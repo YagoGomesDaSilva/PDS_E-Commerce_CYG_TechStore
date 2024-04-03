@@ -18,6 +18,13 @@ const products = [
     { name: 'Produto 14', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
     // Add more products as needed
   ];
+
+  function getProducts() {
+    fetch('http://localhost:8081/produtos')
+      .then(response => response.json(), console.log("Entrou em json() ==>" + response.json()) )
+      .then(data => console.log("data ==> " + data))
+      .catch(error => console.error(error))
+  }
   
   // Function to create product elements and insert them into the product grid
   function insertProducts() {
