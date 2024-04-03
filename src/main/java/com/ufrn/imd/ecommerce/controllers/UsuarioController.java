@@ -1,8 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
-import com.ufrn.imd.ecommerce.models.Usuario;
 import com.ufrn.imd.ecommerce.services.UsuarioService;
-import org.hibernate.annotations.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
