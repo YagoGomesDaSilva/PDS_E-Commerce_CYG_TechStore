@@ -22,6 +22,20 @@ header{
     padding:10px;
     
 }
+.Filtros{
+    justify-content: space-between;
+    display: flex;
+}
+.ListaProdutos{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+}
+.Produto{
+    padding: 20px;
+    box-shadow: 0 2px 4px deepskyblue;
+}
+
 footer{
     position:absolute;
     bottom: 0;
