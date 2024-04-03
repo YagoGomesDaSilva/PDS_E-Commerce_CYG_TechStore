@@ -7,30 +7,31 @@ public class Anuncio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idAnuncio;
 
     @Column(columnDefinition = "VARCHAR(100)")
-    private String tituloAnuncio;
+    private String titulo;
 
     @Column(columnDefinition = "TEXT")
-    private String descricaoAnuncio;
+    private String descricao;
 
     @OneToOne
     private Produto produto;
 
-    public String getTituloAnuncio() {
-        return tituloAnuncio;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTituloAnuncio(String tituloAnuncio) {
-        this.tituloAnuncio = tituloAnuncio;
+    public void setTitulo(String tituloAnuncio) {
+        this.titulo = tituloAnuncio;
     }
 
-    public String getDescricaoAnuncio() {
-        return descricaoAnuncio;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescricaoAnuncio(String descricaoAnuncio) {
-        this.descricaoAnuncio = descricaoAnuncio;
+    public void setDescricao(String descricaoAnuncio) {
+        this.descricao = descricaoAnuncio;
     }
 
     public Produto getProduto() {

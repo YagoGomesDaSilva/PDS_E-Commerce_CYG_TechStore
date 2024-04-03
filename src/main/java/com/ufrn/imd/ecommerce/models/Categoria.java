@@ -10,17 +10,17 @@ public class Categoria {
     private long idCategoria;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String nomeCategoria;
+    private String nome;
 
     public long getIdCategoria() {
         return idCategoria;
     }
 
-    public String getNomeCategoria() {
-        return nomeCategoria;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeCategoria(String nomeCategoria) {
-        this.nomeCategoria = nomeCategoria;
+    public void setNome(String nomeCategoria) {
+        this.nome = nomeCategoria;
     }
 }

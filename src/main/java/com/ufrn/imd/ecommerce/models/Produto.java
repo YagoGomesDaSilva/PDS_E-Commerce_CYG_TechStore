@@ -11,61 +11,61 @@ public class Produto {
     private long idProduto;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String nomeProduto;
+    private String nome;
 
     @Column(columnDefinition = "TEXT")
-    private String descricaoProduto;
+    private String descricao;
 
     @Column(columnDefinition = "DOUBLE")
-    private double valorProduto;
+    private double valor;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String marcaProduto;
+    private String marca;
 
     @Column(columnDefinition = "TEXT")
-    private String observacaoProduto;
+    private String observacao;
 
     public long getIdProduto() {
         return idProduto;
     }
 
-    public String getNomeProduto() {
-        return nomeProduto;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
+    public void setNome(String nomeProduto) {
+        this.nome = nomeProduto;
     }
 
-    public String getDescricaoProduto() {
-        return descricaoProduto;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescricaoProduto(String descricaoProduto) {
-        this.descricaoProduto = descricaoProduto;
+    public void setDescricao(String descricaoProduto) {
+        this.descricao = descricaoProduto;
     }
 
-    public double getValorProduto() {
-        return valorProduto;
+    public double getValor() {
+        return valor;
     }
 
-    public void setValorProduto(double valorProduto) {
-        this.valorProduto = valorProduto;
+    public void setValor(double valorProduto) {
+        this.valor = valorProduto;
     }
 
-    public String getMarcaProduto() {
-        return marcaProduto;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setMarcaProduto(String marcaProduto) {
-        this.marcaProduto = marcaProduto;
+    public void setMarca(String marcaProduto) {
+        this.marca = marcaProduto;
     }
 
-    public String getObservacaoProduto() {
-        return observacaoProduto;
+    public String getObservacao() {
+        return observacao;
     }
 
-    public void setObservacaoProduto(String observacaoProduto) {
-        this.observacaoProduto = observacaoProduto;
+    public void setObservacao(String observacaoProduto) {
+        this.observacao = observacaoProduto;
     }
 }

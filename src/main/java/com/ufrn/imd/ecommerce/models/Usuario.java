@@ -10,10 +10,10 @@ public class Usuario {
     private long idUsuario;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String nomeUsuario;
+    private String nome;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String emailUsuario;
+    private String email;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String senha;
@@ -25,29 +25,29 @@ public class Usuario {
     private String numeroTelefone;
 
     @Column(columnDefinition = "VARCHAR(20)")
-    private String tipoUsuario;
+    private String tipo;
 
     @Column(columnDefinition = "VARCHAR(20)")
-    private String situacaoUsuario;
+    private String situacao;
 
     public long getIdUsuario() {
         return idUsuario;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setNome(String nomeUsuario) {
+        this.nome = nomeUsuario;
     }
 
-    public String getEmailUsuario() {
-        return emailUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailUsuario(String emailUsuario) {
-        this.emailUsuario = emailUsuario;
+    public void setEmail(String emailUsuario) {
+        this.email = emailUsuario;
     }
 
     public String getSenha() {
@@ -74,20 +74,20 @@ public class Usuario {
         this.numeroTelefone = numeroTelefone;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setTipo(String tipoUsuario) {
+        this.tipo = tipoUsuario;
     }
 
-    public String getSituacaoUsuario() {
-        return situacaoUsuario;
+    public String getSituacao() {
+        return situacao;
     }
 
-    public void setSituacaoUsuario(String situacaoUsuario) {
-        this.situacaoUsuario = situacaoUsuario;
+    public void setSituacao(String situacaoUsuario) {
+        this.situacao = situacaoUsuario;
     }
 
     public String getToken() {

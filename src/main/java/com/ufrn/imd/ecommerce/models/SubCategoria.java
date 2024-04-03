@@ -10,7 +10,7 @@ public class SubCategoria {
     private long idSubCategoria;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String nomeSubCategoria;
+    private String nome;
 
     @ManyToOne
     private Produto produto;
