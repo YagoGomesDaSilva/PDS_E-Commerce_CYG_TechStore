@@ -1,8 +1,9 @@
 package com.ufrn.imd.ecommerce.repositories;
 
+import com.ufrn.imd.ecommerce.models.entidades.MovimentacaoEstoque;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long> {
+public interface MovimentacaoEstoqueRepository extends JpaRepository<MovimentacaoEstoque, Long> {
 }
