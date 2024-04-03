@@ -10,7 +10,7 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idProduto;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String nome;
@@ -28,5 +28,9 @@ public class Produto {
     private String observacao;
 
     public Produto() {
+    }
+
+    public Long getIdProduto() {
+        return this.idProduto;
     }
 }

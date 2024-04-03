@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.services.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

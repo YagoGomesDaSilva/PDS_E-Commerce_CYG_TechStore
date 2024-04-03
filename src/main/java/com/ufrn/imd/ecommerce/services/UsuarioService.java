@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.models.heranca.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +13,15 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario findUsuario(Long idUsuario) throws Exception {
-        Usuario usuario = usuarioRepository.findById(idUsuario).isPresent() ? usuarioRepository.findById(idUsuario).get() : null;
+    public UsuarioConcreto findUsuario(Long idUsuario) throws Exception {
+        UsuarioConcreto usuario = usuarioRepository.findById(idUsuario).isPresent() ? usuarioRepository.findById(idUsuario).get() : null;
         if (usuario == null){
             throw new Exception();
         }
         return usuario;
     }
 
-    public void createUsuario(Usuario usuario) {
+    public void createUsuario(UsuarioConcreto usuario) {
         // to-do validações para criação do usuário;
         usuarioRepository.save(usuario);
     }

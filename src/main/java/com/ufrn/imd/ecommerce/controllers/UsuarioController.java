@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.models.heranca.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class UsuarioController {
     @GetMapping(value = "/user")
     public ResponseEntity<?> getUser(@RequestParam(value = "idUsuario") Long idUsuario){
         try{
-            Usuario usuario = usuarioService.findUsuario(idUsuario);
+            UsuarioConcreto usuario = usuarioService.findUsuario(idUsuario);
             return new ResponseEntity<>(usuario, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -25,7 +26,7 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "user")
-    public ResponseEntity<?> createUser(@RequestBody Usuario usuario){
+    public ResponseEntity<?> createUser(@RequestBody UsuarioConcreto usuario){
         try {
             usuarioService.createUsuario(usuario);
             return new ResponseEntity<>(HttpStatus.CREATED);
