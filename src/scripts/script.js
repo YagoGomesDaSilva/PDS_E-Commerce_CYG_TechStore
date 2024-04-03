@@ -2,16 +2,20 @@
 
 // Define your product data (you can fetch this from an API)
 const products = [
-    { name: 'Product 1', description: 'Description of Product 1', imageUrl: 'path/to/product1.jpg' },
-    { name: 'Product 2', description: 'Description of Product 2', imageUrl: 'path/to/product2.jpg' },
-    { name: 'Product 1', description: 'Description of Product 1', imageUrl: 'path/to/product1.jpg' },
-    { name: 'Product 2', description: 'Description of Product 2', imageUrl: 'path/to/product2.jpg' },
-    { name: 'Product 1', description: 'Description of Product 1', imageUrl: 'path/to/product1.jpg' },
-    { name: 'Product 2', description: 'Description of Product 2', imageUrl: 'path/to/product2.jpg' },
-    { name: 'Product 1', description: 'Description of Product 1', imageUrl: 'path/to/product1.jpg' },
-    { name: 'Product 2', description: 'Description of Product 2', imageUrl: 'path/to/product2.jpg' },
-    { name: 'Product 1', description: 'Description of Product 1', imageUrl: 'path/to/product1.jpg' },
-    { name: 'Product 2', description: 'Description of Product 2', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 1', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 2', description: 'R$150,00', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 3', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 4', description: 'R$150,00', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 5', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 6', description: 'R$150,00', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 7', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 8', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 9', description: 'R$150,00', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 10', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 11', description: 'R$150,00', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 12', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
+    { name: 'Produto 13', description: 'R$150,00', imageUrl: 'path/to/product2.jpg' },
+    { name: 'Produto 14', description: 'R$100,00', imageUrl: 'path/to/product1.jpg' },
     // Add more products as needed
   ];
   
@@ -37,7 +41,7 @@ const products = [
       descriptionElement.textContent = product.description;
   
       const buttonElement = document.createElement('button');
-      buttonElement.textContent = 'Add to Cart';
+      buttonElement.textContent = 'Comprar';
   
       productElement.appendChild(imageElement);
       productElement.appendChild(titleElement);
