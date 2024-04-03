@@ -1,0 +1,33 @@
+body{
+    background-color:rgb(14, 14, 28);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:deepskyblue;
+}
+header{
+    background-color: deepskyblue;
+    color: rgb(14, 14, 28);
+    width: 100%;
+}
+.Topo{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    padding: 10px;
+    h1{
+        font-size: 50px;
+    }
+}
+.Busca{
+    width: 300px;
+    padding:10px;
+    
+}
+footer{
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: deepskyblue;
+    text-align: center;
+    color: rgb(14, 14, 28);
+}
