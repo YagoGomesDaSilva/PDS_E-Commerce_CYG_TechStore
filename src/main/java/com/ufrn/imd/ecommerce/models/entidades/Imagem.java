@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Imagem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idImagem;
 
     @Column(columnDefinition = "VARCHAR(100)")
