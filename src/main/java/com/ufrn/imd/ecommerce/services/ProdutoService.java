@@ -38,7 +38,7 @@ public class ProdutoService {
     }
 
     public void updateProduto(Produto produto) throws Exception {
-        if(produtoRepository.findById(produto.getIdProduto()).isPresent()){
+        if(produtoRepository.findById(produto.getId()).isPresent()){
             //to-do implementar update em produto
         } else {
             throw new Exception("Produto não encontrado");
