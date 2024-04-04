@@ -2,11 +2,12 @@ package com.ufrn.imd.ecommerce.models.entidades;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 //@Table(name = "Produtos")
-public class Produto {
+public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,6 +62,10 @@ public class Produto {
 
     public String getObservacao() {
         return observacao;
+    }
+
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
     }
 
     public void setObservacao(String observacao) {
