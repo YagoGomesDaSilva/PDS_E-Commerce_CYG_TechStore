@@ -1,10 +1,6 @@
-package com.ufrn.imd.ecommerce.models.heranca;
+package com.ufrn.imd.ecommerce.models;
 
 
-import com.ufrn.imd.ecommerce.models.entidades.Cartao;
-import com.ufrn.imd.ecommerce.models.entidades.Endereco;
-import com.ufrn.imd.ecommerce.models.entidades.MovimentacaoEstoque;
-import com.ufrn.imd.ecommerce.models.entidades.Pedido;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

@@ -1,11 +1,7 @@
-package com.ufrn.imd.ecommerce.models.entidades;
+package com.ufrn.imd.ecommerce.models;
 
-import com.ufrn.imd.ecommerce.models.heranca.Anunciante;
-import com.ufrn.imd.ecommerce.models.heranca.UsuarioAbstrato;
 import jakarta.persistence.*;
-import jdk.dynalink.linker.LinkerServices;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 

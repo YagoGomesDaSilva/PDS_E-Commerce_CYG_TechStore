@@ -1,4 +1,4 @@
-package com.ufrn.imd.ecommerce.models.entidades;
+package com.ufrn.imd.ecommerce.models;
 
 import jakarta.persistence.*;
 

@@ -1,7 +1,5 @@
-package com.ufrn.imd.ecommerce.models.entidades;
+package com.ufrn.imd.ecommerce.models;
 
-import com.ufrn.imd.ecommerce.models.entidadeEnum.TipoPagamento;
-import com.ufrn.imd.ecommerce.models.heranca.UsuarioConcreto;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

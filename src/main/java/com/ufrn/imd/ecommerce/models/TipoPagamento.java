@@ -1,4 +1,4 @@
-package com.ufrn.imd.ecommerce.models.entidadeEnum;
+package com.ufrn.imd.ecommerce.models;
 
 public enum TipoPagamento {
     DEBITO,

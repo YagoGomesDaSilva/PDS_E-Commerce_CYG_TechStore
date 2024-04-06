@@ -1,6 +1,6 @@
 package com.ufrn.imd.ecommerce.services;
 
-import com.ufrn.imd.ecommerce.models.heranca.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 

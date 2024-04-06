@@ -1,4 +1,4 @@
-package com.ufrn.imd.ecommerce.models.entidades;
+package com.ufrn.imd.ecommerce.models;
 
 import jakarta.persistence.*;
 
@@ -7,16 +7,15 @@ import java.util.Objects;
 @Entity
 public class PedidoItem {
 
-    @EmbeddedId
-    private PedidoItemKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @ManyToOne
-    @MapsId("produtoId")
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
     @ManyToOne
-    @MapsId("pedidoId")
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
@@ -32,13 +31,6 @@ public class PedidoItem {
         this.quantidade = quantidade;
     }
 
-    public PedidoItemKey getId() {
-        return id;
-    }
-
-    public void setId(PedidoItemKey id) {
-        this.id = id;
-    }
 
     public Produto getProduto() {
         return produto;
@@ -62,18 +54,5 @@ public class PedidoItem {
 
     public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PedidoItem that = (PedidoItem) o;
-        return Objects.equals(id, that.id) && Objects.equals(produto, that.produto) && Objects.equals(pedido, that.pedido) && Objects.equals(quantidade, that.quantidade);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, produto, pedido, quantidade);
     }
 }
