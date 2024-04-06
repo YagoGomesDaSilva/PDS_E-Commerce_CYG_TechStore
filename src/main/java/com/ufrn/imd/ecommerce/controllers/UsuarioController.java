@@ -1,6 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
-import com.ufrn.imd.ecommerce.models.heranca.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping(value = "user")
+    @PostMapping(value = "/user")
     public ResponseEntity<?> createUser(@RequestBody UsuarioConcreto usuario){
         try {
             usuarioService.createUsuario(usuario);
