@@ -24,17 +24,17 @@ public class ProdutoService {
         return produto;
     }
 
-    public void createProduto(Produto produto) {
-        //to-do validações para criação do produto
-        produtoRepository.save(produto);
-    }
-
     public List<Produto> findProdutos() throws Exception {
         List<Produto> produtos = produtoRepository.findAll();
         if(produtos.isEmpty()){
             throw new Exception();
         }
         return  produtos;
+    }
+
+    public void createProduto(Produto produto) {
+        //to-do validações para criação do produto
+        produtoRepository.save(produto);
     }
 
     public void updateProduto(Produto produto) throws Exception {
@@ -44,4 +44,13 @@ public class ProdutoService {
             throw new Exception("Produto não encontrado");
         }
     }
+
+    public void deletarProduto(Produto produto) throws Exception{
+        if(produtoRepository.findById(produto.getId()).isPresent()){
+            produtoRepository.delete(produto);
+        } else {
+            throw new Exception("Produto não encontrado");
+        }
+    }
+
 }
