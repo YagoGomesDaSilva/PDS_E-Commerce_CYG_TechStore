@@ -1,6 +1,7 @@
 package com.ufrn.imd.ecommerce.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,6 +14,7 @@ public abstract class UsuarioAbstrato {
     private Long id;
     @Column(columnDefinition = "VARCHAR(50)")
     private String nome;
+    @Email
     @Column(columnDefinition = "VARCHAR(50)")
     private String email;
     @Column(columnDefinition = "VARCHAR(50)")
