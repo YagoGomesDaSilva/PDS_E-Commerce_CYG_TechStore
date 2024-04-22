@@ -43,6 +43,8 @@ public interface UsuarioRepository extends JpaRepository<UsuarioConcreto, Long> 
     @Query("SELECT DISTINCT u FROM UsuarioConcreto u JOIN FETCH u.enderecos JOIN FETCH u.cartoes JOIN FETCH u.pedidos JOIN FETCH u.movimentacoesEstoque")
     List<UsuarioConcreto> findAllUsuarioConcretoWithAllAssociations();
 
+    UsuarioConcreto findUsuarioConcretoByEmail(String email);
+
     UserDetails findByEmail(String email);
 
 

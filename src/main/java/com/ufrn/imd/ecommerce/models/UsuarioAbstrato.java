@@ -10,13 +10,12 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class UsuarioAbstrato {
 
-
     @Column(columnDefinition = "VARCHAR(50)")
     protected String nome;
     @Email
     @Column(columnDefinition = "VARCHAR(50)")
     protected String email;
-    @Column(columnDefinition = "VARCHAR(50)")
+    @Column(columnDefinition = "VARCHAR(100)")
     protected String senha;
     @Column(columnDefinition = "VARCHAR(15)")
     protected String numeroTelefone;

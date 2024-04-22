@@ -46,6 +46,12 @@ public  class UsuarioConcreto extends UsuarioAbstrato implements UserDetails {
         this.movimentacoesEstoque = movimentacoesEstoque;
     }
 
+    public UsuarioConcreto(String email, String encyptedPassword, TipoUsuario tipoUsuario) {
+        this.email = email;
+        this.senha = encyptedPassword;
+        this.tipoUsuario = tipoUsuario;
+    }
+
     public Long getId() {
         return id;
     }

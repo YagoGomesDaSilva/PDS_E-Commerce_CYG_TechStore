@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.error.InfoDuplicatedException;
 import com.ufrn.imd.ecommerce.error.InvalidFirstNameException;
 import com.ufrn.imd.ecommerce.models.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
@@ -32,12 +33,19 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public void createUsuario(UsuarioConcreto usuario) throws InvalidFirstNameException {
+    public void createUsuarioConcreto(UsuarioConcreto usuario) throws InvalidFirstNameException {
         // Verificar se há apenas caracteres do alfabeto no nome
         if (!usuario.getNome().matches("[a-zA-Z]+")) {
             throw new InvalidFirstNameException();
         }
         usuario.setNome(usuario.getNome().trim());
+        usuarioRepository.save(usuario);
+    }
+
+    public void createUsuario(UsuarioConcreto usuario) throws InfoDuplicatedException {
+        if(usuarioRepository.findUsuarioConcretoByEmail(usuario.getEmail()) != null) {
+            throw new InfoDuplicatedException("Usuário já existe");
+        }
         usuarioRepository.save(usuario);
     }
 
