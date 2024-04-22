@@ -26,6 +26,7 @@ public class ProdutoController {
     public ResponseEntity<?> getProduto(@RequestParam(value = "idProduto") Long idProduto){
         try{
             Produto produto = produtoService.findProduto(idProduto);
+            produto.setImagems(imagemService.findImagensByProduto(idProduto));
             return new ResponseEntity<>(produto, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -36,6 +37,9 @@ public class ProdutoController {
     public ResponseEntity<?> getProdutos(){
         try {
             List<Produto> produtos = produtoService.findProdutos();
+            for(Produto produto : produtos){
+                produto.setImagems(imagemService.findImagensByProduto(produto.getId()));
+            }
             return new ResponseEntity<>(produtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

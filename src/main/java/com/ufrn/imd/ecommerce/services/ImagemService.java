@@ -4,6 +4,8 @@ import com.ufrn.imd.ecommerce.models.Imagem;
 import com.ufrn.imd.ecommerce.repositories.ImagemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImagemService {
 
@@ -16,5 +18,9 @@ public class ImagemService {
 
     public void saveImage(Imagem imagem) {
         imagemRepository.save(imagem);
+    }
+
+    public List<Imagem> findImagensByProduto(Long idProduto) {
+        return imagemRepository.findByProdutoId(idProduto);
     }
 }
