@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.InfoDuplicatedException;
 import com.ufrn.imd.ecommerce.models.AuthenticationDTO;
 import com.ufrn.imd.ecommerce.models.RegisterDTO;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,15 +32,17 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
-            // Autenticar o usuário
-        UserDetails userDetails = authService.loadUserByUsername(data.getEmail());
-        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword(), userDetails.getAuthorities());
-        authenticationManager.authenticate(usernamePassword);
+        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
+        Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        String token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
+
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
@@ -54,5 +58,4 @@ public class AuthController {
 
         return ResponseEntity.ok().build();
     }
-
 }
