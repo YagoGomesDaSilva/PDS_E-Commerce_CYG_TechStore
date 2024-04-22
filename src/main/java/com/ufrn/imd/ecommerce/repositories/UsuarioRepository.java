@@ -4,6 +4,7 @@ import com.ufrn.imd.ecommerce.models.UsuarioConcreto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioConcreto, Long> 
     @Query("SELECT DISTINCT u FROM UsuarioConcreto u JOIN FETCH u.enderecos JOIN FETCH u.cartoes JOIN FETCH u.pedidos JOIN FETCH u.movimentacoesEstoque")
     List<UsuarioConcreto> findAllUsuarioConcretoWithAllAssociations();
 
-
+    UserDetails findByEmail(String email);
 
 
 }

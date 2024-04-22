@@ -1,25 +1,38 @@
 package com.ufrn.imd.ecommerce.models;
 
 
+import com.ufrn.imd.ecommerce.enums.TipoUsuario;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @DiscriminatorValue("usuario")
-public  class UsuarioConcreto extends UsuarioAbstrato{
+public  class UsuarioConcreto extends UsuarioAbstrato implements UserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Endereco> enderecos;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cartao> cartoes;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pedido> pedidos;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MovimentacaoEstoque> movimentacoesEstoque;
 
+    private TipoUsuario tipoUsuario;
 
     public UsuarioConcreto() {
         super();
@@ -31,6 +44,22 @@ public  class UsuarioConcreto extends UsuarioAbstrato{
         this.cartoes = cartoes;
         this.pedidos = pedidos;
         this.movimentacoesEstoque = movimentacoesEstoque;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public List<Endereco> getEnderecos() {
@@ -76,5 +105,44 @@ public  class UsuarioConcreto extends UsuarioAbstrato{
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), enderecos, cartoes, pedidos, movimentacoesEstoque);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.tipoUsuario == TipoUsuario.ADMIN){
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.nome;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

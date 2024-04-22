@@ -11,6 +11,10 @@ import java.util.Objects;
 @DiscriminatorColumn(name = "tipo_perfil", discriminatorType = DiscriminatorType.STRING)
 public class Anunciante extends UsuarioAbstrato{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+
     @Column(columnDefinition = "VARCHAR(14)")
     String documento;
 
@@ -70,6 +74,9 @@ public class Anunciante extends UsuarioAbstrato{
         this.estoques = estoques;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     @Override
     public boolean equals(Object o) {

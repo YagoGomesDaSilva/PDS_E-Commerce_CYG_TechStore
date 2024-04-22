@@ -2,6 +2,7 @@ package com.ufrn.imd.ecommerce.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -9,24 +10,22 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class UsuarioAbstrato {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     @Column(columnDefinition = "VARCHAR(50)")
-    private String nome;
+    protected String nome;
     @Email
     @Column(columnDefinition = "VARCHAR(50)")
-    private String email;
+    protected String email;
     @Column(columnDefinition = "VARCHAR(50)")
-    private String senha;
+    protected String senha;
     @Column(columnDefinition = "VARCHAR(15)")
-    private String numeroTelefone;
+    protected String numeroTelefone;
     @Column
-    private boolean tipo;
+    protected boolean tipo;
     @Column(columnDefinition = "VARCHAR(100)")
-    private String token;
+    protected String token;
     @Column(scale = 2)
-    private BigDecimal credito;
+    protected BigDecimal credito;
 
     public UsuarioAbstrato() {
     }
@@ -39,14 +38,6 @@ public abstract class UsuarioAbstrato {
         this.tipo = tipo;
         this.token = token;
         this.credito = credito;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -110,11 +101,11 @@ public abstract class UsuarioAbstrato {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsuarioAbstrato that = (UsuarioAbstrato) o;
-        return tipo == that.tipo && Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(email, that.email) && Objects.equals(senha, that.senha) && Objects.equals(numeroTelefone, that.numeroTelefone) && Objects.equals(token, that.token) && Objects.equals(credito, that.credito);
+        return tipo == that.tipo && Objects.equals(nome, that.nome) && Objects.equals(email, that.email) && Objects.equals(senha, that.senha) && Objects.equals(numeroTelefone, that.numeroTelefone) && Objects.equals(token, that.token) && Objects.equals(credito, that.credito);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, email, senha, numeroTelefone, tipo, token, credito);
+        return Objects.hash(nome, email, senha, numeroTelefone, tipo, token, credito);
     }
 }
