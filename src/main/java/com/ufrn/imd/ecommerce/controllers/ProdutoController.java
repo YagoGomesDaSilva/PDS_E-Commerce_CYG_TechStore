@@ -1,6 +1,9 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.models.Imagem;
 import com.ufrn.imd.ecommerce.models.Produto;
+import com.ufrn.imd.ecommerce.models.ProdutoImagemDTO;
+import com.ufrn.imd.ecommerce.services.ImagemService;
 import com.ufrn.imd.ecommerce.services.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +15,11 @@ import java.util.List;
 public class ProdutoController {
 
     private final ProdutoService produtoService;
+    private final ImagemService imagemService;
 
-    public ProdutoController(ProdutoService produtoService) {
+    public ProdutoController(ProdutoService produtoService, ImagemService imagemService) {
         this.produtoService = produtoService;
+        this.imagemService = imagemService;
     }
 
     @GetMapping(value = "/produto")
@@ -38,9 +43,14 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "/produto")
-    public ResponseEntity<?> createProduto(@RequestBody Produto produto){
+    public ResponseEntity<?> createProduto(@RequestBody ProdutoImagemDTO produtoImagemDTO){
         try {
-            produtoService.createProduto(produto);
+            produtoService.createProduto(produtoImagemDTO.getProduto());
+
+            Imagem imagem = produtoImagemDTO.getImagem();
+            imagem.setProduto(produtoImagemDTO.getProduto());
+            imagemService.saveImage(imagem);
+
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
