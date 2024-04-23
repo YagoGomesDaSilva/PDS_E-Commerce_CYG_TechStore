@@ -1,8 +1,6 @@
-package com.ufrn.imd.ecommerce.models;
+package com.ufrn.imd.ecommerce.models.entidades;
 
 import jakarta.persistence.*;
-
-import java.util.Objects;
 
 @Entity
 public class PedidoItem {

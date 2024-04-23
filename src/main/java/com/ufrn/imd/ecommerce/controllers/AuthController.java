@@ -2,9 +2,9 @@ package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.InfoDuplicatedException;
-import com.ufrn.imd.ecommerce.models.AuthenticationDTO;
-import com.ufrn.imd.ecommerce.models.RegisterDTO;
-import com.ufrn.imd.ecommerce.models.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.DTO.AuthenticationDTO;
+import com.ufrn.imd.ecommerce.models.DTO.RegisterDTO;
+import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.services.AuthService;
 import com.ufrn.imd.ecommerce.services.UsuarioService;
 import jakarta.validation.Valid;

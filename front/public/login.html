@@ -19,7 +19,7 @@
 
             <nav class="navegacao col-4">
                 <ul class=>
-                    <li><a href="index.html"> Home </a></li>|
+                    <li><a href="index.html">Home </a></li>|
                     <li><a href="login.html"> Login </a></li>|
                     <li><a href="cadastrarUsuario.html">Cadastro </a></li>|
                     <li><a href="areacliente.html">Meus Pedidos</a></li>|
@@ -28,30 +28,18 @@
             </nav>
         </div>
     </header>
-    
+
     <div class="formulario">
-        <form id="formProduto">
-            <label for="nomeProduto">Nome: </label>
-            <input class="tag-form" type="text" name="nomeProduto" id="nomeProduto">
+        <form id="formUsuario">
+            <label for="email">Email: </label>
+            <input class="tag-form" type="email" name="email" id="email">
             <br>
             <br>
-            <label for="valor">Valor: </label>
-            <input class="tag-form" type="text" name="valor" id="valor">
+            <label for="senha">Senha: </label>
+            <input class="tag-form" type="password" name="senha" id="senha">
             <br>
             <br>
-            <label for="marca">Marca: </label>
-            <input class="tag-form" type="text" name="marca" id="marca">
-            <br>
-            <br>
-            <label for="descricao">Descrição: </label>
-            <input class="tag-form" type="text" name="descricao" id="descricao">
-            <br>
-            <br>
-            <label for="observacao">Observação: </label>
-            <input class="tag-form" type="text" name="observacao" id="observacao">
-            <br>
-            <br>
-            <button type="button" class="button-submit"  onclick="createProduto()">Cadastrar</button>
+            <button type="button" class="button-submit" onclick="createUsuario()">Entrar</button>
         </form>
     </div>
 

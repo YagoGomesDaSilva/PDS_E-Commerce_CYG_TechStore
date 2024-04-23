@@ -1,4 +1,4 @@
-package com.ufrn.imd.ecommerce.models;
+package com.ufrn.imd.ecommerce.models.DTO;
 
 public class AuthenticationDTO {
 
