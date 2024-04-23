@@ -1,8 +1,7 @@
-package com.ufrn.imd.ecommerce.models;
+package com.ufrn.imd.ecommerce.models.entidades;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
 import java.util.Objects;

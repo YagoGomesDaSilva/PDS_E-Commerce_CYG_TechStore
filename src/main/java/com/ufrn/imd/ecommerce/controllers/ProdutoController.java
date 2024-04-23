@@ -1,8 +1,8 @@
 package com.ufrn.imd.ecommerce.controllers;
 
-import com.ufrn.imd.ecommerce.models.Imagem;
-import com.ufrn.imd.ecommerce.models.Produto;
-import com.ufrn.imd.ecommerce.models.ProdutoImagemDTO;
+import com.ufrn.imd.ecommerce.models.entidades.Imagem;
+import com.ufrn.imd.ecommerce.models.entidades.Produto;
+import com.ufrn.imd.ecommerce.models.DTO.ProdutoImagemDTO;
 import com.ufrn.imd.ecommerce.services.ImagemService;
 import com.ufrn.imd.ecommerce.services.ProdutoService;
 import org.springframework.http.HttpStatus;

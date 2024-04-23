@@ -1,6 +1,6 @@
 package com.ufrn.imd.ecommerce.repositories;
 
-import com.ufrn.imd.ecommerce.models.Anunciante;
+import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
