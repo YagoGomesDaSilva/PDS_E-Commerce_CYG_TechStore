@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests( authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/produto").hasRole("ANUNCIANTE")
+                        .requestMatchers(HttpMethod.POST, "/produto").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
