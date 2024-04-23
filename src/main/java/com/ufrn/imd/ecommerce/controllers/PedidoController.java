@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
@@ -17,10 +19,21 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long save( @RequestBody PedidoDTO dto ) throws Exception {
+    public Pedido save( @RequestBody PedidoDTO dto ) throws Exception {
         Pedido pedido = pedidoService.createPedido(dto);
-        return pedido.getId();
+        return pedido;
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<PedidoDTO> findAll() {
+        // to-do
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Pedido findById(@RequestParam Long id) {
+        // to-do
+    }
 
 }
