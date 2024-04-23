@@ -1,6 +1,6 @@
 package com.ufrn.imd.ecommerce.repositories;
 
-import com.ufrn.imd.ecommerce.models.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

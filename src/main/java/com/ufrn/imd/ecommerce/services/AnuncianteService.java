@@ -1,9 +1,7 @@
 package com.ufrn.imd.ecommerce.services;
 
-import com.ufrn.imd.ecommerce.models.Anunciante;
-import com.ufrn.imd.ecommerce.models.Anuncio;
+import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
-import com.ufrn.imd.ecommerce.repositories.AnuncioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

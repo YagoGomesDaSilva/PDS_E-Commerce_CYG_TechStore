@@ -1,4 +1,4 @@
-package com.ufrn.imd.ecommerce.models;
+package com.ufrn.imd.ecommerce.models.entidades;
 
 
 import com.ufrn.imd.ecommerce.enums.TipoUsuario;

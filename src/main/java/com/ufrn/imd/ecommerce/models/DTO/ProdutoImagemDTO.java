@@ -1,4 +1,7 @@
-package com.ufrn.imd.ecommerce.models;
+package com.ufrn.imd.ecommerce.models.DTO;
+
+import com.ufrn.imd.ecommerce.models.entidades.Imagem;
+import com.ufrn.imd.ecommerce.models.entidades.Produto;
 
 public class ProdutoImagemDTO {
 

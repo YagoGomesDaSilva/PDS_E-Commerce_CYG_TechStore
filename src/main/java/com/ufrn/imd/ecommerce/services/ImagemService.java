@@ -1,6 +1,6 @@
 package com.ufrn.imd.ecommerce.services;
 
-import com.ufrn.imd.ecommerce.models.Imagem;
+import com.ufrn.imd.ecommerce.models.entidades.Imagem;
 import com.ufrn.imd.ecommerce.repositories.ImagemRepository;
 import org.springframework.stereotype.Service;
 
