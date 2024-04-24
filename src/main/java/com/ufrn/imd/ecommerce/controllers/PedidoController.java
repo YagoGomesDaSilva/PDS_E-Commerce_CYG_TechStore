@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -26,14 +27,14 @@ public class PedidoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<PedidoDTO> findAll() {
-        // to-do
+    public List<Pedido> findAll() throws Exception {
+        return pedidoService.findPedidos();
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Pedido findById(@RequestParam Long id) {
-        // to-do
+    public Optional<Pedido> findFullById(@RequestParam Long id) throws Exception {
+        return pedidoService.findFullPedido(id);
     }
 
 }

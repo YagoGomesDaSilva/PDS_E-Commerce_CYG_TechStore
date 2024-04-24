@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,6 @@ public class PedidoService {
         this.produtoRepository = produtoRepository;
     }
 
-
     @Transactional
     public Pedido createPedido(PedidoDTO dto) throws Exception {
         Long compradorId = dto.getCompradorId();
@@ -49,7 +49,6 @@ public class PedidoService {
         pedido.setPedidoItems(pedidoItems);
         return pedido;
     }
-
     private Set<PedidoItem> converterItems(Pedido pedido, List<PedidoItemDTO> items) throws Exception {
         if(items.isEmpty()){
             throw new Exception("Não é possível realizar um pedido sem items.");
@@ -75,9 +74,6 @@ public class PedidoService {
                     return pedidoItems;
                 }).collect(Collectors.toSet());
     }
-
-
-
     public Pedido findPedido(Long idPedido) throws Exception {
         Pedido pedido = pedidoRepository.findById(idPedido).isPresent() ? pedidoRepository.findById(idPedido).get() : null;
         if(pedido == null){
@@ -85,7 +81,6 @@ public class PedidoService {
         }
         return pedido;
     }
-
     public List<Pedido> findPedidos() throws Exception {
         List<Pedido> pedidos = pedidoRepository.findAll();
         if(pedidos.isEmpty()){
@@ -94,9 +89,9 @@ public class PedidoService {
         return pedidos;
     }
 
-
-
-
+    public Optional<Pedido> findFullPedido(Long idPedido){
+        return pedidoRepository.findPedidoByIdWithPedidoItemsAndUsuario(idPedido);
+    }
     private void updadePedido(Pedido pedido) throws Exception{
         if(pedidoRepository.findById(pedido.getId()).isPresent()){
             //to-do implementar update em Usuario
@@ -104,8 +99,7 @@ public class PedidoService {
             throw new Exception("Pedido não encontrado");
         }
     }
-
-    public void deletarUsuario(Pedido pedido) throws Exception{
+    public void deletarPedido(Pedido pedido) throws Exception{
         if(pedidoRepository.findById(pedido.getId()).isPresent()){
             pedidoRepository.delete(pedido);
         } else {

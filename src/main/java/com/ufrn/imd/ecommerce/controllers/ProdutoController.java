@@ -8,8 +8,13 @@ import com.ufrn.imd.ecommerce.services.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 public class ProdutoController {
@@ -25,8 +30,8 @@ public class ProdutoController {
     @GetMapping(value = "/produto")
     public ResponseEntity<?> getProduto(@RequestParam(value = "idProduto") Long idProduto){
         try{
-            Produto produto = produtoService.findProduto(idProduto);
-            produto.setImagems(imagemService.findImagensByProduto(idProduto));
+            Optional<Produto> produto = produtoService.findProduto(idProduto);
+            produto.ifPresent(value -> value.setImagems(imagemService.findImagensByProduto(idProduto)));
             return new ResponseEntity<>(produto, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,7 +60,7 @@ public class ProdutoController {
             imagem.setProduto(produtoImagemDTO.getProduto());
             imagemService.saveImage(imagem);
 
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -65,10 +70,62 @@ public class ProdutoController {
     public ResponseEntity<?> updateProduto(@RequestBody Produto produto) {
         try {
             produtoService.updateProduto(produto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @PostMapping
+    @ResponseStatus(CREATED)
+    public Produto save( @RequestBody Produto produto ){
+        return produtoService.createProduto(produto);
+    }
+
+    @PutMapping("{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void update( @PathVariable Long id, @RequestBody Produto produto ) throws Exception {
+        produtoService
+                .findProduto(id)
+                .map( p -> {
+                    produto.setId(p.getId());
+                    try {
+                        produtoService.updateProduto(produto);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    return produto;
+                }).orElseThrow( () ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Produto não encontrado."));
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void delete(@PathVariable Long id) throws Exception {
+        produtoService
+                .findProduto(id)
+                .map( p -> {
+                    try {
+                        produtoService.deletarProduto(p);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    return Void.TYPE;
+                }).orElseThrow( () ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Produto não encontrado."));
+    }
+
+    @GetMapping("{id}")
+    public Produto getById(@PathVariable Long id) throws Exception {
+        return produtoService
+                .findProduto(id)
+                .orElseThrow( () ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Produto não encontrado."));
+    }
+
 
 }

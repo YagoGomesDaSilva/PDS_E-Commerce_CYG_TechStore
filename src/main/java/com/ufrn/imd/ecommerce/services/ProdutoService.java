@@ -5,6 +5,7 @@ import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
@@ -15,13 +16,13 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public Produto findProduto(Long idProduto) throws Exception {
+    public Optional<Produto> findProduto(Long idProduto) throws Exception {
         Produto produto = produtoRepository.findById(idProduto).isPresent() ? produtoRepository.findById(idProduto).get() : null;
 
         if(produto == null){
             throw new Exception("Produto não encontrado");
         }
-        return produto;
+        return Optional.of(produto);
     }
 
     public List<Produto> findProdutos() throws Exception {
@@ -32,9 +33,9 @@ public class ProdutoService {
         return  produtos;
     }
 
-    public void createProduto(Produto produto) {
+    public Produto createProduto(Produto produto) {
         //to-do validações para criação do produto
-        produtoRepository.save(produto);
+        return produtoRepository.save(produto);
     }
 
     public void updateProduto(Produto produto) throws Exception {
