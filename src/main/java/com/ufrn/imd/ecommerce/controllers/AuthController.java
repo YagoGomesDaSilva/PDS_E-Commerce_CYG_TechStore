@@ -1,7 +1,7 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.config.TokenService;
-import com.ufrn.imd.ecommerce.error.InfoDuplicatedException;
+import com.ufrn.imd.ecommerce.error.exceptions.InfoDuplicatedException;
 import com.ufrn.imd.ecommerce.models.DTO.AuthenticationDTO;
 import com.ufrn.imd.ecommerce.models.DTO.RegisterDTO;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;

@@ -1,7 +1,7 @@
 package com.ufrn.imd.ecommerce.services;
 
-import com.ufrn.imd.ecommerce.error.InfoDuplicatedException;
-import com.ufrn.imd.ecommerce.error.InvalidFirstNameException;
+import com.ufrn.imd.ecommerce.error.exceptions.InfoDuplicatedException;
+import com.ufrn.imd.ecommerce.error.exceptions.InvalidFirstNameException;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;

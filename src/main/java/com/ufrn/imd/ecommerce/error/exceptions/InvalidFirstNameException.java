@@ -1,4 +1,4 @@
-package com.ufrn.imd.ecommerce.error;
+package com.ufrn.imd.ecommerce.error.exceptions;
 
 public class InvalidFirstNameException extends Exception {
 
