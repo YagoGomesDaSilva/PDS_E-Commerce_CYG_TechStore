@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.ufrn.imd.ecommerce.enums.TipoPagamento;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

@@ -16,7 +16,7 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/user")
-    public ResponseEntity<?> getUser(@RequestParam(value = "idUsuario") Long idUsuario){
+    public ResponseEntity<?> getUser(@RequestParam(value = "id") Long idUsuario){
         try{
             UsuarioConcreto usuario = usuarioService.findUsuario(idUsuario);
             return new ResponseEntity<>(usuario, HttpStatus.OK);

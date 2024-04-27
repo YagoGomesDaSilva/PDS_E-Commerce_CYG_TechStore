@@ -1,7 +1,8 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.config.TokenService;
-import com.ufrn.imd.ecommerce.error.exceptions.InfoDuplicatedException;
+import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
+import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.DTO.AuthenticationDTO;
 import com.ufrn.imd.ecommerce.models.DTO.RegisterDTO;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
@@ -51,8 +52,8 @@ public class AuthController {
 
         try {
             this.usuarioService.createUsuario(usuario);
-        } catch (InfoDuplicatedException e) {
-            return ResponseEntity.badRequest().body("Já existe um usuário cadastrado com esse email!");
+        } catch (UsuarioExCustom e) {
+            return ResponseEntity.badRequest().body(UsuarioEnumEx.EMAIL_DUPLICADO);
         }
 
         return ResponseEntity.ok().build();

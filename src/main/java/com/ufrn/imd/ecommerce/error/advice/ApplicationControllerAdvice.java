@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice //trata os exceptionHandlers --> trata erros quando elesa acontecem
+@RestControllerAdvice //trata os exceptionHandlers --> trata erros quando eles acontecem
 public class ApplicationControllerAdvice {
 
     /*
      * toda vez que api lançar essa exceção, cairá aqui!
-     * preciso dizer qual status será retornado - por padrão -bad request - 400
+     * precisa dizer qual status será retornado - por padrão - bad request - 400
      */
     @ExceptionHandler(RegraNegocioException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
