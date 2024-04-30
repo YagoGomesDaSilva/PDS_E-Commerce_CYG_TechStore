@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
 import com.ufrn.imd.ecommerce.models.entidades.Imagem;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.DTO.ProdutoImagemDTO;
@@ -76,7 +77,6 @@ public class ProdutoController {
         }
     }
 
-
     @PostMapping
     @ResponseStatus(CREATED)
     public Produto save( @RequestBody Produto produto ){
@@ -84,51 +84,40 @@ public class ProdutoController {
     }
 
 
-
-
     @PutMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update( @PathVariable Long id, @RequestBody Produto produto ) throws Exception {
+    public void update( @PathVariable Long id, @RequestBody Produto produto )  {
         produtoService
                 .findProduto(id)
                 .map( p -> {
                     produto.setId(p.getId());
-                    try {
                         produtoService.updateProduto(produto);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
                     return produto;
                 }).orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Produto não encontrado."));
+                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long id) throws Exception {
+    public void delete(@PathVariable Long id) {
         produtoService
                 .findProduto(id)
                 .map( p -> {
-                    try {
                         produtoService.deletarProduto(p);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
                     return Void.TYPE;
                 }).orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Produto não encontrado."));
+                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
     }
 
     @GetMapping("{id}")
-    public Produto getById(@PathVariable Long id) throws Exception {
+    public Produto getById(@PathVariable Long id) {
         return produtoService
                 .findProduto(id)
                 .orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Produto não encontrado."));
+                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
     }
-
 
 }
