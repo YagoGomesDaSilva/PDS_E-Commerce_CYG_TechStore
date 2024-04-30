@@ -1,5 +1,12 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.error.enunsEx.PedidoEnumEx;
+import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
+import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
+import com.ufrn.imd.ecommerce.error.exceptions.PedidoExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
+import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoItemDTO;
 import com.ufrn.imd.ecommerce.models.entidades.*;
@@ -33,10 +40,12 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido createPedido(PedidoDTO dto) throws Exception {
+    public Pedido createPedido(PedidoDTO dto)  {
         Long compradorId = dto.getCompradorId();
 
-        UsuarioConcreto usuario = usuarioRepository.findById(compradorId).orElseThrow(() -> new Exception("Código de cliente inválido."));
+        UsuarioConcreto usuario = usuarioRepository
+                .findById(compradorId)
+                .orElseThrow(() -> new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO));
 
         Pedido pedido = new Pedido();
         pedido.setValorTotal(dto.getValorTotal());
@@ -49,24 +58,19 @@ public class PedidoService {
         pedido.setPedidoItems(pedidoItems);
         return pedido;
     }
-    private Set<PedidoItem> converterItems(Pedido pedido, List<PedidoItemDTO> items) throws Exception {
+
+    private Set<PedidoItem> converterItems(Pedido pedido, List<PedidoItemDTO> items)  {
         if(items.isEmpty()){
-            throw new Exception("Não é possível realizar um pedido sem items.");
+            throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);
         }
 
         return items
                 .stream()
                 .map( dto -> {
                     Long idProduto = dto.getProduto();
-                    Produto produto = null;
-                    try {
-                        produto = produtoRepository
-                                .findById(idProduto)
-                                .orElseThrow(() -> new Exception( "Código de produto inválido: "+ idProduto ));
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-
+                    Produto produto = produtoRepository
+                            .findById(idProduto)
+                            .orElseThrow(() -> new ProdutoExCustom(ProdutoEnumEx.PRODUTO_INVALIDO));
                     PedidoItem pedidoItems = new PedidoItem();
                     pedidoItems.setQuantidade(dto.getQuantidade());
                     pedidoItems.setPedido(pedido);
@@ -74,17 +78,19 @@ public class PedidoService {
                     return pedidoItems;
                 }).collect(Collectors.toSet());
     }
-    public Pedido findPedido(Long idPedido) throws Exception {
+
+
+    public Pedido findPedido(Long idPedido)  {
         Pedido pedido = pedidoRepository.findById(idPedido).isPresent() ? pedidoRepository.findById(idPedido).get() : null;
         if(pedido == null){
-            throw new Exception();
+            throw new PedidoExCustom(PedidoEnumEx.PEDIDO_NAO_ENCONTRADO);
         }
         return pedido;
     }
-    public List<Pedido> findPedidos() throws Exception {
+    public List<Pedido> findPedidos()  {
         List<Pedido> pedidos = pedidoRepository.findAll();
         if(pedidos.isEmpty()){
-            throw new Exception();
+            throw new RegraNegocioException("Não ha pedidos realizados!");
         }
         return pedidos;
     }
@@ -92,18 +98,18 @@ public class PedidoService {
     public Optional<Pedido> findFullPedido(Long idPedido){
         return pedidoRepository.findPedidoByIdWithPedidoItemsAndUsuario(idPedido);
     }
-    private void updadePedido(Pedido pedido) throws Exception{
+    private void updadePedido(Pedido pedido) {
         if(pedidoRepository.findById(pedido.getId()).isPresent()){
             //to-do implementar update em Usuario
         } else {
-            throw new Exception("Pedido não encontrado");
+            throw new PedidoExCustom(PedidoEnumEx.PEDIDO_NAO_ENCONTRADO);
         }
     }
-    public void deletarPedido(Pedido pedido) throws Exception{
+    public void deletarPedido(Pedido pedido) {
         if(pedidoRepository.findById(pedido.getId()).isPresent()){
             pedidoRepository.delete(pedido);
         } else {
-            throw new Exception("Usuario não encontrado");
+            throw new PedidoExCustom(PedidoEnumEx.PEDIDO_NAO_ENCONTRADO);
         }
     }
 

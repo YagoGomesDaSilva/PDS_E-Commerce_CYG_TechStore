@@ -2,9 +2,9 @@ package com.ufrn.imd.ecommerce.error.exceptions;
 
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 
-public class UsuarioExCustom extends Exception {
+public class UsuarioExCustom  extends RuntimeException {
 
-    public UsuarioExCustom(UsuarioEnumEx usuarioNaoEncontrado){
+    public UsuarioExCustom(UsuarioEnumEx tipoErro){
         super();
     }
 

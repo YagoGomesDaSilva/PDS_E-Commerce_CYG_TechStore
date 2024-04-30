@@ -7,7 +7,6 @@ public enum EnderecoEnumEx {
     ENDERECO_INVALIDO_PARA_ENTREGA("O endereço especificado não é válido para entrega."),
     ERRO_SALVAR_ENDERECO("Ocorreu um erro ao salvar o endereço.");
 
-
     private String mensagem;
 
     EnderecoEnumEx(String mensagem) {
@@ -17,6 +16,5 @@ public enum EnderecoEnumEx {
     public String getMensagem() {
         return mensagem;
     }
-
 
 }

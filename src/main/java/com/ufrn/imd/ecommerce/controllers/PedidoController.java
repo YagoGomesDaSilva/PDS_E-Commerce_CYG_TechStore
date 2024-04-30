@@ -20,20 +20,20 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pedido save( @RequestBody PedidoDTO dto ) throws Exception {
+    public Pedido save( @RequestBody PedidoDTO dto )  {
         Pedido pedido = pedidoService.createPedido(dto);
         return pedido;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Pedido> findAll() throws Exception {
+    public List<Pedido> findAll() {
         return pedidoService.findPedidos();
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Pedido> findFullById(@RequestParam Long id) throws Exception {
+    public Optional<Pedido> findFullById(@RequestParam Long id) {
         return pedidoService.findFullPedido(id);
     }
 
