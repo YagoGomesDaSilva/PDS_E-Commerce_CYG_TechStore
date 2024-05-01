@@ -42,8 +42,9 @@ public class Produto {
     private List<Imagem> imagems;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> categorias;
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private  List<Estoque> estoques;
+    @ManyToOne
+    @JoinColumn(name = "estoque_id")
+    private Estoque estoque; // Relacionamento com Estoque
 
     @OneToMany(mappedBy = "produto")
     private Set<PedidoItem> pedidoItems;
@@ -52,7 +53,7 @@ public class Produto {
     }
 
 
-    public Produto(String nome, String descricao, BigDecimal valorTotal, String marca, String observacao, Anunciante anunciante, Anuncio anuncio, List<Imagem> imagems, List<Categoria> categorias, List<Estoque> estoques, Set<PedidoItem> pedidoItems) {
+    public Produto(String nome, String descricao, BigDecimal valorTotal, String marca, String observacao, Anunciante anunciante, Anuncio anuncio, List<Imagem> imagems, List<Categoria> categorias, Estoque estoque, Set<PedidoItem> pedidoItems) {
         this.nome = nome;
         this.descricao = descricao;
         this.valorTotal = valorTotal;
@@ -62,7 +63,7 @@ public class Produto {
         this.anuncio = anuncio;
         this.imagems = imagems;
         this.categorias = categorias;
-        this.estoques = estoques;
+        this.estoque = estoque;
         this.pedidoItems = pedidoItems;
     }
 
@@ -146,12 +147,12 @@ public class Produto {
         this.categorias = categorias;
     }
 
-    public List<Estoque> getEstoques() {
-        return estoques;
+    public Estoque getEstoque() {
+        return estoque;
     }
 
-    public void setEstoques(List<Estoque> estoques) {
-        this.estoques = estoques;
+    public void setEstoque(List<Estoque> estoques) {
+        this.estoque = estoque;
     }
 
     public Set<PedidoItem> getPedidoItems() {
@@ -167,11 +168,11 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(descricao, produto.descricao) && Objects.equals(valorTotal, produto.valorTotal) && Objects.equals(marca, produto.marca) && Objects.equals(observacao, produto.observacao) && Objects.equals(anunciante, produto.anunciante) && Objects.equals(anuncio, produto.anuncio) && Objects.equals(imagems, produto.imagems) && Objects.equals(categorias, produto.categorias) && Objects.equals(estoques, produto.estoques) && Objects.equals(pedidoItems, produto.pedidoItems);
+        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(descricao, produto.descricao) && Objects.equals(valorTotal, produto.valorTotal) && Objects.equals(marca, produto.marca) && Objects.equals(observacao, produto.observacao) && Objects.equals(anunciante, produto.anunciante) && Objects.equals(anuncio, produto.anuncio) && Objects.equals(imagems, produto.imagems) && Objects.equals(categorias, produto.categorias) && Objects.equals(estoque, produto.estoque) && Objects.equals(pedidoItems, produto.pedidoItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, valorTotal, marca, observacao, anunciante, anuncio, imagems, categorias, estoques, pedidoItems);
+        return Objects.hash(id, nome, descricao, valorTotal, marca, observacao, anunciante, anuncio, imagems, categorias, estoque, pedidoItems);
     }
 }

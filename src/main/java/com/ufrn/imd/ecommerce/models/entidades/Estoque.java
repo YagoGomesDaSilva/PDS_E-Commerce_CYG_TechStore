@@ -21,24 +21,23 @@ public class Estoque {
 
     @OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MovimentacaoEstoque> movimentacoesEstoque;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "anunciante_id")
     private Anunciante anunciante;
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
+    @OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Produto> produtos; // Relacionamento com Produto
 
     public Estoque() {
 
     }
 
-    public Estoque(String numDocumento, Integer quantidade, String localEstoque, List<MovimentacaoEstoque> movimentacoesEstoque, Anunciante anunciante, Produto produto) {
+    public Estoque(String numDocumento, Integer quantidade, String localEstoque, List<MovimentacaoEstoque> movimentacoesEstoque, Anunciante anunciante, List<Produto> produtos) {
         this.numDocumento = numDocumento;
         this.quantidade = quantidade;
         this.localEstoque = localEstoque;
         this.movimentacoesEstoque = movimentacoesEstoque;
         this.anunciante = anunciante;
-        this.produto = produto;
+        this.produtos = produtos;
     }
 
     public Long getId() {
@@ -89,12 +88,12 @@ public class Estoque {
         this.anunciante = anunciante;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     @Override
@@ -102,11 +101,11 @@ public class Estoque {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Estoque estoque = (Estoque) o;
-        return Objects.equals(id, estoque.id) && Objects.equals(numDocumento, estoque.numDocumento) && Objects.equals(quantidade, estoque.quantidade) && Objects.equals(localEstoque, estoque.localEstoque) && Objects.equals(movimentacoesEstoque, estoque.movimentacoesEstoque) && Objects.equals(anunciante, estoque.anunciante) && Objects.equals(produto, estoque.produto);
+        return Objects.equals(id, estoque.id) && Objects.equals(numDocumento, estoque.numDocumento) && Objects.equals(quantidade, estoque.quantidade) && Objects.equals(localEstoque, estoque.localEstoque) && Objects.equals(movimentacoesEstoque, estoque.movimentacoesEstoque) && Objects.equals(anunciante, estoque.anunciante) && Objects.equals(produtos, estoque.produtos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numDocumento, quantidade, localEstoque, movimentacoesEstoque, anunciante, produto);
+        return Objects.hash(id, numDocumento, quantidade, localEstoque, movimentacoesEstoque, anunciante, produtos);
     }
 }
