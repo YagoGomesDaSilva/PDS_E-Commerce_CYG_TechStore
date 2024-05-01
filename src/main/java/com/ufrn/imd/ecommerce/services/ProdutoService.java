@@ -40,9 +40,9 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public void updateProduto(Produto produto)  {
+    public Produto updateProduto(Produto produto)  {
         if(produtoRepository.findById(produto.getId()).isPresent()){
-            //to-do implementar update em produto
+            return produtoRepository.save(produto);
         } else {
             throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);
         }

@@ -1,13 +1,13 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
+import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Imagem;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.DTO.ProdutoImagemDTO;
 import com.ufrn.imd.ecommerce.services.ImagemService;
 import com.ufrn.imd.ecommerce.services.ProdutoService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +18,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
+@RequestMapping("/produto")
 public class ProdutoController {
 
     private final ProdutoService produtoService;
@@ -28,6 +29,69 @@ public class ProdutoController {
         this.imagemService = imagemService;
     }
 
+    @GetMapping("/{idProduto}")
+    public Produto getProduto(@PathVariable Long idProduto) {
+        Optional<Produto> produto = produtoService.findProduto(idProduto);
+        produto.ifPresent(p -> p.setImagems(imagemService.findImagensByProduto(idProduto)));
+        return produto.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping
+    public List<Produto> getProdutos(){
+        List<Produto> produtos = produtoService.findProdutos();
+        produtos.forEach(p -> p.setImagems(imagemService.findImagensByProduto(p.getId())));
+        return produtos;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Produto createProduto(@RequestBody ProdutoImagemDTO produtoImagemDTO) {
+        try {
+            produtoService.createProduto(produtoImagemDTO.getProduto());
+
+            Imagem imagem = produtoImagemDTO.getImagem();
+            imagem.setProduto(produtoImagemDTO.getProduto());
+            imagemService.saveImage(imagem);
+
+            Optional<Produto> produto = produtoService.findProduto(produtoImagemDTO.getProduto().getId());
+
+            if (produto.isPresent()){
+                return produto.get();
+            }
+            else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Produto updateProduto(@RequestBody Produto produto) {
+        try {
+            return produtoService.updateProduto(produto);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        produtoService
+                .findProduto(id)
+                .map( p -> {
+                    produtoService.deletarProduto(p);
+                    return Void.TYPE;
+                }).orElseThrow( () ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
+    }
+
+
+    /*
     @GetMapping(value = "/produto")
     public ResponseEntity<?> getProduto(@RequestParam(value = "idProduto") Long idProduto){
         try{
@@ -77,6 +141,8 @@ public class ProdutoController {
         }
     }
 
+
+*/
     @PostMapping
     @ResponseStatus(CREATED)
     public Produto save( @RequestBody Produto produto ){
@@ -98,18 +164,6 @@ public class ProdutoController {
                                 ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        produtoService
-                .findProduto(id)
-                .map( p -> {
-                        produtoService.deletarProduto(p);
-                    return Void.TYPE;
-                }).orElseThrow( () ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
-    }
 
     @GetMapping("{id}")
     public Produto getById(@PathVariable Long id) {
