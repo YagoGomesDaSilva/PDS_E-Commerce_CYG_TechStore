@@ -1,9 +1,11 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.List;
 public class AnuncianteService {
 
     private final AnuncianteRepository anuncianteRepository;
+    private final TokenService tokenService;
 
-    public AnuncianteService(AnuncianteRepository anuncianteRepository) {
+    public AnuncianteService(AnuncianteRepository anuncianteRepository, TokenService tokenService) {
         this.anuncianteRepository = anuncianteRepository;
+        this.tokenService = tokenService;
     }
 
     public Anunciante findAnunciante(Long idAnunciante) {
@@ -54,5 +58,7 @@ public class AnuncianteService {
     }
 
 
-
+    public Anunciante findByEmail(HttpServletRequest request) {
+        return anuncianteRepository.findByEmail(tokenService.getUsername(tokenService.resolveToken(request)));
+    }
 }

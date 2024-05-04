@@ -142,36 +142,36 @@ public class ProdutoController {
     }
 
 
-*/
-    @PostMapping
-    @ResponseStatus(CREATED)
-    public Produto save( @RequestBody Produto produto ){
-        return produtoService.createProduto(produto);
-    }
-
-
-    @PutMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
-    public void update( @PathVariable Long id, @RequestBody Produto produto )  {
-        produtoService
-                .findProduto(id)
-                .map( p -> {
-                    produto.setId(p.getId());
-                        produtoService.updateProduto(produto);
-                    return produto;
-                }).orElseThrow( () ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
-    }
-
-
-    @GetMapping("{id}")
-    public Produto getById(@PathVariable Long id) {
-        return produtoService
-                .findProduto(id)
-                .orElseThrow( () ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
-    }
+//*/
+//    @PostMapping
+//    @ResponseStatus(CREATED)
+//    public Produto save( @RequestBody Produto produto ){
+//        return produtoService.createProduto(produto);
+//    }
+//
+//
+//    @PutMapping("{id}")
+//    @ResponseStatus(NO_CONTENT)
+//    public void update( @PathVariable Long id, @RequestBody Produto produto )  {
+//        produtoService
+//                .findProduto(id)
+//                .map( p -> {
+//                    produto.setId(p.getId());
+//                        produtoService.updateProduto(produto);
+//                    return produto;
+//                }).orElseThrow( () ->
+//                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+//                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
+//    }
+//
+//
+//    @GetMapping("{id}")
+//    public Produto getById(@PathVariable Long id) {
+//        return produtoService
+//                .findProduto(id)
+//                .orElseThrow( () ->
+//                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+//                                ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO.getMensagem()));
+//    }
 
 }

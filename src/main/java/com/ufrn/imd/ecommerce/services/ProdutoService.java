@@ -5,6 +5,7 @@ import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,4 +56,7 @@ public class ProdutoService {
             throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);        }
     }
 
+    public Produto findProdutoByAnuncio(Long idAnuncio) {
+        return new Produto();
+    }
 }

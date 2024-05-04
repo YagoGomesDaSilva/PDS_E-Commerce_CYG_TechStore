@@ -6,6 +6,7 @@ public enum AnuncioEnumEx {
     ANUNCIO_EXPIRADO("O anúncio especificado está expirado."),
     LIMITE_ANUNCIOS_EXCEDIDO("O limite máximo de anúncios foi excedido."),
     ERRO_PUBLICAR_ANUNCIO("Ocorreu um erro ao publicar o anúncio."),
+    NENHUM_ANUNCIO_ENCONTRADO("No momento não há nenhum anúncio cadastrado"),
     ANUNCIO_DESATIVADO("O anúncio está desativado.");
 
     private String mensagem;
