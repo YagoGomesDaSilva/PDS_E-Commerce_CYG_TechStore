@@ -52,7 +52,6 @@ public class Produto {
     public Produto() {
     }
 
-
     public Produto(String nome, String descricao, BigDecimal valorTotal, String marca, String observacao, Anunciante anunciante, Anuncio anuncio, List<Imagem> imagems, List<Categoria> categorias, Estoque estoque, Set<PedidoItem> pedidoItems) {
         this.nome = nome;
         this.descricao = descricao;

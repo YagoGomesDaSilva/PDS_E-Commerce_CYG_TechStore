@@ -31,7 +31,7 @@ public class PedidoController {
         return pedidoService.findPedidos();
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Pedido> findFullById(@RequestParam Long id) {
         return pedidoService.findFullPedido(id);

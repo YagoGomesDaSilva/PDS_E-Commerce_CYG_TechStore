@@ -49,16 +49,13 @@ public class TokenService {
         }
     }
 
-    public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
-    }
-
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        String authHeader = req.getHeader("Authorization");
+        if (authHeader == null) {
+            return null;
         }
-        return null;
+
+        return authHeader.replace("Bearer", "");
     }
 
     private Instant generateExpirationDate(){

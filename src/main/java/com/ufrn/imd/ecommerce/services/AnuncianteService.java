@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.config.SecurityFilter;
 import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
@@ -15,10 +16,12 @@ public class AnuncianteService {
 
     private final AnuncianteRepository anuncianteRepository;
     private final TokenService tokenService;
+    private final SecurityFilter securityFilter;
 
-    public AnuncianteService(AnuncianteRepository anuncianteRepository, TokenService tokenService) {
+    public AnuncianteService(AnuncianteRepository anuncianteRepository, TokenService tokenService, SecurityFilter securityFilter) {
         this.anuncianteRepository = anuncianteRepository;
         this.tokenService = tokenService;
+        this.securityFilter = securityFilter;
     }
 
     public Anunciante findAnunciante(Long idAnunciante) {
@@ -59,6 +62,9 @@ public class AnuncianteService {
 
 
     public Anunciante findByEmail(HttpServletRequest request) {
-        return anuncianteRepository.findByEmail(tokenService.getUsername(tokenService.resolveToken(request)));
+        var token = tokenService.resolveToken(request);
+        var user = tokenService.validateToken(token);
+        var anunciante = anuncianteRepository.findByEmail(user);
+        return anunciante;
     }
 }

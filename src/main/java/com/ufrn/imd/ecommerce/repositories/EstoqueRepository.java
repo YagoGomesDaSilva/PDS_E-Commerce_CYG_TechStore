@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
 
     // Consulta para buscar todos os registros de Estoque com os relacionamentos carregados de forma ansiosa
-    @Query("SELECT DISTINCT e FROM Estoque e LEFT JOIN FETCH e.movimentacoesEstoque LEFT JOIN FETCH e.anunciante LEFT JOIN FETCH e.produto")
+    @Query("SELECT DISTINCT e FROM Estoque e LEFT JOIN FETCH e.movimentacoesEstoque LEFT JOIN FETCH e.anunciante LEFT JOIN FETCH e.produtos")
     List<Estoque> findAllEstoquesWithDetails();
 
     // Consulta para buscar um registro de Estoque pelo ID com os relacionamentos carregados de forma ansiosa
-    @Query("SELECT DISTINCT e FROM Estoque e LEFT JOIN FETCH e.movimentacoesEstoque LEFT JOIN FETCH e.anunciante LEFT JOIN FETCH e.produto WHERE e.id = :estoqueId")
+    @Query("SELECT DISTINCT e FROM Estoque e LEFT JOIN FETCH e.movimentacoesEstoque LEFT JOIN FETCH e.anunciante LEFT JOIN FETCH e.produtos WHERE e.id = :estoqueId")
     Optional<Estoque> findEstoqueByIdWithDetails(@Param("estoqueId") Long estoqueId);
 
 

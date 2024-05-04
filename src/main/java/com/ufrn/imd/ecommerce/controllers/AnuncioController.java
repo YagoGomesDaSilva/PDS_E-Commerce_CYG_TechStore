@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("anuncio")
+@RequestMapping("/anuncio")
 public class AnuncioController {
 
     private final ProdutoService produtoService;

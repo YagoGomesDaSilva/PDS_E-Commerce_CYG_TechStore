@@ -53,7 +53,8 @@ public class ProdutoService {
         if(produtoRepository.findById(produto.getId()).isPresent()){
             produtoRepository.delete(produto);
         } else {
-            throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);        }
+            throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);
+        }
     }
 
     public Produto findProdutoByAnuncio(Long idAnuncio) {
