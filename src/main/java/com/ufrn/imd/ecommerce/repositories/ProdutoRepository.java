@@ -18,13 +18,13 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.categorias")
     List<Produto> findAllProdutosWithCategorias();
 
-    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.estoque")
+    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.estoques")
     List<Produto> findAllProdutosWithEstoques();
 
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.pedidoItems")
     List<Produto> findAllProdutosWithPedidoItems();
 
-    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems JOIN FETCH p.categorias JOIN FETCH p.estoque JOIN FETCH p.pedidoItems")
+    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems JOIN FETCH p.categorias JOIN FETCH p.estoques JOIN FETCH p.pedidoItems")
     List<Produto> findAllProdutosWithAllAssociations();
 
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems WHERE p.id = :produtoId")
@@ -33,13 +33,13 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.categorias WHERE p.id = :produtoId")
     Optional<Produto> findProdutoByIdWithCategorias(@Param("produtoId") Long produtoId);
 
-    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.estoque WHERE p.id = :produtoId")
+    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.estoques WHERE p.id = :produtoId")
     Optional<Produto> findProdutoByIdWithEstoques(@Param("produtoId") Long produtoId);
 
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.pedidoItems WHERE p.id = :produtoId")
     Optional<Produto> findProdutoByIdWithPedidoItems(@Param("produtoId") Long produtoId);
 
-    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems JOIN FETCH p.categorias JOIN FETCH p.estoque JOIN FETCH p.pedidoItems WHERE p.id = :produtoId")
+    @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems JOIN FETCH p.categorias JOIN FETCH p.estoques JOIN FETCH p.pedidoItems WHERE p.id = :produtoId")
     Optional<Produto> findProdutoByIdWithAllAssociations(@Param("produtoId") Long produtoId);
 
 

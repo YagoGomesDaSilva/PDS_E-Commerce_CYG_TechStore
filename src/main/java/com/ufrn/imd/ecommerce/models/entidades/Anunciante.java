@@ -22,8 +22,8 @@ public class Anunciante extends UsuarioAbstrato{
     private List<Anuncio> anuncios;
     @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private  List<Produto> produtos;
-    @OneToOne(mappedBy = "anunciante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Estoque estoque;
+    @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Estoque> estoques;
 
     public Anunciante() {
         super();
@@ -34,12 +34,12 @@ public class Anunciante extends UsuarioAbstrato{
         this.documento = documento;
     }
 
-    public Anunciante(String nome, String email, String senha, String numeroTelefone, boolean tipo, String token, BigDecimal credito, String documento, List<Anuncio> anuncios, List<Produto> produtos, Estoque estoque) {
+    public Anunciante(String nome, String email, String senha, String numeroTelefone, boolean tipo, String token, BigDecimal credito, String documento, List<Anuncio> anuncios, List<Produto> produtos, List<Estoque> estoques) {
         super(nome, email, senha, numeroTelefone, tipo, token, credito);
         this.documento = documento;
         this.anuncios = anuncios;
         this.produtos = produtos;
-        this.estoque = estoque;
+        this.estoques = estoques;
     }
 
     public String getDocumento() {
@@ -66,12 +66,12 @@ public class Anunciante extends UsuarioAbstrato{
         this.produtos = produtos;
     }
 
-    public Estoque getEstoque() {
-        return estoque;
+    public List<Estoque> getEstoques() {
+        return estoques;
     }
 
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
+    public void setEstoques(List<Estoque> estoques) {
+        this.estoques = estoques;
     }
 
     public Long getId() {
@@ -84,11 +84,11 @@ public class Anunciante extends UsuarioAbstrato{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Anunciante that = (Anunciante) o;
-        return Objects.equals(documento, that.documento) && Objects.equals(anuncios, that.anuncios) && Objects.equals(produtos, that.produtos) && Objects.equals(estoque, that.estoque);
+        return Objects.equals(documento, that.documento) && Objects.equals(anuncios, that.anuncios) && Objects.equals(produtos, that.produtos) && Objects.equals(estoques, that.estoques);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), documento, anuncios, produtos, estoque);
+        return Objects.hash(super.hashCode(), documento, anuncios, produtos, estoques);
     }
 }
