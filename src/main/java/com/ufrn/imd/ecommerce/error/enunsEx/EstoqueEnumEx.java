@@ -8,7 +8,8 @@ public enum EstoqueEnumEx {
     OPERACAO_SAIDA_INVALIDA("Não há quantidade suficiente em estoque para realizar a operação de saída."),
     OPERACAO_ENTRADA_INVALIDA("A quantidade especificada para a operação de entrada de estoque é inválida."),
     ESTOQUE_MINIMO_NAO_ALCANCADO("O estoque mínimo definido para o produto não foi alcançado."),
-    ESTOQUE_MAXIMO_EXCEDIDO("O estoque máximo definido para o produto foi excedido.");
+    ESTOQUE_MAXIMO_EXCEDIDO("O estoque máximo definido para o produto foi excedido."),
+    ESTOQUE_JA_EXISTENTE("Estoque ja existe!");
     private String mensagem;
 
     EstoqueEnumEx(String mensagem) {
