@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class Imagem {
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
+    @JsonIgnore
     private Produto produto;
 
     public Imagem() {
@@ -24,6 +26,11 @@ public class Imagem {
     public Imagem(String caminhoImagem, Produto produto) {
         this.caminhoImagem = caminhoImagem;
         this.produto = produto;
+    }
+
+    public Imagem(Long idImagem, String caminhoImagem) {
+        this.idImagem = idImagem;
+        this.caminhoImagem = caminhoImagem;
     }
 
     public Long getIdImagem() {
