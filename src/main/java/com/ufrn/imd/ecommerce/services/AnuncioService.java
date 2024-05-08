@@ -40,12 +40,12 @@ public class AnuncioService {
         return anuncios;
     }
 
-    public void createAnuncio(Anuncio anuncio, HttpServletRequest request) {
+    public Anunciante createAnuncio(Anuncio anuncio, HttpServletRequest request) {
         Anunciante anunciante = anuncianteService.findByEmail(request);
         if(anunciante != null) {
             anuncio.setAnunciante(anunciante);
             anuncioRepository.save(anuncio);
-            return;
+            return anunciante;
         }
 
         throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);

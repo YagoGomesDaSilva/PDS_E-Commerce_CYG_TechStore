@@ -1,20 +1,32 @@
 package com.ufrn.imd.ecommerce.models.DTO;
 
 import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
+import com.ufrn.imd.ecommerce.models.entidades.Estoque;
 import com.ufrn.imd.ecommerce.models.entidades.Imagem;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 
+import java.util.List;
+
 public class AnuncioDTO {
 
-    private Imagem imagem;
+    private List<Imagem> imagem;
     private Produto produto;
     private Anuncio anuncio;
+    private Estoque estoque;
 
-    public Imagem getImagem() {
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
+
+    public List<Imagem> getImagem() {
         return imagem;
     }
 
-    public void setImagem(Imagem imagem) {
+    public void setImagem(List<Imagem> imagem) {
         this.imagem = imagem;
     }
 

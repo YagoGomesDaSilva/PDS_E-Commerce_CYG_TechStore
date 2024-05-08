@@ -3,9 +3,12 @@ package com.ufrn.imd.ecommerce.controllers;
 import com.ufrn.imd.ecommerce.error.exceptions.AnuncioExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.DTO.AnuncioDTO;
+import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
 import com.ufrn.imd.ecommerce.models.entidades.Imagem;
+import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.services.AnuncioService;
+import com.ufrn.imd.ecommerce.services.EstoqueService;
 import com.ufrn.imd.ecommerce.services.ImagemService;
 import com.ufrn.imd.ecommerce.services.ProdutoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,23 +27,29 @@ public class AnuncioController {
     private final ImagemService imagemService;
     private final AnuncioService anuncioService;
 
-    public AnuncioController(ProdutoService produtoService, ImagemService imagemService, AnuncioService anuncioService) {
+    private final EstoqueService estoqueService;
+
+    public AnuncioController(ProdutoService produtoService, ImagemService imagemService, AnuncioService anuncioService,EstoqueService estoqueService) {
         this.produtoService = produtoService;
         this.imagemService = imagemService;
         this.anuncioService = anuncioService;
+        this.estoqueService = estoqueService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Anuncio create(@RequestBody AnuncioDTO anuncioDTO, HttpServletRequest request) {
         try {
-            anuncioService.createAnuncio(anuncioDTO.getAnuncio(), request);
+            Anunciante anunciante = anuncioService.createAnuncio(anuncioDTO.getAnuncio(), request);
+            Produto produto = produtoService.createProduto(anuncioDTO.getProduto());
 
-            produtoService.createProduto(anuncioDTO.getProduto());
+            estoqueService.createEstoque(anunciante.getId(),produto);
 
-            Imagem imagem = anuncioDTO.getImagem();
-            imagem.setProduto(anuncioDTO.getProduto());
-            imagemService.saveImage(imagem);
+            List<Imagem> imagens = anuncioDTO.getImagem();
+            for (Imagem imagem : imagens ) {
+                imagem.setProduto(anuncioDTO.getProduto());
+                imagemService.saveImage(imagem);
+            }
 
             Optional<Anuncio> anuncio = anuncioService.findAnuncio(anuncioDTO.getAnuncio().getId());
 
@@ -59,17 +68,18 @@ public class AnuncioController {
     }
 
     @GetMapping("/{idAnuncio}")
-    public Anuncio getProduto(@PathVariable Long idAnuncio) {
+    public AnuncioDTO getAnuncio(@PathVariable Long idAnuncio) {
         try {
-            Optional<Anuncio> anuncio = anuncioService.findAnuncio(idAnuncio);
-            anuncio.ifPresent(a -> {
-                        a.setProduto(produtoService.findProdutoByAnuncio(idAnuncio));
-                        if(a.getProduto() != null){
-                            a.getProduto().setImagems(imagemService.findImagensByProduto(a.getProduto().getId()));
-                        }
-                    }
-            );
-            return anuncio.get();
+            AnuncioDTO anuncioDTO = new AnuncioDTO();
+            anuncioDTO.setAnuncio( anuncioService.findAnuncio(idAnuncio).get());
+
+            anuncioDTO.setProduto(produtoService.findProdutoByAnuncio(idAnuncio));
+            anuncioDTO.setImagem(imagemService.findImagensByProduto(anuncioDTO.getProduto().getId()));
+
+            Long anuncianteId = anuncioDTO.getAnuncio().getAnunciante().getId();
+            anuncioDTO.setEstoque(estoqueService.findEstoque(anuncianteId, anuncioDTO.getProduto()).get());
+
+            return anuncioDTO;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
