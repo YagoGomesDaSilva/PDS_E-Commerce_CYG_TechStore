@@ -42,16 +42,16 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    public void createUsuario(UsuarioConcreto usuario) throws UsuarioExCustom {
+    public UsuarioConcreto createUsuario(UsuarioConcreto usuario) throws UsuarioExCustom {
         if(usuarioRepository.findUsuarioConcretoByEmail(usuario.getEmail()) != null) {
             throw new UsuarioExCustom(UsuarioEnumEx.EMAIL_DUPLICADO);
         }
-        usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
-    public void updateUsuario(UsuarioConcreto usuario) throws UsuarioExCustom {
+    public UsuarioConcreto updateUsuario(UsuarioConcreto usuario) throws UsuarioExCustom {
         if(usuarioRepository.findById(usuario.getId()).isPresent()){
-            //to-do implementar update em Usuario
+            return usuarioRepository.save(usuario);
         } else {
             throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
         }

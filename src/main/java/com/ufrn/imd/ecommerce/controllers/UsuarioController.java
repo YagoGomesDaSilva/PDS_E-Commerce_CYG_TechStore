@@ -1,37 +1,59 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/user")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping(value = "/user")
-    public ResponseEntity<?> getUser(@RequestParam(value = "id") Long idUsuario){
+    @GetMapping("/{idUsuario}")
+    public UsuarioConcreto getUser(@PathVariable Long idUsuario){
         try{
-            UsuarioConcreto usuario = usuarioService.findUsuario(idUsuario);
-            return new ResponseEntity<>(usuario, HttpStatus.OK);
+            Optional<UsuarioConcreto> usuario = Optional.of(usuarioService.findUsuario(idUsuario));
+
+            if (usuario.isPresent()){
+                return usuario.get();
+            }
+            else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping(value = "/user")
-    public ResponseEntity<?> createUser(@RequestBody UsuarioConcreto usuario){
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UsuarioConcreto createUser(@RequestBody UsuarioConcreto usuario){
         try {
-            usuarioService.createUsuario(usuario);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return usuarioService.createUsuario(usuario);
         } catch (Exception e){
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UsuarioConcreto updateUser(@RequestBody UsuarioConcreto usuario) {
+        try {
+            return usuarioService.createUsuario(usuario);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -26,7 +26,6 @@ public class AnuncioController {
     private final ProdutoService produtoService;
     private final ImagemService imagemService;
     private final AnuncioService anuncioService;
-
     private final EstoqueService estoqueService;
 
     public AnuncioController(ProdutoService produtoService, ImagemService imagemService, AnuncioService anuncioService,EstoqueService estoqueService) {
