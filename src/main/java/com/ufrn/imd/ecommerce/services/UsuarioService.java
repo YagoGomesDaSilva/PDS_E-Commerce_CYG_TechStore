@@ -1,9 +1,11 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final TokenService tokenService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, TokenService tokenService) {
         this.usuarioRepository = usuarioRepository;
+        this.tokenService = tokenService;
     }
 
     public UsuarioConcreto findUsuario(Long idUsuario) throws UsuarioExCustom {
@@ -63,5 +67,11 @@ public class UsuarioService {
         } else {
             throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
         }
+    }
+
+    public UsuarioConcreto findUsuarioByToken(HttpServletRequest request) {
+        var token = tokenService.resolveToken(request);
+        var user = tokenService.validateToken(token);
+        return usuarioRepository.findUsuarioConcretoByEmail(user);
     }
 }
