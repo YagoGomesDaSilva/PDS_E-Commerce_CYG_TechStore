@@ -1,3 +1,5 @@
+const token = localStorage.getItem('token');
+
 // products.js  
   function getProducts() {
     fetch('http://localhost:8080/produtos')
@@ -34,6 +36,10 @@
             productContainer.appendChild(productWrapper);
           });
       })
+  }
+
+  function redirectCreateAnuncio() {
+    window.location.href = '/anunciante/cadastrarAnuncio.html';
   }
   
   // Call the function to insert products when the page loads

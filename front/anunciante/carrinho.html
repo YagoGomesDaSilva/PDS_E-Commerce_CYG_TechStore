@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CYG-TechStore</title>
-    <link rel="stylesheet" href="../styles/style.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu carrinho</title>
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
     <div class="wrapper">
@@ -20,9 +21,7 @@
     
                 <nav class="navegacao col-4">
                     <ul class=>
-                        <li><a href="index.html">Home </a></li>|
-                        <li><a href="login.html"> Login </a></li>|
-                        <li><a href="cadastrarUsuario.html">Cadastro </a></li>|
+                        <li><a href="index.html"> Home </a></li>|
                         <li><a href="areacliente.html">Meus Pedidos</a></li>|
                         <li><a href="carrinho.html">Carrinho</a></li>
                     </ul>
@@ -30,22 +29,25 @@
             </div>
         </header>
     
-        <div class="login-content">
-            <div class="formulario">
-                <form id="formLogin">
-                    <label for="email">Email: </label>
-                    <input class="tag-form" type="email" name="email" id="email">
-                    <br>
-                    <br>
-                    <label for="senha">Senha: </label>
-                    <input class="tag-form" type="password" name="senha" id="senha">
-                    <br>
-                    <br>
-                    <button type="button" class="button-submit" onclick="login()">Entrar</button>
-                </form>
+        <main class="carrinho">
+            <h1>Carrinho de compras</h1>
+            <div class="itens-carrinho">
+                <h3>Mouse Gamer</h3>
             </div>
-            <p>Não possui conta? <a href="cadastrarUsuario.html">Cadastrar-se</a></p>
-        </div>
+            <div class="acoes">
+                <p>
+                    <strong>Total: </strong>
+                    <span>R$100,00</span>
+                </p>
+                <p>
+                    <strong>Sua carteira: </strong>
+                    <span>R$0,00</span>
+                </p>
+                <button>Finalizar compra</button>
+                <button>Limpar carrinho</button>
+            </div>
+            
+        </main>
     
         <footer>
             <p>&copy; Projeto feito por Carlos Eduardo, Gabriel Alves, Luiz Augusto e Yago Gomes. Todos os direitos reservados.</p>
@@ -56,6 +58,5 @@
             </nav>
         </footer>
     </div>
-    <script src="../scripts/login.js"></script>
 </body>
 </html>

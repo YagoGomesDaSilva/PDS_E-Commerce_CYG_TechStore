@@ -21,8 +21,6 @@
                 <nav class="navegacao col-4">
                     <ul class=>
                         <li><a href="index.html"> Home </a></li>|
-                        <li><a href="login.html"> Login </a></li>|
-                        <li><a href="cadastrarUsuario.html">Cadastro </a></li>|
                         <li><a href="areacliente.html">Meus Pedidos</a></li>|
                         <li><a href="carrinho.html">Carrinho</a></li>
                     </ul>
@@ -30,25 +28,43 @@
             </div>
         </header>
         
-        <div class="formulario formulario-cadastro">
-            <form id="formUsuario">
-                <label for="nomeUsuario">Nome: </label>
-                <input class="tag-form" type="text" name="nomeUsuario" id="nomeUsuario">
+        <div class="formulario-produto">
+            <form id="formProduto">
+                <label for="titulo">Título: </label>
+                <input class="tag-form" type="text" name="titulo" id="titulo">
                 <br>
                 <br>
-                <label for="email">Email: </label>
-                <input class="tag-form" type="email" name="email" id="email">
+                <label for="descricaoAnuncio">Descrição do anúncio: </label>
+                <input class="tag-form" type="text" name="descricaoAnuncio" id="descricaoAnuncio">
                 <br>
                 <br>
-                <label for="senha">Senha: </label>
-                <input class="tag-form" type="password" name="senha" id="senha">
+                <label for="nomeProduto">Nome: </label>
+                <input class="tag-form" type="text" name="nomeProduto" id="nomeProduto">
                 <br>
                 <br>
-                <label for="telefone">Telefone: </label>
-                <input class="tag-form" type="tel" name="telefone" id="telefone">
+                <label for="valor">Valor: </label>
+                <input class="tag-form" type="text" name="valor" id="valor">
                 <br>
                 <br>
-                <button type="button" class="button-submit" onclick="createUsuario()">Cadastrar</button>
+                <label for="marca">Marca: </label>
+                <input class="tag-form" type="text" name="marca" id="marca">
+                <br>
+                <br>
+                <label for="quantidade">Quantidade: </label>
+                <input class="tag-form" type="number" name="quantidade" id="quantidade">
+                <br>
+                <br>
+                <label for="descricao">Descrição do produto: </label>
+                <input class="tag-form" type="text" name="descricao" id="descricao">
+                <br>
+                <br>
+                <label for="observacao">Observação: </label>
+                <input class="tag-form" type="text" name="observacao" id="observacao">
+                <br>
+                <br>
+                <label for="images">Imagens: </label>
+                <input type="file" id="imageUpload" name="images" accept="image/*" multiple>
+                <button type="button" class="button-submit"  onclick="createProduto()">Cadastrar</button>
             </form>
         </div>
     

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CYG-TechStore</title>
-    <link rel="stylesheet" href="../styles/style.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do cliente</title>
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
     <div class="wrapper">
@@ -20,9 +21,7 @@
     
                 <nav class="navegacao col-4">
                     <ul class=>
-                        <li><a href="index.html">Home </a></li>|
-                        <li><a href="login.html"> Login </a></li>|
-                        <li><a href="cadastrarUsuario.html">Cadastro </a></li>|
+                        <li><a href="index.html"> Home </a></li>|
                         <li><a href="areacliente.html">Meus Pedidos</a></li>|
                         <li><a href="carrinho.html">Carrinho</a></li>
                     </ul>
@@ -30,22 +29,25 @@
             </div>
         </header>
     
-        <div class="login-content">
-            <div class="formulario">
-                <form id="formLogin">
-                    <label for="email">Email: </label>
-                    <input class="tag-form" type="email" name="email" id="email">
-                    <br>
-                    <br>
-                    <label for="senha">Senha: </label>
-                    <input class="tag-form" type="password" name="senha" id="senha">
-                    <br>
-                    <br>
-                    <button type="button" class="button-submit" onclick="login()">Entrar</button>
-                </form>
-            </div>
-            <p>Não possui conta? <a href="cadastrarUsuario.html">Cadastrar-se</a></p>
-        </div>
+        <main class="client-area">
+            <h1>Bem vindo, Cliente!</h1>
+            <nav class="cliente-navagacao">
+            <ul>
+                <li>
+                    Favoritos
+                </li>
+                <li>
+                    Histórico de compras
+                </li>
+                <li>
+                    Sua Carteira
+                </li>
+                <li onclick="redirectCreateAnuncio()">
+                    Criar Anuncio
+                </li>
+            </ul>
+            </nav>
+        </main>
     
         <footer>
             <p>&copy; Projeto feito por Carlos Eduardo, Gabriel Alves, Luiz Augusto e Yago Gomes. Todos os direitos reservados.</p>
@@ -56,6 +58,6 @@
             </nav>
         </footer>
     </div>
-    <script src="../scripts/login.js"></script>
+    <script src="../scripts/script.js"></script>
 </body>
 </html>
