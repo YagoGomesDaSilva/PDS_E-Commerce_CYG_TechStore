@@ -26,7 +26,7 @@ public class AnuncianteController {
     @ResponseStatus(HttpStatus.CREATED)
     public Anunciante create(@RequestBody Anunciante anunciante, HttpServletRequest request) {
         UsuarioConcreto usuario = usuarioService.findUsuarioByToken(request);
-        anuncianteService.createAnunciante(anunciante);
+        anuncianteService.createAnunciante(anunciante, usuario);
         return anunciante;
     }
 }

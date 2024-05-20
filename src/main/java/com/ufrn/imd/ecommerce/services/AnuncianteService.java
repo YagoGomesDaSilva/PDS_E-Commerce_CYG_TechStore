@@ -5,6 +5,7 @@ import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
+import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,9 @@ public class AnuncianteService {
         return anunciantes;
     }
 
-    public void createAnunciante(Anunciante anunciante) {
-        // to-do validações para criação do Anunciante;
+    public void createAnunciante(Anunciante anunciante, UsuarioConcreto usuario) {
+        anunciante.setNome(usuario.getNome());
+        anunciante.setEmail(usuario.getEmail());
         anuncianteRepository.save(anunciante);
     }
 
