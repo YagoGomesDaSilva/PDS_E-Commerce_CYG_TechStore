@@ -50,9 +50,9 @@ public class EstoqueService {
         return Optional.of(estoqueRepository.save(estoque));
     }
 
-    public Optional<Estoque> createEstoque(Long anuncianteId, Produto produto){
+    public Optional<Estoque> createEstoque(Estoque estoqueDTO, Long anuncianteId, Produto produto){
 
-        Optional<Anunciante> anuncianteOpc = anuncianteRepository.findAnuncianteByIdWithDetails(anuncianteId);
+        Optional<Anunciante> anuncianteOpc = anuncianteRepository.findAnuncianteById(anuncianteId);
         Anunciante anunciante = anuncianteOpc.orElseThrow(() -> new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO));
 
         List<Estoque> estoques = anunciante.getEstoques();
@@ -64,6 +64,7 @@ public class EstoqueService {
         Estoque estoque = new Estoque();
         estoque.setAnunciante(anunciante);
         estoque.setProduto(produto);
+        estoque.setQuantidade(estoqueDTO.getQuantidade());
         return Optional.of(estoqueRepository.save(estoque));
     }
 

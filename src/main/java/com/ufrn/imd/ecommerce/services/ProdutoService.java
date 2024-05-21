@@ -3,6 +3,8 @@ package com.ufrn.imd.ecommerce.services;
 import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
+import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
+import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import org.springframework.security.core.parameters.P;
@@ -36,8 +38,8 @@ public class ProdutoService {
         return  produtos;
     }
 
-    public Produto createProduto(Produto produto) {
-        //to-do validações para criação do produto
+    public Produto createProduto(Produto produto, Anunciante anunciante) {
+        produto.setAnunciante(anunciante);
         return produtoRepository.save(produto);
     }
 
@@ -59,5 +61,10 @@ public class ProdutoService {
 
     public Produto findProdutoByAnuncio(Long idAnuncio) {
         return new Produto();
+    }
+
+    public void addAnuncio(Produto produto, Anuncio anuncio) {
+        produto.setAnuncio(anuncio);
+        produtoRepository.save(produto);
     }
 }

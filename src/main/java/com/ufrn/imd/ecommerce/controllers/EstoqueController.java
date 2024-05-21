@@ -19,10 +19,10 @@ public class EstoqueController {
         this.estoqueService = estoqueService;
     }
 
-    @PostMapping("/{anuncianteId}")
-    public Estoque createEstoque(@PathVariable Long anuncianteId, @RequestBody Produto produto) {
-        return estoqueService.createEstoque(anuncianteId, produto).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-    }
+//    @PostMapping("/{anuncianteId}")
+//    public Estoque createEstoque(@PathVariable Long anuncianteId, @RequestBody Produto produto) {
+//        return estoqueService.createEstoque(anuncianteId, produto).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+//    }
 
     @PutMapping("/{anuncianteId}")
     public Estoque updateEstoque(@PathVariable Long anuncianteId, @RequestBody Produto produto, @RequestParam int quantidade) {

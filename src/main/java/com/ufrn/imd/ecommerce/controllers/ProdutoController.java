@@ -43,29 +43,29 @@ public class ProdutoController {
         return produtos;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Produto createProduto(@RequestBody ProdutoImagemDTO produtoImagemDTO) {
-        try {
-            produtoService.createProduto(produtoImagemDTO.getProduto());
-
-            Imagem imagem = produtoImagemDTO.getImagem();
-            imagem.setProduto(produtoImagemDTO.getProduto());
-            imagemService.saveImage(imagem);
-
-            Optional<Produto> produto = produtoService.findProduto(produtoImagemDTO.getProduto().getId());
-
-            if (produto.isPresent()){
-                return produto.get();
-            }
-            else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Produto createProduto(@RequestBody ProdutoImagemDTO produtoImagemDTO) {
+//        try {
+//            produtoService.createProduto(produtoImagemDTO.getProduto());
+//
+//            Imagem imagem = produtoImagemDTO.getImagem();
+//            imagem.setProduto(produtoImagemDTO.getProduto());
+//            imagemService.saveImage(imagem);
+//
+//            Optional<Produto> produto = produtoService.findProduto(produtoImagemDTO.getProduto().getId());
+//
+//            if (produto.isPresent()){
+//                return produto.get();
+//            }
+//            else {
+//                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//            }
+//
+//        } catch (Exception e) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,9 +24,11 @@ public class Estoque {
     private List<MovimentacaoEstoque> movimentacoesEstoque;
     @ManyToOne
     @JoinColumn(name = "anunciante_id")
+    @JsonIgnore
     private Anunciante anunciante;
     @ManyToOne
     @JoinColumn(name = "produto_id")
+    @JsonIgnore
     private Produto produto;
 
     public Estoque() {

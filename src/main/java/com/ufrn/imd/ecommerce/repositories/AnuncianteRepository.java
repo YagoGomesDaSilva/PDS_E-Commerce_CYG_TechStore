@@ -22,4 +22,6 @@ public interface AnuncianteRepository extends JpaRepository<Anunciante, Long> {
     Optional<Anunciante> findAnuncianteByIdWithDetails(@Param("anuncianteId") Long anuncianteId);
 
     Anunciante findByEmail(String email);
+
+    Optional<Anunciante> findAnuncianteById(Long anuncianteId);
 }

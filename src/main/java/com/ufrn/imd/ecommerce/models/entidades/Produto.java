@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -31,10 +32,12 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "anunciante_id")
+    @JsonIgnore
     private Anunciante anunciante;
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "anuncio_id", referencedColumnName = "id")
+    @JsonIgnore
     private Anuncio anuncio;
 
 
@@ -43,6 +46,7 @@ public class Produto {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> categorias;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private  List<Estoque> estoques;
 
     @OneToMany(mappedBy = "produto")
