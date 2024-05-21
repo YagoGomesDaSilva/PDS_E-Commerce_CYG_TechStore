@@ -12,7 +12,7 @@ function createProduto() {
     const formData = new FormData(form);
 
     const imageFiles = formData.getAll('images');
-    const imagePaths = imageFiles.map(file => file.name); // Supondo que o nome do arquivo seja o path
+    const imagePaths = imageFiles.map(file => file.name); 
 
     
     const produtoData = {
@@ -25,34 +25,39 @@ function createProduto() {
 
     const anuncio = {
         titulo: formData.get('titulo'),
-        descricaoAnuncio: formData.get('descricaoAnuncio'),
-    }
-    
-    const anuncioDTO = {
-        imagem : imagePaths,
-        produto : produtoData,
-        anuncio : anuncio,
-        estoque : formData.get('quantidade')
+        descricao: formData.get('descricaoAnuncio'),
     }
 
-    fetch('http://localhost:8080/produto', {
+    const imagens = imagePaths.map(path => ({
+        caminhoImagem: path
+    }));
+    
+    const anuncioDTO = {
+        imagem : imagens,
+        produto : produtoData,
+        anuncio : anuncio,
+        estoque : {
+            quantidade : formData.get('quantidade')
+        }
+    }
+
+    fetch('http://localhost:8080/anuncio', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(produtoData)
+        body: JSON.stringify(anuncioDTO)
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Erro ao cadastrar produto');
         }
         alert('Produto cadastrado com sucesso!');
-        // Redirecionar para uma rota específica, se necessário
-        // window.location.href = '/rota-especifica';
     })
     .catch(error => {
         console.error('Erro:', error);
         alert('Erro ao cadastrar produto');
     });
 }
+

@@ -16,6 +16,8 @@ public class Anunciante extends UsuarioAbstrato{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    String nomeAnunciante;
+
     @Column(columnDefinition = "VARCHAR(14)")
     String documento;
 
@@ -90,8 +92,8 @@ public class Anunciante extends UsuarioAbstrato{
         return Objects.equals(documento, that.documento) && Objects.equals(anuncios, that.anuncios) && Objects.equals(produtos, that.produtos) && Objects.equals(estoques, that.estoques);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), documento, anuncios, produtos, estoques);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(super.hashCode(), documento, anuncios, produtos, estoques);
+//    }
 }

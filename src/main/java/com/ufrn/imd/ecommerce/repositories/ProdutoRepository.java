@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.repositories;
 
+import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,5 +43,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems JOIN FETCH p.categorias JOIN FETCH p.estoques JOIN FETCH p.pedidoItems WHERE p.id = :produtoId")
     Optional<Produto> findProdutoByIdWithAllAssociations(@Param("produtoId") Long produtoId);
 
-
+    Produto findProdutoByAnuncio(Anuncio anuncio);
 }

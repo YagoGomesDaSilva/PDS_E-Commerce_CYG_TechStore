@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,17 +41,20 @@ public class AnuncioController {
         try {
             Anunciante anunciante = anuncianteService.findByEmail(request);
             Produto produto = produtoService.createProduto(anuncioDTO.getProduto(), anunciante);
-            Anuncio anuncio = anuncioService.createAnuncio(anuncioDTO.getAnuncio(), anunciante, produto);
+            Anuncio anuncio = anuncioService.createAnuncio(anuncioDTO.getAnuncio(), anunciante);
 
             produtoService.addAnuncio(produto, anuncio);
 
             estoqueService.createEstoque(anuncioDTO.getEstoque(), anunciante.getId(), produto);
 
-            List<Imagem> imagens = anuncioDTO.getImagem();
-            for (Imagem imagem : imagens ) {
+            List<Imagem> imagens = new ArrayList<>();
+            for (Imagem imagem : anuncioDTO.getImagem() ) {
                 imagem.setProduto(anuncioDTO.getProduto());
-                imagemService.saveImage(imagem);
+                imagens.add(imagemService.saveImage(imagem));
             }
+
+            produtoService.addImagens(produto, imagens);
+            anuncioService.addProduto(produto, anuncio);
 
             return anuncio;
         } catch (UsuarioExCustom e) {
@@ -82,12 +86,12 @@ public class AnuncioController {
     public List<Anuncio> getAllAnuncios() {
         try {
             List<Anuncio> anuncios = anuncioService.findAnuncios();
-            anuncios.forEach(a -> {
-                a.setProduto(produtoService.findProdutoByAnuncio(a.getId()));
-                if (a.getProduto() != null) {
-                    a.getProduto().setImagems(imagemService.findImagensByProduto(a.getProduto().getId()));
-                }
-            });
+//            anuncios.forEach(a -> {
+//                a.setProduto(produtoService.findProdutoByAnuncio(a.getId()));
+//                if (a.getProduto() != null) {
+//                    a.getProduto().setImagems(imagemService.findImagensByProduto(a.getProduto().getId()));
+//                }
+//            });
             return anuncios;
         } catch (AnuncioExCustom e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

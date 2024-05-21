@@ -174,9 +174,9 @@ public class Produto {
         return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(descricao, produto.descricao) && Objects.equals(valorTotal, produto.valorTotal) && Objects.equals(marca, produto.marca) && Objects.equals(observacao, produto.observacao) && Objects.equals(anunciante, produto.anunciante) && Objects.equals(anuncio, produto.anuncio) && Objects.equals(imagems, produto.imagems) && Objects.equals(categorias, produto.categorias) && Objects.equals(estoques, produto.estoques) && Objects.equals(pedidoItems, produto.pedidoItems);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome, descricao, valorTotal, marca, observacao, anunciante, anuncio, imagems, categorias, estoques, pedidoItems);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, nome, descricao, valorTotal, marca, observacao, anunciante, anuncio, imagems, categorias, estoques, pedidoItems);
+//    }
 }
 

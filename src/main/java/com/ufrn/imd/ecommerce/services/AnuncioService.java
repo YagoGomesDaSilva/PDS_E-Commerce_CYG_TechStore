@@ -8,6 +8,8 @@ import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.repositories.AnuncioRepository;
+import com.ufrn.imd.ecommerce.repositories.ImagemRepository;
+import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,16 @@ public class AnuncioService {
 
     private final AnuncioRepository anuncioRepository;
     private final AnuncianteService anuncianteService;
+    private final ProdutoRepository produtoRepository;
+    private final ImagemService imagemService;
+    private final ImagemRepository imagemRepository;
 
-    public AnuncioService(AnuncioRepository anuncioRepository, AnuncianteService anuncianteService) {
+    public AnuncioService(AnuncioRepository anuncioRepository, AnuncianteService anuncianteService, ProdutoRepository produtoRepository, ImagemService imagemService, ImagemRepository imagemRepository) {
         this.anuncioRepository = anuncioRepository;
         this.anuncianteService = anuncianteService;
+        this.produtoRepository = produtoRepository;
+        this.imagemService = imagemService;
+        this.imagemRepository = imagemRepository;
     }
 
     public Optional<Anuncio> findAnuncio(Long idAnuncio) throws Exception {
@@ -30,6 +38,11 @@ public class AnuncioService {
         if (anuncio == null){
             throw new AnuncioExCustom(AnuncioEnumEx.ANUNCIO_NAO_ENCONTRADO);
         }
+        Produto produto = produtoRepository.findProdutoByAnuncio(anuncio);
+
+        produto.setImagems(imagemRepository.findByProdutoId(produto.getId()));
+
+        anuncio.setProduto(produto);
         return Optional.of(anuncio);
     }
 
@@ -38,12 +51,19 @@ public class AnuncioService {
         if(anuncios.isEmpty()){
             throw new AnuncioExCustom(AnuncioEnumEx.NENHUM_ANUNCIO_ENCONTRADO);
         }
+        for (Anuncio anuncio : anuncios) {
+            Produto produto = produtoRepository.findProdutoByAnuncio(anuncio);
+            if (produto != null){
+                produto.setImagems(imagemRepository.findByProdutoId(produto.getId()));
+
+                anuncio.setProduto(produto);
+            }
+        }
         return anuncios;
     }
 
-    public Anuncio createAnuncio(Anuncio anuncio, Anunciante anunciante, Produto produto) {
+    public Anuncio createAnuncio(Anuncio anuncio, Anunciante anunciante) {
         if(anunciante != null) {
-            anuncio.setProduto(produto);
             anuncio.setAnunciante(anunciante);
             anuncioRepository.save(anuncio);
             return anuncio;
@@ -68,4 +88,8 @@ public class AnuncioService {
         }
     }
 
+    public Anuncio addProduto(Produto produto, Anuncio anuncio) {
+        anuncio.setProduto(produto);
+        return anuncioRepository.save(anuncio);
+    }
 }

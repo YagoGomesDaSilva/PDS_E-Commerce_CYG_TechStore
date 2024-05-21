@@ -22,8 +22,8 @@ function login() {
       })
       .then(token => {
           localStorage.setItem('token', token);
-          console.log('Login bem-sucedido');
+          alert('Login bem-sucedido');
           window.location.href = '/cliente/areacliente.html';
       })
-      .catch(error => console.error('Erro:', error));
+      .catch(error => alert('Erro:', error));
 }

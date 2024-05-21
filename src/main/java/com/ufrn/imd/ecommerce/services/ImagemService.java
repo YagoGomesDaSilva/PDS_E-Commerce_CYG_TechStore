@@ -16,8 +16,8 @@ public class ImagemService {
     }
 
 
-    public void saveImage(Imagem imagem) {
-        imagemRepository.save(imagem);
+    public Imagem saveImage(Imagem imagem) {
+        return imagemRepository.save(imagem);
     }
 
     public List<Imagem> findImagensByProduto(Long idProduto) {

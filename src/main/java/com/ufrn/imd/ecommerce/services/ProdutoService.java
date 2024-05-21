@@ -5,6 +5,7 @@ import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
+import com.ufrn.imd.ecommerce.models.entidades.Imagem;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import org.springframework.security.core.parameters.P;
@@ -65,6 +66,11 @@ public class ProdutoService {
 
     public void addAnuncio(Produto produto, Anuncio anuncio) {
         produto.setAnuncio(anuncio);
+        produtoRepository.save(produto);
+    }
+
+    public void addImagens(Produto produto, List<Imagem> imagens) {
+        produto.setImagems(imagens);
         produtoRepository.save(produto);
     }
 }

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área do cliente</title>
-    <link rel="stylesheet" href="../styles/style.css">
+    <title>CYG-TechStore</title>
+    <link rel="stylesheet" href="../styles/style.css"> 
 </head>
 <body>
     <div class="wrapper">
@@ -28,34 +27,20 @@
                 </nav>
             </div>
         </header>
-        <div class="">
-    
-        </div>
-    
-        <main class="client-area">
-            <h1>Bem vindo, Cliente!</h1>
-            <nav class="cliente-navagacao">
-            <ul>
-                <li>
-                    Favoritos
-                </li>
-                <li>
-                    Histórico de compras
-                </li>
-                <li onclick="redirectCreateAnunciante()">
-                    Tornar-se anunciante
-                </li>
-                <li>
-                    Sua Carteira
-                </li>
-                <li onclick="(function() { 
-                    alert('Torne-se anunciante antes de criar os seus anúncios'); 
-                    redirectCreateAnunciante(); 
-                })()">
-                    Criar Anuncio
-                </li>
-            </ul>
-            </nav>
+        
+
+        <main>
+            <div class="formulario-produto">
+                <form id="formAnunciante">
+                    <label for="documento">Documento: </label>
+                    <input class="tag-form" type="text" placeholder="CPF/CNPJ" name="documento" id="documento">
+                    <br>
+                    <br>
+                    <label for="nomeAnunciante">Nome da Loja/Anunciante: </label>
+                    <input class="tag-form" type="text" name="nomeAnunciante" id="nomeAnunciante">
+                    <button type="button" class="button-submit"  onclick="createAnunciante()">Cadastrar</button>
+                </form>
+            </div>
         </main>
     
         <footer>
@@ -67,7 +52,6 @@
             </nav>
         </footer>
     </div>
-
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/cadastro.js"></script>
 </body>
 </html>

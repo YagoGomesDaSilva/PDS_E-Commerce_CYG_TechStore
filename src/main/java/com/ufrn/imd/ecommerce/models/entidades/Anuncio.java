@@ -84,9 +84,9 @@ public class Anuncio {
         Anuncio anuncio = (Anuncio) o;
         return Objects.equals(id, anuncio.id) && Objects.equals(titulo, anuncio.titulo) && Objects.equals(descricao, anuncio.descricao) && Objects.equals(anunciante, anuncio.anunciante) && Objects.equals(produto, anuncio.produto);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, titulo, descricao, anunciante, produto);
-    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, titulo, descricao, anunciante, produto);
+//    }
 }
