@@ -1,19 +1,14 @@
 package com.ufrn.imd.ecommerce.services;
 
+import com.ufrn.imd.ecommerce.error.enunsEx.EstoqueEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.PedidoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
-import com.ufrn.imd.ecommerce.error.exceptions.PedidoExCustom;
-import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
-import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
-import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.*;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoItemDTO;
 import com.ufrn.imd.ecommerce.models.entidades.*;
-import com.ufrn.imd.ecommerce.repositories.PedidoItemRepository;
-import com.ufrn.imd.ecommerce.repositories.PedidoRepository;
-import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
-import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
+import com.ufrn.imd.ecommerce.repositories.*;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
@@ -32,11 +27,19 @@ public class PedidoService {
     private final UsuarioRepository usuarioRepository;
     private final ProdutoRepository produtoRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository, PedidoItemRepository pedidoItemRepository , UsuarioRepository usuarioRepository,ProdutoRepository produtoRepository){
+    private final EstoqueRepository estoqueRepository;
+
+    public PedidoService(PedidoRepository pedidoRepository,
+                         PedidoItemRepository pedidoItemRepository,
+                         UsuarioRepository usuarioRepository,
+                         ProdutoRepository produtoRepository,
+                         EstoqueRepository estoqueRepository){
+
         this.pedidoRepository = pedidoRepository;
         this.pedidoItemRepository = pedidoItemRepository;
         this.usuarioRepository = usuarioRepository;
         this.produtoRepository = produtoRepository;
+        this.estoqueRepository = estoqueRepository;
     }
 
     @Transactional
@@ -71,6 +74,31 @@ public class PedidoService {
                     Produto produto = produtoRepository
                             .findById(idProduto)
                             .orElseThrow(() -> new ProdutoExCustom(ProdutoEnumEx.PRODUTO_INVALIDO));
+
+                    int qtdProduto = produto.getEstoques().stream()
+                            .mapToInt(Estoque::getQuantidade).sum();
+
+                    if (qtdProduto <=  dto.getQuantidade() ) {
+                        throw new EstoqueExCustom(EstoqueEnumEx.ESTOQUE_NAO_ENCONTRADO);
+                    }
+
+                    // Diminuir a quantidade do produto no estoque
+
+                    Long quantidadeRestante = dto.getQuantidade();
+                    for (Estoque estoque : produto.getEstoques()) {
+                        int quantidadeNoEstoque = estoque.getQuantidade();
+
+                        if (quantidadeNoEstoque >= quantidadeRestante) {
+                            estoque.setQuantidade((int) (quantidadeNoEstoque - quantidadeRestante));
+                            estoqueRepository.save(estoque); // Persistir alteração no banco
+                            quantidadeRestante = 0L;
+                            break;
+                        }
+                    }
+
+                    if(quantidadeRestante>0)
+                        throw new EstoqueExCustom(EstoqueEnumEx.QUANTIDADE_INVALIDA);
+
                     PedidoItem pedidoItems = new PedidoItem();
                     pedidoItems.setQuantidade(dto.getQuantidade());
                     pedidoItems.setPedido(pedido);
