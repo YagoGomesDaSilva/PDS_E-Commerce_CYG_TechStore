@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -25,9 +26,13 @@ public class AnuncianteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Anunciante create(@RequestBody Anunciante anunciante, HttpServletRequest request) {
-        UsuarioConcreto usuario = usuarioService.findUsuarioByToken(request);
-        anuncianteService.createAnunciante(anunciante, usuario);
-        return anunciante;
+        try {
+            UsuarioConcreto usuario = usuarioService.findUsuarioByToken(request);
+            anuncianteService.createAnunciante(anunciante, usuario);
+            return anunciante;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
 

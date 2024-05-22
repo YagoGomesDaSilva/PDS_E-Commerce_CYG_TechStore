@@ -29,6 +29,9 @@ public class PedidoItem {
         this.quantidade = quantidade;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public Produto getProduto() {
         return produto;
