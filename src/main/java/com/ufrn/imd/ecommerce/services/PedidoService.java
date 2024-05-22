@@ -94,6 +94,12 @@ public class PedidoService {
                             quantidadeRestante = 0L;
                             break;
                         }
+                        else {
+                            estoque.setQuantidade(0);
+                            estoqueRepository.save(estoque); // Persistir alteração no banco
+                            quantidadeRestante -= quantidadeNoEstoque;
+                            // Continue no loop para subtrair o restante dos próximos estoques
+                        }
                     }
 
                     if(quantidadeRestante>0)
