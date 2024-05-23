@@ -43,13 +43,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido createPedido(PedidoDTO dto)  {
-        Long compradorId = dto.getCompradorId();
-
-        UsuarioConcreto usuario = usuarioRepository
-                .findById(compradorId)
-                .orElseThrow(() -> new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO));
-
+    public Pedido createPedido(PedidoDTO dto, UsuarioConcreto usuario)  {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(dto.getValorTotal());
         pedido.setData(LocalDate.now());
@@ -78,7 +72,7 @@ public class PedidoService {
                     int qtdProduto = produto.getEstoques().stream()
                             .mapToInt(Estoque::getQuantidade).sum();
 
-                    if (qtdProduto <=  dto.getQuantidade() ) {
+                    if (qtdProduto < dto.getQuantidade() ) {
                         throw new EstoqueExCustom(EstoqueEnumEx.ESTOQUE_NAO_ENCONTRADO);
                     }
 

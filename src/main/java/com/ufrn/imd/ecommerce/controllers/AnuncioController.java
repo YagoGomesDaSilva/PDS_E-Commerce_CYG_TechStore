@@ -67,15 +67,6 @@ public class AnuncioController {
     @GetMapping("/{idAnuncio}")
     public Anuncio getAnuncio(@PathVariable Long idAnuncio) {
         try {
-//            AnuncioDTO anuncioDTO = new AnuncioDTO();
-//            anuncioDTO.setAnuncio( anuncioService.findAnuncio(idAnuncio).get());
-//
-//            anuncioDTO.setProduto(produtoService.findProdutoByAnuncio(idAnuncio));
-//            anuncioDTO.setImagem(imagemService.findImagensByProduto(anuncioDTO.getProduto().getId()));
-//
-//            Long anuncianteId = anuncioDTO.getAnuncio().getAnunciante().getId();
-//            anuncioDTO.setEstoque(estoqueService.findEstoque(anuncianteId, anuncioDTO.getProduto()).get());
-
             return anuncioService.findAnuncio(idAnuncio).get();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -86,12 +77,6 @@ public class AnuncioController {
     public List<Anuncio> getAllAnuncios() {
         try {
             List<Anuncio> anuncios = anuncioService.findAnuncios();
-//            anuncios.forEach(a -> {
-//                a.setProduto(produtoService.findProdutoByAnuncio(a.getId()));
-//                if (a.getProduto() != null) {
-//                    a.getProduto().setImagems(imagemService.findImagensByProduto(a.getProduto().getId()));
-//                }
-//            });
             return anuncios;
         } catch (AnuncioExCustom e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

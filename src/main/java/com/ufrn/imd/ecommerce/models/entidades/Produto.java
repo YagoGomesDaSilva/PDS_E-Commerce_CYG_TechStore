@@ -50,6 +50,7 @@ public class Produto {
     private  List<Estoque> estoques;
 
     @OneToMany(mappedBy = "produto")
+    @JsonIgnore
     private Set<PedidoItem> pedidoItems;
 
     public Produto() {

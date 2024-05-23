@@ -1,6 +1,7 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufrn.imd.ecommerce.enums.TipoUsuario;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,7 @@ public  class UsuarioConcreto extends UsuarioAbstrato implements UserDetails {
     private List<Cartao> cartoes;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Pedido> pedidos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

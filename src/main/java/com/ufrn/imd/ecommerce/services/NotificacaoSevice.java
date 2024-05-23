@@ -19,7 +19,7 @@ public class NotificacaoSevice {
     }
 
     public void notifyUsers(Produto produto) {
-        List<ProdutoFavorito> favoritos = produtoFavoritoRepository.findByProductId(produto.getId());
+        List<ProdutoFavorito> favoritos = produtoFavoritoRepository.findByProduto(produto);
 
         for (ProdutoFavorito favorito : favoritos) {
             UsuarioConcreto user = favorito.getUsuarioConcreto();

@@ -8,17 +8,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class PedidoDTO {
-    private Long compradorId;
     private BigDecimal valorTotal;
     private List<PedidoItemDTO> items;
-
-    public Long getCompradorId() {
-        return compradorId;
-    }
-
-    public void setCompradorId(Long compradorId) {
-        this.compradorId = compradorId;
-    }
 
     public BigDecimal getValorTotal() {
         return valorTotal;

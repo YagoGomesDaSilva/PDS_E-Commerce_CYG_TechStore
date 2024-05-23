@@ -27,7 +27,7 @@ public class ProdutoFavoritoService {
         UsuarioConcreto usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Produto produto = produtoRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
 
-        if (!produtoFavoritoRepository.findByUserIdAndProductId(userId, productId).isPresent()) {
+        if (!produtoFavoritoRepository.findByUsuarioConcretoAndProduto(usuario, produto).isPresent()) {
             ProdutoFavorito favorito = new ProdutoFavorito();
             favorito.setUsuarioConcreto(usuario);
             favorito.setProduto(produto);
@@ -37,11 +37,13 @@ public class ProdutoFavoritoService {
     }
 
     public void removeFavoriteProduct(Long userId, Long productId) {
-        produtoFavoritoRepository.deleteByUserIdAndProductId(userId, productId);
+        UsuarioConcreto usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Produto produto = produtoRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        produtoFavoritoRepository.deleteByUsuarioConcretoAndProduto(usuario, produto);
     }
 
-    public List<Produto> getFavoriteProducts(Long userId) {
-        return produtoFavoritoRepository.findByUserId(userId).stream()
+    public List<Produto> getFavoriteProducts(UsuarioConcreto usuario) {
+        return produtoFavoritoRepository.findByUsuarioConcreto(usuario).stream()
                 .map(ProdutoFavorito::getProduto)
                 .collect(Collectors.toList());
     }

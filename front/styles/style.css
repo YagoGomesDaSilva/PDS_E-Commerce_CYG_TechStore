@@ -159,6 +159,34 @@ h1 a {
     justify-content: center;
 }
 
+
+.add-to-cart-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.add-to-cart-button i {
+    font-size: 1rem;
+}
+
+.cart-container {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.cart-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
 .main-content{
     display: flex;
     align-items: center;
@@ -339,6 +367,60 @@ footer a {
 footer a:hover {
     color:rgb(14, 14, 28);
 }
+
+.order-details {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.order-details h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-info {
+    margin-bottom: 20px;
+}
+
+.order-info h2 {
+    margin: 10px 0;
+}
+
+.order-info p {
+    margin: 5px 0;
+}
+
+.order-items {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.order-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item h3 {
+    margin: 5px 0;
+}
+
+.order-item p {
+    margin: 5px 0;
+}
+
+.order-item img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
 /* Responisvidade */
 
 .col-1 {width: 8.33%;}

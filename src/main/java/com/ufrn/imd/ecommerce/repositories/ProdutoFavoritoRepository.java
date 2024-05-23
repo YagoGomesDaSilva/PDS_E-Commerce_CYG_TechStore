@@ -1,15 +1,19 @@
 package com.ufrn.imd.ecommerce.repositories;
 
+import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.entidades.ProdutoFavorito;
+import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProdutoFavoritoRepository extends JpaRepository<ProdutoFavorito, Long> {
-    List<ProdutoFavorito> findByUserId(Long userId);
-    List<ProdutoFavorito> findByProductId(Long productId);
-    void deleteByUserIdAndProductId(Long userId, Long productId);
+    List<ProdutoFavorito> findByUsuarioConcreto(UsuarioConcreto usuario);
 
-    Optional<Object> findByUserIdAndProductId(Long userId, Long productId);
+    List<ProdutoFavorito> findByProduto(Produto produto);
+
+    void deleteByUsuarioConcretoAndProduto(UsuarioConcreto usuario, Produto produto);
+
+    Optional<Object> findByUsuarioConcretoAndProduto(UsuarioConcreto usuario, Produto produto);
 }
