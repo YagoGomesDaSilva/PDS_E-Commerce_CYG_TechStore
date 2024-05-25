@@ -26,7 +26,7 @@ function createUsuario() {
         .then(token => {
             localStorage.setItem('token', token);
             alert('Usuário cadastrado com sucesso!');
-            window.location.href = '/cliente/areacliente.html';
+            window.location.href = '../cliente/areacliente.html';
         })
         .catch(error => {
             console.error('Erro:', error);
@@ -58,7 +58,7 @@ function createAnunciante() {
                 throw new Error('Erro ao cadastrar anunciante');
             }
             alert('Anunciante cadastrado com sucesso!');
-            window.location.href = '/anunciante/areacliente.html';
+            window.location.href = '../anunciante/areacliente.html';
         })
         .catch(error => {
             console.error('Erro:', error);

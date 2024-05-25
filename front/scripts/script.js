@@ -73,11 +73,11 @@ function getProducts() {
 }
 
   function redirectCreateAnuncio() {
-    window.location.href = '/anunciante/cadastrarAnuncio.html';
+    window.location.href = 'cadastrarAnuncio.html';
   }
 
   function redirectCreateAnunciante() {
-    window.location.href = '/cliente/cadastroAnunciante.html';
+    window.location.href = 'cadastroAnunciante.html';
   }
   
   window.onload = function() {
