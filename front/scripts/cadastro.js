@@ -1,4 +1,3 @@
-const token = localStorage.getItem('token');
 
 function createUsuario() {
     const form = document.getElementById('formUsuario');
@@ -18,17 +17,21 @@ function createUsuario() {
         },
         body: JSON.stringify(userData)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro ao cadastrar usuário');
-        }
-        alert('Usuário cadastrado com sucesso!');
-        window.location.href = '/cliente/areacliente.html';
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao cadastrar usuário');
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao cadastrar usuário');
+            }
+            return response.text();
+        })
+        .then(token => {
+            localStorage.setItem('token', token);
+            alert('Usuário cadastrado com sucesso!');
+            window.location.href = '/cliente/areacliente.html';
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao cadastrar usuário');
+        });
 }
 
 function createAnunciante() {
@@ -40,6 +43,8 @@ function createAnunciante() {
         nomeAnunciante: formData.get('nomeAnunciante'),
     };
 
+    const token = localStorage.getItem('token');
+
     fetch('http://localhost:8080/anunciante', {
         method: 'POST',
         headers: {
@@ -48,16 +53,16 @@ function createAnunciante() {
         },
         body: JSON.stringify(userData)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro ao cadastrar anunciante');
-        }
-        alert('Anunciante cadastrado com sucesso!');
-        window.location.href = '/anunciante/areacliente.html';
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao cadastrar anunciante');
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao cadastrar anunciante');
+            }
+            alert('Anunciante cadastrado com sucesso!');
+            window.location.href = '/anunciante/areacliente.html';
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao cadastrar anunciante');
+        });
 }
 
