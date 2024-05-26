@@ -128,49 +128,57 @@ function loadCart() {
 }
 
 function sendCartToBackend() {
-  const cart = getCartAsJSON();
-  let valorTotal = 0;
-  const productQuantities = {};
-
-  cart.forEach(pedido => {
+    const cart = getCartAsJSON();
+    let valorTotal = 0;
+    const productQuantities = {};
+  
+    cart.forEach(pedido => {
       valorTotal += pedido.valorTotal;
       pedido.items.forEach(item => {
-          if (productQuantities[item.idProduto]) {
-              productQuantities[item.idProduto]++;
-          } else {
-              productQuantities[item.idProduto] = 1;
-          }
+        if (productQuantities[item.idProduto]) {
+          productQuantities[item.idProduto]++;
+        } else {
+          productQuantities[item.idProduto] = 1;
+        }
       });
-  });
-
-  const items = Object.keys(productQuantities).map(idProduto => ({
+    });
+  
+    const items = Object.keys(productQuantities).map(idProduto => ({
       produto: parseInt(idProduto),
       quantidade: productQuantities[idProduto]
-  }));
-
-  const payload = {
+    }));
+  
+    const payload = {
       valorTotal: valorTotal,
       items: items
-  };
-
-  fetch('http://localhost:8080/pedido', {
+    };
+  
+    fetch('http://localhost:8080/pedido', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(payload)
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log('Carrinho enviado com sucesso:');
-      localStorage.setItem('orderData', data); // Armazena os dados do pedido no localStorage
-      window.location.href = '/cliente/pedido.html';
-  })
-  .catch(error => {
-      console.error('Erro ao enviar o carrinho:', error);
-  });
-}
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Carrinho enviado com sucesso:', data);
+        localStorage.setItem('order', JSON.stringify(data));
+        setTimeout(() => {
+            window.location.href = './pedido.html';
+        }, 3000)
+      })
+      .catch(error => {
+        console.error('Erro ao enviar o carrinho:', error);
+      });
+  }
+  
 
 function removeFromCart(index) {
   let cart = getCartAsJSON();

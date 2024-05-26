@@ -1,4 +1,4 @@
-const orderData = JSON.parse(localStorage.getItem('orderData'));
+const orderData = JSON.parse(localStorage.getItem('order'));
 
 window.onload = function() {
     if (orderData) {

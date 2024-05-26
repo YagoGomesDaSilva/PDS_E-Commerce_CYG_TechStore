@@ -44,7 +44,7 @@
                     <p id="productObservations">Observações</p>
                     <div class="product-actions">
                         <button id="buyButton">Comprar</button>
-                        <button id="addToCartButton">Adicionar ao Carrinho</button>
+                        <button id="addToCartButton" onclick="addToCart()">Adicionar ao Carrinho</button>
                     </div>
                 </div>
             </div>
@@ -59,6 +59,12 @@
             </nav>
         </footer>
     </div>
-    <script src="../scripts/produto.js"></script>
+    <script src="../scripts/produto.js">
+        function addToCart(pedido) {
+            let cart = getCartAsJSON();
+            cart.push(pedido);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+    </script>
 </body>
 </html>

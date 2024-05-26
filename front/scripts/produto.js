@@ -1,3 +1,5 @@
+import { addToCart } from './script.js';
+
 // Obter a URL atual
 const urlParams = new URLSearchParams(window.location.search);
 

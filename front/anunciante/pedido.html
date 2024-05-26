@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu carrinho</title>
+    <title>CYG-TechStore</title>
     <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/new.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">    
 </head>
 <body>
     <div class="wrapper">
@@ -28,11 +30,14 @@
                 </nav>
             </div>
         </header>
-        <main class="main-cart-container">
-            <div class="carrinho">
-                <div id="cart" class="cart-container"></div> 
-            </div>    
+        
+        <main class="order-details">
+            <h1>Detalhes do Pedido</h1>
+            <div id="order-info" class="order-info">
+                <!-- Informações do pedido serão adicionadas dinamicamente aqui -->
+            </div>
         </main>
+    
         <footer>
             <p>&copy; Projeto feito por Carlos Eduardo, Gabriel Alves, Luiz Augusto e Yago Gomes. Todos os direitos reservados.</p>
             <nav>
@@ -42,6 +47,6 @@
             </nav>
         </footer>
     </div>
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/pedido.js"></script>
 </body>
 </html>
