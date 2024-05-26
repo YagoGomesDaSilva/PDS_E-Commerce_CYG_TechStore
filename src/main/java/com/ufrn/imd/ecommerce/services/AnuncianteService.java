@@ -63,10 +63,14 @@ public class AnuncianteService {
     }
 
 
-    public Anunciante findByEmail(HttpServletRequest request) {
+    public Anunciante findByToken(HttpServletRequest request) {
         var token = tokenService.resolveToken(request);
         var user = tokenService.validateToken(token);
         var anunciante = anuncianteRepository.findByEmail(user);
         return anunciante;
+    }
+
+    public Anunciante findByEmail(String email) {
+        return anuncianteRepository.findByEmail(email);
     }
 }

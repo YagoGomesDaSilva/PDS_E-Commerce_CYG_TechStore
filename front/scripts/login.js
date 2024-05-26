@@ -18,12 +18,12 @@ function login() {
         if (!response.ok) {
             throw new Error('Erro ao fazer login');
         }
-        return response.text();
+        return response.json();
       })
-      .then(token => {
-          localStorage.setItem('token', token);
+      .then(data => {
+          localStorage.setItem('token', data.token);
           alert('Login bem-sucedido');
-          window.location.href = '../cliente/areacliente.html';
+          window.location.href = `../${data.tipoUsuario}/areacliente.html`;
       })
       .catch(error => alert('Erro:', error));
 }

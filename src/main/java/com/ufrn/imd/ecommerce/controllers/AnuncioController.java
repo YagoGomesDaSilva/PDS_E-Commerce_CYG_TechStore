@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/anuncio")
@@ -39,7 +38,7 @@ public class AnuncioController {
     @ResponseStatus(HttpStatus.CREATED)
     public Anuncio create(@RequestBody AnuncioDTO anuncioDTO, HttpServletRequest request) {
         try {
-            Anunciante anunciante = anuncianteService.findByEmail(request);
+            Anunciante anunciante = anuncianteService.findByToken(request);
             Produto produto = produtoService.createProduto(anuncioDTO.getProduto(), anunciante);
             Anuncio anuncio = anuncioService.createAnuncio(anuncioDTO.getAnuncio(), anunciante);
 

@@ -2,10 +2,14 @@ package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
+import com.ufrn.imd.ecommerce.error.exceptions.AnuncioExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
+import com.ufrn.imd.ecommerce.models.DTO.AuthDTO;
 import com.ufrn.imd.ecommerce.models.DTO.AuthenticationDTO;
 import com.ufrn.imd.ecommerce.models.DTO.RegisterDTO;
+import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.services.AnuncianteService;
 import com.ufrn.imd.ecommerce.services.AuthService;
 import com.ufrn.imd.ecommerce.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -34,15 +38,24 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private AnuncianteService anuncianteService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
-        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
-        Authentication auth = authenticationManager.authenticate(usernamePassword);
+        String token = "";
+        try {
+            UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
+            Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-        String token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
-
-        return ResponseEntity.ok(token);
+            token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
+            Anunciante anunciante = anuncianteService.findByEmail(data.getEmail());
+            return ResponseEntity.ok(new AuthDTO(token, "anunciante"));
+        } catch (AnuncioExCustom err) {
+            return ResponseEntity.ok(new AuthDTO(token, "cliente"));
+        } catch (RuntimeException err){
+            return ResponseEntity.badRequest().body(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
+        }
     }
 
     @PostMapping("/register")
