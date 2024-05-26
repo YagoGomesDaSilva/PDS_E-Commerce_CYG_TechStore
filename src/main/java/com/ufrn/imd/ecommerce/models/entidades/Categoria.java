@@ -21,7 +21,6 @@ public class Categoria {
     private List<Categoria> subcategorias;
 
 
-
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
