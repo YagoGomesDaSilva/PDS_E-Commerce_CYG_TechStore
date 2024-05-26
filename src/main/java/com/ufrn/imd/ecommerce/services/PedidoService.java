@@ -124,8 +124,13 @@ public class PedidoService {
     }
 
     public Optional<Pedido> findFullPedido(Long idPedido){
-        return pedidoRepository.findPedidoByIdWithPedidoItemsAndUsuario(idPedido);
+        Optional<Pedido> pedido = pedidoRepository.findPedidoByIdWithPedidoItemsAndUsuario(idPedido);
+        if(pedido.isPresent()){
+            return pedido;
+        }
+        throw new PedidoExCustom(PedidoEnumEx.PEDIDO_NAO_ENCONTRADO);
     }
+
     private void updadePedido(Pedido pedido) {
         if(pedidoRepository.findById(pedido.getId()).isPresent()){
             //to-do implementar update em Usuario

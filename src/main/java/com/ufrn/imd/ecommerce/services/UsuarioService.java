@@ -29,24 +29,10 @@ public class UsuarioService {
         return usuario;
     }
 
-    public List<UsuarioConcreto> findUsuarios() throws UsuarioExCustom {
-        List<UsuarioConcreto> usuarios = usuarioRepository.findAll();
-        if (usuarios.isEmpty()) {
-            throw new UsuarioExCustom(UsuarioEnumEx.SEM_USUARIOS_CADASTRADOS);
-        }
-        return usuarios;
-    }
-
-    public void createUsuarioConcreto(UsuarioConcreto usuario) throws UsuarioExCustom {
-        // Verificar se há apenas caracteres do alfabeto no nome
+    public UsuarioConcreto createUsuario(UsuarioConcreto usuario) throws UsuarioExCustom {
         if (!usuario.getNome().matches("[a-zA-Z]+")) {
             throw new UsuarioExCustom(UsuarioEnumEx.NOME_USUARIO_INVALIDO);
         }
-        usuario.setNome(usuario.getNome().trim());
-        usuarioRepository.save(usuario);
-    }
-
-    public UsuarioConcreto createUsuario(UsuarioConcreto usuario) throws UsuarioExCustom {
         if(usuarioRepository.findUsuarioConcretoByEmail(usuario.getEmail()) != null) {
             throw new UsuarioExCustom(UsuarioEnumEx.EMAIL_DUPLICADO);
         }
@@ -72,6 +58,9 @@ public class UsuarioService {
     public UsuarioConcreto findUsuarioByToken(HttpServletRequest request) {
         var token = tokenService.resolveToken(request);
         var user = tokenService.validateToken(token);
+        if(user.equals("")){
+            throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
+        }
         return usuarioRepository.findUsuarioConcretoByEmail(user);
     }
 }

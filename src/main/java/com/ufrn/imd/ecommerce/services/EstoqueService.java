@@ -64,6 +64,9 @@ public class EstoqueService {
         Estoque estoque = new Estoque();
         estoque.setAnunciante(anunciante);
         estoque.setProduto(produto);
+        if(estoqueDTO.getQuantidade() <= 0) {
+            throw new EstoqueExCustom(EstoqueEnumEx.QUANTIDADE_INVALIDA);
+        }
         estoque.setQuantidade(estoqueDTO.getQuantidade());
         return Optional.of(estoqueRepository.save(estoque));
     }

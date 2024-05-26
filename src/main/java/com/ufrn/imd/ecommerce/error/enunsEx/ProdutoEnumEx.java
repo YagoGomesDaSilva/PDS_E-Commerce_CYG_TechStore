@@ -1,9 +1,10 @@
 package com.ufrn.imd.ecommerce.error.enunsEx;
 
 public enum ProdutoEnumEx {
-    PRODUTO_INVALIDO("O pedido é inválido."),
+    PRODUTO_INVALIDO("Produto possui informações inválidas."),
     PRODUTO_NAO_ENCONTRADO("O pedido não foi encontrado."),
-    CATEGORIA_NAO_ESPECIFICADA("A categoria do produto não foi especificada.");
+    CATEGORIA_NAO_ESPECIFICADA("A categoria do produto não foi especificada."),
+    PRODUTO_VALOR_NEGATIVO("Não é possível cadastrar produto com valor negativo.");
 
 
 

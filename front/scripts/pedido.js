@@ -28,7 +28,6 @@ function renderOrderDetails(order) {
         orderItemDiv.classList.add('order-item');
         orderItemDiv.innerHTML = `
             <h3>${product.nome}</h3>
-            <img src="${product.imagems[0].caminhoImagem}" alt="${product.nome}">
             <p><strong>Descrição:</strong> ${product.descricao}</p>
             <p><strong>Marca:</strong> ${product.marca}</p>
             <p><strong>Observação:</strong> ${product.observacao}</p>

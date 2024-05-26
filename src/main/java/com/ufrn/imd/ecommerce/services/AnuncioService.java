@@ -64,6 +64,9 @@ public class AnuncioService {
 
     public Anuncio createAnuncio(Anuncio anuncio, Anunciante anunciante) {
         if(anunciante != null) {
+            if(anuncio.getTitulo().equals("")){
+                throw new AnuncioExCustom(AnuncioEnumEx.ANUNCIO_SEM_TITULO);
+            }
             anuncio.setAnunciante(anunciante);
             anuncioRepository.save(anuncio);
             return anuncio;

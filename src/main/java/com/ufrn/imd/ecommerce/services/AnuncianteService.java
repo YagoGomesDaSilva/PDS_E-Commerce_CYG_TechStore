@@ -42,8 +42,13 @@ public class AnuncianteService {
     }
 
     public void createAnunciante(Anunciante anunciante, UsuarioConcreto usuario) {
+        if(anunciante.getNomeAnunciante().equals("")){
+            anunciante.setNomeAnunciante(usuario.getNome());
+        }
         anunciante.setNome(usuario.getNome());
         anunciante.setEmail(usuario.getEmail());
+        anunciante.setNumeroTelefone(usuario.getNumeroTelefone());
+        anunciante.setSenha(usuario.getSenha());
         anuncianteRepository.save(anunciante);
     }
 
@@ -67,6 +72,9 @@ public class AnuncianteService {
         var token = tokenService.resolveToken(request);
         var user = tokenService.validateToken(token);
         var anunciante = anuncianteRepository.findByEmail(user);
+        if(user.equals("") || anunciante == null){
+            throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
+        }
         return anunciante;
     }
 

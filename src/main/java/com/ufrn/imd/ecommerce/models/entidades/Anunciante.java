@@ -47,6 +47,14 @@ public class Anunciante extends UsuarioAbstrato{
         this.estoques = estoques;
     }
 
+    public String getNomeAnunciante() {
+        return nomeAnunciante;
+    }
+
+    public void setNomeAnunciante(String nomeAnunciante) {
+        this.nomeAnunciante = nomeAnunciante;
+    }
+
     public String getDocumento() {
         return documento;
     }

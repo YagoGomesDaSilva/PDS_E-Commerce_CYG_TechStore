@@ -1,6 +1,8 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.error.exceptions.AnuncioExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.EstoqueExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.ProdutoExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.DTO.AnuncioDTO;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
@@ -58,8 +60,8 @@ public class AnuncioController {
             return anuncio;
         } catch (UsuarioExCustom e) {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (ProdutoExCustom | AnuncioExCustom | EstoqueExCustom e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 

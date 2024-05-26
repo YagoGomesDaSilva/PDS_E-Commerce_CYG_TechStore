@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.services.AnuncianteService;
@@ -30,8 +31,8 @@ public class AnuncianteController {
             UsuarioConcreto usuario = usuarioService.findUsuarioByToken(request);
             anuncianteService.createAnunciante(anunciante, usuario);
             return anunciante;
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (UsuarioExCustom err) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 }

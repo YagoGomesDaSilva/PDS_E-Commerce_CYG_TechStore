@@ -49,7 +49,7 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
             token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
-            Anunciante anunciante = anuncianteService.findByEmail(data.getEmail());
+            anuncianteService.findByEmail(data.getEmail());
             return ResponseEntity.ok(new AuthDTO(token, "anunciante"));
         } catch (AnuncioExCustom err) {
             return ResponseEntity.ok(new AuthDTO(token, "cliente"));
@@ -70,8 +70,8 @@ public class AuthController {
 
             String token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
             return ResponseEntity.ok(token);
-        } catch (UsuarioExCustom e) {
-            return ResponseEntity.badRequest().body(UsuarioEnumEx.EMAIL_DUPLICADO);
+        } catch (UsuarioExCustom err) {
+            return ResponseEntity.badRequest().body(err);
         }
     }
 

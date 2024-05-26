@@ -1,6 +1,8 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 
+import com.ufrn.imd.ecommerce.error.exceptions.PedidoExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.entidades.Pedido;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
@@ -39,13 +41,21 @@ public class PedidoController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Pedido> findAll() {
-        return pedidoService.findPedidos();
+        try {
+            return pedidoService.findPedidos();
+        } catch (RegraNegocioException err) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Pedido> findFullById(@RequestParam Long id) {
-        return pedidoService.findFullPedido(id);
+        try {
+            return pedidoService.findFullPedido(id);
+        } catch (PedidoExCustom err) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
