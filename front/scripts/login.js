@@ -23,7 +23,7 @@ function login() {
       .then(token => {
           localStorage.setItem('token', token);
           alert('Login bem-sucedido');
-          window.location.href = '/cliente/areacliente.html';
+          window.location.href = '../cliente/areacliente.html';
       })
       .catch(error => alert('Erro:', error));
 }

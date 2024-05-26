@@ -52,10 +52,14 @@ public class AuthController {
 
         try {
             this.usuarioService.createUsuario(usuario);
+            UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
+            Authentication auth = authenticationManager.authenticate(usernamePassword);
+
+            String token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
+            return ResponseEntity.ok(token);
         } catch (UsuarioExCustom e) {
             return ResponseEntity.badRequest().body(UsuarioEnumEx.EMAIL_DUPLICADO);
         }
-
-        return ResponseEntity.ok().build();
     }
+
 }
