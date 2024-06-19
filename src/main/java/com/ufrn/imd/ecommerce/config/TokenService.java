@@ -23,8 +23,6 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-
-
     public String generateToken(UsuarioConcreto usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -41,8 +39,6 @@ public class TokenService {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(TokenService.class);
-
-    // other methods
 
     public String validateToken(String token) {
         try {
@@ -62,21 +58,6 @@ public class TokenService {
     }
 
 
-/*
-    public String validateToken(String token) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            token = token.trim();
-            return JWT.require(algorithm)
-                    .withIssuer("auth-user")
-                    .build()
-                    .verify(token)
-                    .getSubject();
-        } catch (JWTVerificationException ex) {
-            return "";
-        }
-    }
-*/
     public String resolveToken(HttpServletRequest req) {
         String authHeader = req.getHeader("Authorization");
         if (authHeader == null) {

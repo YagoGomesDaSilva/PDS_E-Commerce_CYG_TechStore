@@ -11,8 +11,6 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<UsuarioConcreto, Long> {
-
-
     @Query("SELECT u FROM UsuarioConcreto u JOIN FETCH u.enderecos WHERE u.id = :usuarioId")
     UsuarioConcreto findUsuarioConcretoByIdWithEnderecos(@Param("usuarioId") Long usuarioId);
 

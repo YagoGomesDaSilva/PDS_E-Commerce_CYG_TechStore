@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-
     @Query("SELECT DISTINCT p FROM Produto p JOIN FETCH p.imagems")
     List<Produto> findAllProdutosWithImagems();
 

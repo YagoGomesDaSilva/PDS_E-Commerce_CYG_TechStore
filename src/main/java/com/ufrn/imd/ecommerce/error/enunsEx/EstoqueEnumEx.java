@@ -1,8 +1,6 @@
 package com.ufrn.imd.ecommerce.error.enunsEx;
 
 public enum EstoqueEnumEx {
-
-
     ESTOQUE_NAO_ENCONTRADO("Estoque não encontrado para o produto."),
     QUANTIDADE_INVALIDA("A quantidade especificada para o estoque é inválida."),
     PRODUTO_NAO_ASSOCIADO("O produto especificado não está associado a nenhum registro de estoque."),

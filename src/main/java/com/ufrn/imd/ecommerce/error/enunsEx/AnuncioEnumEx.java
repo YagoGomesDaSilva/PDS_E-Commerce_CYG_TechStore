@@ -1,7 +1,6 @@
 package com.ufrn.imd.ecommerce.error.enunsEx;
 
 public enum AnuncioEnumEx {
-
     ANUNCIO_NAO_ENCONTRADO("O anúncio especificado não foi encontrado."),
     ANUNCIO_EXPIRADO("O anúncio especificado está expirado."),
     LIMITE_ANUNCIOS_EXCEDIDO("O limite máximo de anúncios foi excedido."),

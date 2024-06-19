@@ -4,6 +4,7 @@ public enum TipoPagamentoEnumEx {
     TIPO_PAGAMENTO_NAO_ENCONTRADO("O tipo de pagamento especificado não foi encontrado.");
 
     private String mensagem;
+
     TipoPagamentoEnumEx(String mensagem){
         this.mensagem = mensagem;
     }
