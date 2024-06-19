@@ -12,6 +12,7 @@ import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
 import com.ufrn.imd.ecommerce.repositories.EstoqueRepository;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
+import com.ufrn.imd.ecommerce.services.interfaces.NotificacaoSevice;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

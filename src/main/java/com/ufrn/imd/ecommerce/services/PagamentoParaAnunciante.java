@@ -1,6 +1,8 @@
 package com.ufrn.imd.ecommerce.services;
 
-public class PagamentoParaAnunciante implements FormaPagamentoService{
+import com.ufrn.imd.ecommerce.services.interfaces.FormaPagamentoService;
+
+public class PagamentoParaAnunciante implements FormaPagamentoService {
     @Override
     public void calcularPagamento() {
 

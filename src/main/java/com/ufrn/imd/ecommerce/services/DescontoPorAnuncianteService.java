@@ -1,6 +1,8 @@
 package com.ufrn.imd.ecommerce.services;
 
-public class DescontoPorAnuncianteService implements DescontoService{
+import com.ufrn.imd.ecommerce.services.interfaces.DescontoService;
+
+public class DescontoPorAnuncianteService implements DescontoService {
     @Override
     public void calcularDesconto() {
 

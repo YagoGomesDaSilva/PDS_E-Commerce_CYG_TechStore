@@ -1,10 +1,10 @@
-package com.ufrn.imd.ecommerce.services;
+package com.ufrn.imd.ecommerce.services.interfaces;
 
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.entidades.ProdutoFavorito;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.ProdutoFavoritoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ufrn.imd.ecommerce.services.EmailService;
 
 import java.util.List;
 
