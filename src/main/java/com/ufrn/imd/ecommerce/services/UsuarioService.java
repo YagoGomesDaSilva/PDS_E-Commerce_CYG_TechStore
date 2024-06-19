@@ -6,6 +6,7 @@ import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +14,13 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
-    private final TokenService tokenService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private TokenService tokenService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, TokenService tokenService) {
-        this.usuarioRepository = usuarioRepository;
-        this.tokenService = tokenService;
+    public UsuarioService() {
+        //to-do
     }
 
     public UsuarioConcreto findUsuario(Long idUsuario) throws UsuarioExCustom {

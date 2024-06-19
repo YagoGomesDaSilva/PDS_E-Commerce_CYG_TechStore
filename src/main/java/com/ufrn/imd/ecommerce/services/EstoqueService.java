@@ -14,6 +14,7 @@ import com.ufrn.imd.ecommerce.repositories.EstoqueRepository;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +25,17 @@ public class EstoqueService {
     private final EstoqueRepository estoqueRepository;
     private final ProdutoRepository produtoRepository;
     private final AnuncianteRepository anuncianteRepository;
+    private List<NotificacaoSevice> notificacaoSevices;
 
     public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository, AnuncianteRepository anuncianteRepository) {
         this.estoqueRepository = estoqueRepository;
         this.produtoRepository = produtoRepository;
         this.anuncianteRepository = anuncianteRepository;
+        this.notificacaoSevices = new ArrayList<>();
+    }
+
+    public void cadastraNotificacaoObserver(NotificacaoSevice notificacao){
+        notificacaoSevices.add(notificacao);
     }
 
     public Optional<Estoque> updateEstoque(Long anuncianteId, Produto produto, int quantidade) {

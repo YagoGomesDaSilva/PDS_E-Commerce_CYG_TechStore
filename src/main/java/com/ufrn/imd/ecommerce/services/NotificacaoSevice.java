@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class NotificacaoSevice {
+public abstract class NotificacaoSevice {
 
     private final ProdutoFavoritoRepository produtoFavoritoRepository;
     private final EmailService emailService; // Supondo que exista um serviço para envio de e-mails
@@ -26,4 +26,16 @@ public class NotificacaoSevice {
             emailService.sendEmail(user.getEmail(), "Produto disponível", "O produto " + produto.getNome() + " está de volta ao estoque.");
         }
     }
+
+    public void createNotificacao(){
+
+    }
+
+    public void enviarEmail(){
+
+    }
+
+    public abstract void usarCredito();
+
+    public abstract void formatarEmail();
 }

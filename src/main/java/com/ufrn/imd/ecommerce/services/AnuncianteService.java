@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AnuncianteService {
+public class AnuncianteService extends UsuarioService {
 
     private final AnuncianteRepository anuncianteRepository;
     private final TokenService tokenService;
     private final SecurityFilter securityFilter;
 
     public AnuncianteService(AnuncianteRepository anuncianteRepository, TokenService tokenService, SecurityFilter securityFilter) {
+        super();
         this.anuncianteRepository = anuncianteRepository;
         this.tokenService = tokenService;
         this.securityFilter = securityFilter;
