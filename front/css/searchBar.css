@@ -1,0 +1,16 @@
+.search-bar {
+    width: 47vw;
+    max-width: 474px;
+    min-width: 170px;
+    padding: 0.8em;
+    background-color: transparent;
+    border-radius: 24px;
+    border: 2px solid #135D66;
+}
+
+.search-bar::placeholder {
+    background: url("../imgs/search.svg") no-repeat left center;
+    text-align: center;
+    background-position: 0.5em;
+    background-size: contain;
+}

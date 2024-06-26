@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header-placeholder"></div>
+        
+        <main class="container-principal-main">
+            <div class="produtos">
+                <h2>Produtos</h2>
+                <div class="swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-pagination"></div>
+                    <div id="component-products" class="container-products swiper-wrapper">
+                        
+                    </div>
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                  
+                  </div>
+                
+            </div>
+        </main>
+        
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="scripts/loadHtml.js"></script>
+    <script src="scripts/loadProduct.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'bullets',
+            },
+            breakpoints: {
+                360: {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            },
+        });
+        </script>
+        <script src="scripts/cart.js"></script>
+</body>
+</html>

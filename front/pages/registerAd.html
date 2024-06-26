@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header-placeholder"></div>
+        <main class="container-principal">
+            <form id="formAnuncio">
+                <label class="required" for="titulo">Título do anúncio </label>
+                <input class="tag-form" onBlur="validateCampo(event)" type="text" name="Titulo" id="titulo">
+                <div id="tituloError" class="error-message"></div>
+
+                <label class="required" for="descricaoAnuncio">Descrição do anúncio </label>
+                <input class="tag-form" onBlur="validateCampo(event)" type="text" name="Descrição do anúncio" id="descricaoAnuncio">
+                <div id="descricaoAnuncioError" class="error-message"></div>
+
+                <label class="required" for="nomeProduto">Nome do produto </label>
+                <input class="tag-form" onBlur="validateCampo(event)" type="text" name="Nome do produto" id="nomeProduto">
+                <div id="nomeProdutoError" class="error-message"></div>
+
+                <label class="required" for="valor">Valor </label>
+                <input class="tag-form" onBlur="validateCampo(event)" type="text" name="Valor" id="valor">
+                <div id="valorError" class="error-message"></div>
+                
+                <label class="required" for="marca">Marca </label>
+                <input class="tag-form" onBlur="validateCampo(event)" type="text" name="Marca" id="marca">
+                <div id="marcaError" class="error-message"></div>
+
+                <label class="required" for="quantidade">Quantidade </label>
+                <input class="tag-form" onBlur="validateCampo(event)" type="number" name="Quantidade" id="quantidade">
+                <div id="quantidadeError" class="error-message"></div>
+
+                <label for="observacao">Observação </label>
+                <input class="tag-form" type="text" name="observacao" id="observacao">
+                
+                <label for="images">Imagens </label>
+                <input type="file" id="imageUpload" name="images" accept="image/*" multiple>
+                <button type="button" class="button-submit"  onclick="createAnuncio()">Cadastrar</button>
+            </form>
+        </main>
+        
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="../scripts/loadHtml.js"></script>
+    <script src="../scripts/product.js"></script>
+</body>
+</html>

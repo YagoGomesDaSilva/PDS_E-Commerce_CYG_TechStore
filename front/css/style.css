@@ -1,0 +1,66 @@
+@import url("header.css");
+@import url("searchBar.css");
+@import url("forms.css");
+@import url("product.css");
+@import url("announcement.css");
+@import url("cart.css");
+
+:root {
+    --cor-de-fundo: #EBECEE;
+    --branco: white;
+    --preto: #0c0c0c;
+    --cor-cabecalho: #92FFE3;
+    --cor-menu-hamburguer: linear-gradient(98deg, #77B0AA 35.49%, #77B0AA 165.37%);
+    --cor-fundo-itens: linear-gradient(98deg, #003C43 35.49%, #135D66 165.37%);
+    --verde: #135D66;
+    --verde-escuro: #003C43;
+    --amarelo: #E2A312;
+    --font-principal: "Poppins";
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    background-color: var(--cor-de-fundo);
+    font-family: var(--font-principal);
+    font-size: 16px;
+    font-weight: 400;
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+main {
+    flex: 1;
+    padding: 15px;
+}
+
+.container-principal-main{
+    display: flex;
+    align-items: center;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    display: none;
+}
+
+.swiper-slide {
+    max-width: 120px !important;
+}
+
+.swiper-pagination {
+    position: initial;
+}

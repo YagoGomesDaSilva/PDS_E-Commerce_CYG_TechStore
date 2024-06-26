@@ -1,0 +1,55 @@
+.formulario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formulario form {
+    width: 89vw;
+    max-width: 700px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 1em;
+    margin-bottom: 5px;
+}
+
+label.required::after {
+    content: " *";
+    color: red;
+}
+
+input {
+    width: 85vw;
+    max-width: 700px;
+    padding: 0.5em;
+    border-radius: 6px;
+    border: 1px solid #CCC;
+    background: #FFF; 
+}
+
+.button-submit {
+    width: 89vw;
+    max-width: 700px;
+    font-size: 16px;
+    padding: 0.5em;
+    border-radius: 10px;
+    background: var(--verde); 
+    color: var(--branco);
+    border: none;
+    margin-top: 1em;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 2px;
+    display: none;
+}
+
+.invalid {
+    border: 1px solid red;
+}

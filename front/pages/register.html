@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header-placeholder"></div>
+        <main class="container-principal">
+            <div class="formulario">
+                <form id="formUsuario">
+                    <label for="nome" class="required">Nome </label>
+                    <input class="tag-form" type="text" name="Nome" id="nome" maxlength="50" onBlur="validateCampo(event)">
+                    <div id="nomeError" class="error-message"></div>
+    
+                    <label for="email" class="required">Email </label>
+                    <input class="tag-form" type="email" name="Email" id="email" onBlur="validateCampo(event)">
+                    <div id="emailError" class="error-message"></div>
+    
+                    <label for="documento" class="required">CPF/CNPJ </label>
+                    <input class="tag-form" type="text" name="CPF/CNPJ" id="documento" onBlur="validateCampo(event)" maxlength="18">
+                    <div id="documentoError" class="error-message"></div>
+    
+                    <label for="telefone" class="required">Telefone </label>
+                    <input class="tag-form" type="tel" name="Telefone" id="telefone" onBlur="validateCampo(event)" maxlength="16">
+                    <div id="telefoneError" class="error-message"></div>
+    
+                    <label class="required" for="cep">CEP </label>
+                    <input class="tag-form" type="text" onblur="pesquisarInfosCep(); validateCampo(event)" name="CEP" id="cep" maxlength="9">
+                    <div id="cepError" class="error-message"></div>
+    
+                    <label for="cidade">Cidade </label>
+                    <input class="tag-form" type="text" name="cidade" id="cidade">
+    
+                    <label for="estado">Estado </label>
+                    <input class="tag-form" type="text" name="estado" id="estado">
+    
+                    <label for="logradouro">Logradouro </label>
+                    <input class="tag-form" type="text" name="logradouro" id="logradouro">
+    
+                    <label for="bairro">Bairro </label>
+                    <input class="tag-form" type="text" name="bairro" id="bairro">
+    
+                    <label for="numero">Número </label>
+                    <input class="tag-form" type="text" name="numero" id="numero">
+    
+                    <label class="required" for="senha">Senha: </label>
+                    <input class="tag-form" type="password" name="Senha" id="senha" onBlur="validateCampo(event)">
+                    <div id="senhaError" class="error-message"></div>
+    
+                    <label class="required" for="repeatSenha">Repitir a senha: </label>
+                    <input class="tag-form" type="password" name="Senha" id="repeatSenha" onBlur="validateCampo(event)">
+                    <div id="repeatSenhaError" class="error-message"></div>
+    
+                    <button type="button" class="button-submit" onclick="createAnunciante()">Cadastrar</button>
+                </form>
+            </div>
+        </main>
+        
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="../scripts/loadHtml.js"></script>
+    <script src="../scripts/user.js"></script>
+</body>
+</html>
