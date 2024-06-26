@@ -28,13 +28,13 @@ public class Endereco {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private UsuarioConcreto usuario;
+    private Anunciante usuario;
 
     public Endereco() {
 
     }
 
-    public Endereco(String cidade, String logradouro, Integer numero, String complemento, String referencia, String bairro, String cep, UsuarioConcreto usuario) {
+    public Endereco(String cidade, String logradouro, Integer numero, String complemento, String referencia, String bairro, String cep, Anunciante usuario) {
         this.cidade = cidade;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -109,11 +109,11 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public UsuarioConcreto getUsuario() {
+    public Anunciante getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(UsuarioConcreto usuario) {
+    public void setUsuario(Anunciante usuario) {
         this.usuario = usuario;
     }
 

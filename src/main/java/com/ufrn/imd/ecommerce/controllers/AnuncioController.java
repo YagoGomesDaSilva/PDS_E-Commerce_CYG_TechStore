@@ -40,7 +40,7 @@ public class AnuncioController {
     @ResponseStatus(HttpStatus.CREATED)
     public Anuncio create(@RequestBody AnuncioDTO anuncioDTO, HttpServletRequest request) {
         try {
-            Anunciante anunciante = anuncianteService.findByToken(request);
+            Anunciante anunciante = anuncianteService.findUsuarioByToken(request);
             Produto produto = produtoService.createProduto(anuncioDTO.getProduto(), anunciante);
             Anuncio anuncio = anuncioService.createAnuncio(anuncioDTO.getAnuncio(), anunciante);
 

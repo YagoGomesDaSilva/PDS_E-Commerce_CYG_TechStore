@@ -1,9 +1,12 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.ufrn.imd.ecommerce.enums.TipoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -20,22 +23,19 @@ public abstract class UsuarioAbstrato {
     protected String numeroTelefone;
     @Column
     protected boolean tipo;
-    @Column(columnDefinition = "VARCHAR(100)")
-    protected String token;
-    @Column(scale = 2)
-    protected BigDecimal credito;
+    protected Double credito;
+    protected TipoUsuario tipoUsuario;
 
     public UsuarioAbstrato() {
     }
 
-    public UsuarioAbstrato(String nome, String email, String senha, String numeroTelefone, boolean tipo, String token, BigDecimal credito) {
+    public UsuarioAbstrato(String nome, String email, String senha, String numeroTelefone, Double credito, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.numeroTelefone = numeroTelefone;
-        this.tipo = tipo;
-        this.token = token;
         this.credito = credito;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getNome() {
@@ -78,19 +78,12 @@ public abstract class UsuarioAbstrato {
         this.tipo = tipo;
     }
 
-    public String getToken() {
-        return token;
-    }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public BigDecimal getCredito() {
+    public Double getCredito() {
         return credito;
     }
 
-    public void setCredito(BigDecimal credito) {
+    public void setCredito(Double credito) {
         this.credito = credito;
     }
 
@@ -99,11 +92,11 @@ public abstract class UsuarioAbstrato {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsuarioAbstrato that = (UsuarioAbstrato) o;
-        return tipo == that.tipo && Objects.equals(nome, that.nome) && Objects.equals(email, that.email) && Objects.equals(senha, that.senha) && Objects.equals(numeroTelefone, that.numeroTelefone) && Objects.equals(token, that.token) && Objects.equals(credito, that.credito);
+        return tipo == that.tipo && Objects.equals(nome, that.nome) && Objects.equals(email, that.email) && Objects.equals(senha, that.senha) && Objects.equals(numeroTelefone, that.numeroTelefone) && Objects.equals(credito, that.credito);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, email, senha, numeroTelefone, tipo, token, credito);
+        return Objects.hash(nome, email, senha, numeroTelefone, tipo, credito);
     }
 }

@@ -23,12 +23,12 @@ public class Cartao {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private UsuarioConcreto usuario;
+    private Cliente usuario;
 
     public Cartao() {
     }
 
-    public Cartao(String numero, String nomeTitular, LocalDate dataVencimento, String codigoSeguranca, UsuarioConcreto usuario) {
+    public Cartao(String numero, String nomeTitular, LocalDate dataVencimento, String codigoSeguranca, Cliente usuario) {
         this.numero = numero;
         this.nomeTitular = nomeTitular;
         this.dataVencimento = dataVencimento;
@@ -76,11 +76,11 @@ public class Cartao {
         this.codigoSeguranca = codigoSeguranca;
     }
 
-    public UsuarioConcreto getUsuario() {
+    public Cliente getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(UsuarioConcreto usuario) {
+    public void setUsuario(Cliente usuario) {
         this.usuario = usuario;
     }
 

@@ -1,6 +1,7 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.config.TokenService;
+import com.ufrn.imd.ecommerce.enums.TipoUsuario;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.AnuncioExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
@@ -8,12 +9,15 @@ import com.ufrn.imd.ecommerce.models.DTO.AuthDTO;
 import com.ufrn.imd.ecommerce.models.DTO.AuthenticationDTO;
 import com.ufrn.imd.ecommerce.models.DTO.RegisterDTO;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.Endereco;
+import com.ufrn.imd.ecommerce.models.entidades.Cliente;
 import com.ufrn.imd.ecommerce.services.AnuncianteService;
 import com.ufrn.imd.ecommerce.services.AuthService;
-import com.ufrn.imd.ecommerce.services.UsuarioService;
+import com.ufrn.imd.ecommerce.services.ClienteService;
+import com.ufrn.imd.ecommerce.services.interfaces.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,22 +28,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("auth")
 public class AuthController {
 
-    @Autowired
-    private UsuarioService usuarioService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private AuthService authService;
     @Autowired
     private TokenService tokenService;
+    @Qualifier("anuncianteService")
     @Autowired
-    private AnuncianteService anuncianteService;
+    private UsuarioService usuarioService;
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
@@ -47,9 +52,8 @@ public class AuthController {
         try {
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
-
-            token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
-            anuncianteService.findByEmail(data.getEmail());
+            token = tokenService.generateToken((Anunciante) auth.getPrincipal());
+            usuarioService.findByEmail(data.getEmail());
             return ResponseEntity.ok(new AuthDTO(token, "anunciante"));
         } catch (AnuncioExCustom err) {
             return ResponseEntity.ok(new AuthDTO(token, "cliente"));
@@ -61,14 +65,17 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         String encyptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-        UsuarioConcreto usuario = new UsuarioConcreto(data.getEmail(), encyptedPassword, data.getTipoUsuario());
 
+        ArrayList<Endereco> enderecos = new ArrayList<>();
+        enderecos.add(data.getEndereco());
         try {
-            this.usuarioService.createUsuario(usuario);
+            Anunciante anunciante = new Anunciante(data.getNome(), data.getEmail(), encyptedPassword, data.getTelefone(), 0.0, "", data.getDocumento(), enderecos, TipoUsuario.ANUNCIANTE);
+            usuarioService.createUsuario(anunciante);
+
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-            String token = tokenService.generateToken((UsuarioConcreto) auth.getPrincipal());
+            String token = tokenService.generateToken((Anunciante) auth.getPrincipal());
             return ResponseEntity.ok(token);
         } catch (UsuarioExCustom err) {
             return ResponseEntity.badRequest().body(err);

@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.config;
 
+import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,10 +19,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final UsuarioRepository usuarioRepository;
+    private final AnuncianteRepository anuncianteRepository;
 
-    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository) {
+    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository, AnuncianteRepository anuncianteRepository) {
         this.tokenService = tokenService;
         this.usuarioRepository = usuarioRepository;
+        this.anuncianteRepository = anuncianteRepository;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             String login = tokenService.validateToken(token);
 
-            UserDetails user = usuarioRepository.findByEmail(login);
+            UserDetails user = anuncianteRepository.findByEmail(login);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -44,7 +47,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (authHeader == null) {
             return null;
         }
-
         return authHeader.replace("Bearer", "").trim();
     }
 }

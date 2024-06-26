@@ -1,14 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
-import com.ufrn.imd.ecommerce.models.entidades.Produto;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
-import com.ufrn.imd.ecommerce.services.UsuarioService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")

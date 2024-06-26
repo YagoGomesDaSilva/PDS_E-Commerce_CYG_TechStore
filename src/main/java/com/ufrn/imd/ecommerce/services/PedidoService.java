@@ -3,7 +3,6 @@ package com.ufrn.imd.ecommerce.services;
 import com.ufrn.imd.ecommerce.error.enunsEx.EstoqueEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.PedidoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
-import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.*;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoItemDTO;
@@ -43,11 +42,11 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido createPedido(PedidoDTO dto, UsuarioConcreto usuario)  {
+    public Pedido createPedido(PedidoDTO dto, UsuarioAbstrato usuario)  {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(dto.getValorTotal());
         pedido.setData(LocalDate.now());
-        pedido.setUsuario(usuario);
+//        pedido.setUsuario(usuario);
 
         Set<PedidoItem> pedidoItems = converterItems(pedido, dto.getItems());
         pedidoRepository.save(pedido);

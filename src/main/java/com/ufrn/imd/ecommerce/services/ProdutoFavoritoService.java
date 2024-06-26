@@ -2,7 +2,7 @@ package com.ufrn.imd.ecommerce.services;
 
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.entidades.ProdutoFavorito;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.Cliente;
 import com.ufrn.imd.ecommerce.repositories.ProdutoFavoritoRepository;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
@@ -24,10 +24,10 @@ public class ProdutoFavoritoService {
 
 
     public void addFavoriteProduct(Long userId, Long productId) {
-        UsuarioConcreto usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Cliente usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Produto produto = produtoRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
 
-        if (!produtoFavoritoRepository.findByUsuarioConcretoAndProduto(usuario, produto).isPresent()) {
+        if (!produtoFavoritoRepository.findByClienteAndProduto(usuario, produto).isPresent()) {
             ProdutoFavorito favorito = new ProdutoFavorito();
             favorito.setUsuarioConcreto(usuario);
             favorito.setProduto(produto);
@@ -37,13 +37,13 @@ public class ProdutoFavoritoService {
     }
 
     public void removeFavoriteProduct(Long userId, Long productId) {
-        UsuarioConcreto usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Cliente usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Produto produto = produtoRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
-        produtoFavoritoRepository.deleteByUsuarioConcretoAndProduto(usuario, produto);
+        produtoFavoritoRepository.deleteByClienteAndProduto(usuario, produto);
     }
 
-    public List<Produto> getFavoriteProducts(UsuarioConcreto usuario) {
-        return produtoFavoritoRepository.findByUsuarioConcreto(usuario).stream()
+    public List<Produto> getFavoriteProducts(Cliente usuario) {
+        return produtoFavoritoRepository.findByCliente(usuario).stream()
                 .map(ProdutoFavorito::getProduto)
                 .collect(Collectors.toList());
     }

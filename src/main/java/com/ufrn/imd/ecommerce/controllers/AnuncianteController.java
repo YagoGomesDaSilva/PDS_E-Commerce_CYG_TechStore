@@ -2,10 +2,9 @@ package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.Cliente;
 import com.ufrn.imd.ecommerce.services.AnuncianteService;
-import com.ufrn.imd.ecommerce.services.UsuarioService;
-import jakarta.servlet.http.HttpServlet;
+import com.ufrn.imd.ecommerce.services.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,24 +16,24 @@ import org.springframework.web.server.ResponseStatusException;
 public class AnuncianteController {
 
     private final AnuncianteService anuncianteService;
-    private final UsuarioService usuarioService;
+    private final ClienteService clienteService;
 
-    public AnuncianteController(AnuncianteService anuncianteService, UsuarioService usuarioService) {
+    public AnuncianteController(AnuncianteService anuncianteService, ClienteService clienteService) {
         this.anuncianteService = anuncianteService;
-        this.usuarioService = usuarioService;
+        this.clienteService = clienteService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Anunciante create(@RequestBody Anunciante anunciante, HttpServletRequest request) {
-        try {
-            UsuarioConcreto usuario = usuarioService.findUsuarioByToken(request);
-            anuncianteService.createAnunciante(anunciante, usuario);
-            return anunciante;
-        } catch (UsuarioExCustom err) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Anunciante create(@RequestBody Anunciante anunciante, HttpServletRequest request) {
+//        try {
+//            Cliente usuario = clienteService.findUsuarioByToken(request);
+//            anuncianteService.createUsuario(anunciante, usuario);
+//            return anunciante;
+//        } catch (UsuarioExCustom err) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
 
 

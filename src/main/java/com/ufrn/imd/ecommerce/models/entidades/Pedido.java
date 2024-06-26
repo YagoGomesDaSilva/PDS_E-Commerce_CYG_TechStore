@@ -33,7 +33,7 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private UsuarioConcreto usuario;
+    private Cliente usuario;
 
     @OneToMany(mappedBy = "pedido")
     private Set<PedidoItem> pedidoItems;
@@ -43,7 +43,7 @@ public class Pedido {
     }
 
 
-    public Pedido(BigDecimal valorTotal, BigDecimal valorFrete, BigDecimal valorTotalItens, LocalDate data, String situacao, TipoPagamento tipoPagamento, UsuarioConcreto usuario, Set<PedidoItem> pedidoItems) {
+    public Pedido(BigDecimal valorTotal, BigDecimal valorFrete, BigDecimal valorTotalItens, LocalDate data, String situacao, TipoPagamento tipoPagamento, Cliente usuario, Set<PedidoItem> pedidoItems) {
         this.valorTotal = valorTotal;
         this.valorFrete = valorFrete;
         this.valorTotalItens = valorTotalItens;
@@ -110,11 +110,11 @@ public class Pedido {
         this.tipoPagamento = tipoPagamento;
     }
 
-    public UsuarioConcreto getUsuario() {
+    public Cliente getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(UsuarioConcreto usuario) {
+    public void setUsuario(Cliente usuario) {
         this.usuario = usuario;
     }
 

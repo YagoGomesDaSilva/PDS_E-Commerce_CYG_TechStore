@@ -4,10 +4,12 @@ package com.ufrn.imd.ecommerce.controllers;
 import com.ufrn.imd.ecommerce.error.exceptions.PedidoExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
+import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Pedido;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.Cliente;
+import com.ufrn.imd.ecommerce.services.AnuncianteService;
 import com.ufrn.imd.ecommerce.services.PedidoService;
-import com.ufrn.imd.ecommerce.services.UsuarioService;
+import com.ufrn.imd.ecommerce.services.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +26,15 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
     @Autowired
-    private UsuarioService usuarioService;
+    private ClienteService clienteService;
+    @Autowired
+    private AnuncianteService anuncianteService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Pedido RealizarPedido(@RequestBody PedidoDTO dto, HttpServletRequest request)  {
         try {
-            UsuarioConcreto usuario = usuarioService.findUsuarioByToken(request);
+            Anunciante usuario = anuncianteService.findUsuarioByToken(request);
             Pedido pedido = pedidoService.createPedido(dto, usuario);
             return pedido;
         } catch (Exception e) {

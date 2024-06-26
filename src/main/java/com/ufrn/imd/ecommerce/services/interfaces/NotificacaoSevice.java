@@ -2,7 +2,7 @@ package com.ufrn.imd.ecommerce.services.interfaces;
 
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.entidades.ProdutoFavorito;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.Cliente;
 import com.ufrn.imd.ecommerce.repositories.ProdutoFavoritoRepository;
 import com.ufrn.imd.ecommerce.services.EmailService;
 
@@ -22,7 +22,7 @@ public abstract class NotificacaoSevice {
         List<ProdutoFavorito> favoritos = produtoFavoritoRepository.findByProduto(produto);
 
         for (ProdutoFavorito favorito : favoritos) {
-            UsuarioConcreto user = favorito.getUsuarioConcreto();
+            Cliente user = favorito.getUsuarioConcreto();
             emailService.sendEmail(user.getEmail(), "Produto disponível", "O produto " + produto.getNome() + " está de volta ao estoque.");
         }
     }

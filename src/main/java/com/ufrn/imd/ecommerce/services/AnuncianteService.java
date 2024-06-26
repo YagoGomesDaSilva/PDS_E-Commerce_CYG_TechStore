@@ -5,34 +5,24 @@ import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioConcreto;
+import com.ufrn.imd.ecommerce.models.entidades.UsuarioAbstrato;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
+import com.ufrn.imd.ecommerce.services.interfaces.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AnuncianteService extends UsuarioService {
+public class AnuncianteService implements UsuarioService {
 
-    private final AnuncianteRepository anuncianteRepository;
-    private final TokenService tokenService;
-    private final SecurityFilter securityFilter;
-
-    public AnuncianteService(AnuncianteRepository anuncianteRepository, TokenService tokenService, SecurityFilter securityFilter) {
-        super();
-        this.anuncianteRepository = anuncianteRepository;
-        this.tokenService = tokenService;
-        this.securityFilter = securityFilter;
-    }
-
-    public Anunciante findAnunciante(Long idAnunciante) {
-        Anunciante anunciante = anuncianteRepository.findById(idAnunciante).isPresent() ? anuncianteRepository.findById(idAnunciante).get() : null;
-        if (anunciante == null){
-            throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
-        }
-        return anunciante;
-    }
+    @Autowired
+    private AnuncianteRepository anuncianteRepository;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private SecurityFilter securityFilter;
 
     public List<Anunciante> findAnunciantes() {
         List<Anunciante> anunciantes = anuncianteRepository.findAll();
@@ -42,7 +32,22 @@ public class AnuncianteService extends UsuarioService {
         return anunciantes;
     }
 
-    public void createAnunciante(Anunciante anunciante, UsuarioConcreto usuario) {
+    public Anunciante findByEmail(String email) {
+        return anuncianteRepository.findByEmail(email);
+    }
+
+    @Override
+    public Anunciante findUsuario(Long idUsuario) {
+        Anunciante anunciante = anuncianteRepository.findById(idUsuario).isPresent() ? anuncianteRepository.findById(idUsuario).get() : null;
+        if (anunciante == null){
+            throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
+        }
+        return anunciante;
+    }
+
+    @Override
+    public Anunciante createUsuario(UsuarioAbstrato usuario) {
+        Anunciante anunciante = (Anunciante) usuario;
         if(anunciante.getNomeAnunciante().equals("")){
             anunciante.setNomeAnunciante(usuario.getNome());
         }
@@ -50,17 +55,22 @@ public class AnuncianteService extends UsuarioService {
         anunciante.setEmail(usuario.getEmail());
         anunciante.setNumeroTelefone(usuario.getNumeroTelefone());
         anunciante.setSenha(usuario.getSenha());
-        anuncianteRepository.save(anunciante);
+        return anuncianteRepository.save(anunciante);
     }
 
-    public void updateAnunciante(Anunciante anunciante) {
+    @Override
+    public Anunciante updateUsuario(UsuarioAbstrato usuario) {
+        Anunciante anunciante = (Anunciante) usuario;
         if(anuncianteRepository.findById(anunciante.getId()).isPresent()){
-            //to-do implementar update em Anuncio
+            return anuncianteRepository.save(anunciante);
         } else {
-            throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);        }
+            throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
+        }
     }
 
-    public void deletarAnunciante(Anunciante anunciante) {
+    @Override
+    public void deletarUsuario(UsuarioAbstrato usuario) {
+        Anunciante anunciante = (Anunciante) usuario;
         if(anuncianteRepository.findById(anunciante.getId()).isPresent()){
             anuncianteRepository.delete(anunciante);
         } else {
@@ -68,8 +78,8 @@ public class AnuncianteService extends UsuarioService {
         }
     }
 
-
-    public Anunciante findByToken(HttpServletRequest request) {
+    @Override
+    public Anunciante findUsuarioByToken(HttpServletRequest request) {
         var token = tokenService.resolveToken(request);
         var user = tokenService.validateToken(token);
         var anunciante = anuncianteRepository.findByEmail(user);
@@ -77,9 +87,5 @@ public class AnuncianteService extends UsuarioService {
             throw new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
         }
         return anunciante;
-    }
-
-    public Anunciante findByEmail(String email) {
-        return anuncianteRepository.findByEmail(email);
     }
 }

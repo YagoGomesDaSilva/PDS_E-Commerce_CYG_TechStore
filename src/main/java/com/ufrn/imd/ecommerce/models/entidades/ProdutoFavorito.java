@@ -12,7 +12,7 @@ public class ProdutoFavorito {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UsuarioConcreto usuarioConcreto;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
@@ -20,8 +20,8 @@ public class ProdutoFavorito {
 
     public ProdutoFavorito() {}
 
-    public ProdutoFavorito(UsuarioConcreto usuarioConcreto, Produto produto) {
-        this.usuarioConcreto = usuarioConcreto;
+    public ProdutoFavorito(Cliente cliente, Produto produto) {
+        this.cliente = cliente;
         this.produto = produto;
     }
 
@@ -33,12 +33,12 @@ public class ProdutoFavorito {
         this.id = id;
     }
 
-    public UsuarioConcreto getUsuarioConcreto() {
-        return usuarioConcreto;
+    public Cliente getUsuarioConcreto() {
+        return cliente;
     }
 
-    public void setUsuarioConcreto(UsuarioConcreto usuarioConcreto) {
-        this.usuarioConcreto = usuarioConcreto;
+    public void setUsuarioConcreto(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Produto getProduto() {
