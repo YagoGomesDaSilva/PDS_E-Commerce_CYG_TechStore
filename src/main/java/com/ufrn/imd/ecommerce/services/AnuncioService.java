@@ -33,7 +33,7 @@ public class AnuncioService {
         this.imagemRepository = imagemRepository;
     }
 
-    public Optional<Anuncio> findAnuncio(Long idAnuncio) throws Exception {
+    public Anuncio findAnuncio(Long idAnuncio) throws AnuncioExCustom {
         Anuncio anuncio = anuncioRepository.findAnuncioById(idAnuncio).get();
         if (anuncio == null){
             throw new AnuncioExCustom(AnuncioEnumEx.ANUNCIO_NAO_ENCONTRADO);
@@ -43,7 +43,7 @@ public class AnuncioService {
         produto.setImagems(imagemRepository.findByProdutoId(produto.getId()));
 
         anuncio.setProduto(produto);
-        return Optional.of(anuncio);
+        return anuncio;
     }
 
     public List<Anuncio> findAnuncios() throws AnuncioExCustom {

@@ -68,7 +68,7 @@ public class AnuncioController {
     @GetMapping("/{idAnuncio}")
     public Anuncio getAnuncio(@PathVariable Long idAnuncio) {
         try {
-            return anuncioService.findAnuncio(idAnuncio).get();
+            return anuncioService.findAnuncio(idAnuncio);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

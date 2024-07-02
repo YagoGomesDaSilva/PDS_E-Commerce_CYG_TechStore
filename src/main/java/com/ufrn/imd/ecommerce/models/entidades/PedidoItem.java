@@ -1,6 +1,7 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +22,9 @@ public class PedidoItem {
 
     @Column
     private Long quantidade;
+
+    @Enumerated(EnumType.STRING)
+    private StatusPedidoItem statusPedidoItem;
 
     public PedidoItem() {
     }
@@ -57,5 +61,17 @@ public class PedidoItem {
 
     public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public StatusPedidoItem getStatusPedido() {
+        return statusPedidoItem;
+    }
+
+    public void setStatusPedido(StatusPedidoItem statusPedidoItem) {
+        this.statusPedidoItem = statusPedidoItem;
     }
 }

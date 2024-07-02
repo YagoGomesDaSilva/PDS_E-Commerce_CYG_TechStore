@@ -46,7 +46,7 @@ public class PedidoService {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(dto.getValorTotal());
         pedido.setData(LocalDate.now());
-//        pedido.setUsuario(usuario);
+        pedido.setUsuario(usuario);
 
         Set<PedidoItem> pedidoItems = converterItems(pedido, dto.getItems());
         pedidoRepository.save(pedido);

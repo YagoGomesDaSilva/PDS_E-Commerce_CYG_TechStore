@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.ufrn.imd.ecommerce.enums.StatusPedido;
 import com.ufrn.imd.ecommerce.enums.TipoPagamento;
 import jakarta.persistence.*;
 
@@ -23,8 +24,8 @@ public class Pedido {
     @Column
     @Temporal(TemporalType.DATE)
     private LocalDate data;
-    @Column(columnDefinition = "VARCHAR(20)")
-    private String situacao;
+    @Enumerated(EnumType.STRING)
+    private StatusPedido statusPedido;
     @Column
     @Enumerated(EnumType.STRING)
     private TipoPagamento tipoPagamento;
@@ -42,12 +43,12 @@ public class Pedido {
     }
 
 
-    public Pedido(double valorTotal, double valorFrete, double valorTotalItens, LocalDate data, String situacao, TipoPagamento tipoPagamento, Usuario usuario, Set<PedidoItem> pedidoItems) {
+    public Pedido(double valorTotal, double valorFrete, double valorTotalItens, LocalDate data, StatusPedido statusPedido, TipoPagamento tipoPagamento, Usuario usuario, Set<PedidoItem> pedidoItems) {
         this.valorTotal = valorTotal;
         this.valorFrete = valorFrete;
         this.valorTotalItens = valorTotalItens;
         this.data = data;
-        this.situacao = situacao;
+        this.statusPedido = statusPedido;
         this.tipoPagamento = tipoPagamento;
         this.usuario = usuario;
         this.pedidoItems = pedidoItems;
@@ -93,12 +94,12 @@ public class Pedido {
         this.data = data;
     }
 
-    public String getSituacao() {
-        return situacao;
+    public StatusPedido getStatusPedido() {
+        return statusPedido;
     }
 
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
+    public void setStatusPedido(StatusPedido statusPedido) {
+        this.statusPedido = statusPedido;
     }
 
     public TipoPagamento getTipoPagamento() {
@@ -130,11 +131,11 @@ public class Pedido {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pedido pedido = (Pedido) o;
-        return Objects.equals(id, pedido.id) && Objects.equals(valorTotal, pedido.valorTotal) && Objects.equals(valorFrete, pedido.valorFrete) && Objects.equals(valorTotalItens, pedido.valorTotalItens) && Objects.equals(data, pedido.data) && Objects.equals(situacao, pedido.situacao) && tipoPagamento == pedido.tipoPagamento && Objects.equals(usuario, pedido.usuario) && Objects.equals(pedidoItems, pedido.pedidoItems);
+        return Objects.equals(id, pedido.id) && Objects.equals(valorTotal, pedido.valorTotal) && Objects.equals(valorFrete, pedido.valorFrete) && Objects.equals(valorTotalItens, pedido.valorTotalItens) && Objects.equals(data, pedido.data) && Objects.equals(statusPedido, pedido.statusPedido) && tipoPagamento == pedido.tipoPagamento && Objects.equals(usuario, pedido.usuario) && Objects.equals(pedidoItems, pedido.pedidoItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, valorTotal, valorFrete, valorTotalItens, data, situacao, tipoPagamento, usuario, pedidoItems);
+        return Objects.hash(id, valorTotal, valorFrete, valorTotalItens, data, statusPedido, tipoPagamento, usuario, pedidoItems);
     }
 }
