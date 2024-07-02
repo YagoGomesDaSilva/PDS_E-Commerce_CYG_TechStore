@@ -19,12 +19,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final UsuarioRepository usuarioRepository;
-    private final AnuncianteRepository anuncianteRepository;
 
-    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository, AnuncianteRepository anuncianteRepository) {
+    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository) {
         this.tokenService = tokenService;
         this.usuarioRepository = usuarioRepository;
-        this.anuncianteRepository = anuncianteRepository;
     }
 
     @Override
@@ -33,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             String login = tokenService.validateToken(token);
 
-            UserDetails user = anuncianteRepository.findByEmail(login);
+            UserDetails user = usuarioRepository.findByEmail(login);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

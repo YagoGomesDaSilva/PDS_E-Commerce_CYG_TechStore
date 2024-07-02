@@ -8,14 +8,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class PedidoDTO {
-    private BigDecimal valorTotal;
+    private double valorTotal;
     private List<PedidoItemDTO> items;
 
-    public BigDecimal getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
+    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
 

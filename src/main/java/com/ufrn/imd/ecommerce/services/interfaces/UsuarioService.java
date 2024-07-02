@@ -1,19 +1,19 @@
 package com.ufrn.imd.ecommerce.services.interfaces;
 
 
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioAbstrato;
+import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface UsuarioService {
-    public UsuarioAbstrato findUsuario(Long idUsuario);
+    public Usuario findUsuario(Long idUsuario);
 
-    public UsuarioAbstrato createUsuario(UsuarioAbstrato usuario);
+    public Usuario createUsuario(Usuario usuario);
 
-    public UsuarioAbstrato updateUsuario(UsuarioAbstrato usuario);
+    public Usuario updateUsuario(Usuario usuario);
 
-    public void deletarUsuario(UsuarioAbstrato usuario);
+    public void deletarUsuario(Usuario usuario);
 
-    public UsuarioAbstrato findUsuarioByToken(HttpServletRequest request);
+    public Usuario findUsuarioByToken(HttpServletRequest request);
 
-    public UsuarioAbstrato findByEmail(String email);
+    public Usuario findByEmail(String email);
 }

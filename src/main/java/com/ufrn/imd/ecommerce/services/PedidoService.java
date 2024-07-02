@@ -42,7 +42,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido createPedido(PedidoDTO dto, UsuarioAbstrato usuario)  {
+    public Pedido createPedido(PedidoDTO dto, Usuario usuario)  {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(dto.getValorTotal());
         pedido.setData(LocalDate.now());

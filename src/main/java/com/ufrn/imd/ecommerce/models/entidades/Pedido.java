@@ -15,12 +15,11 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private double valorTotal;
     @Column(scale = 2)
-    private BigDecimal valorTotal;
+    private double valorFrete;
     @Column(scale = 2)
-    private BigDecimal valorFrete;
-    @Column(scale = 2)
-    private BigDecimal valorTotalItens;
+    private double valorTotalItens;
     @Column
     @Temporal(TemporalType.DATE)
     private LocalDate data;
@@ -33,7 +32,7 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Cliente usuario;
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "pedido")
     private Set<PedidoItem> pedidoItems;
@@ -43,7 +42,7 @@ public class Pedido {
     }
 
 
-    public Pedido(BigDecimal valorTotal, BigDecimal valorFrete, BigDecimal valorTotalItens, LocalDate data, String situacao, TipoPagamento tipoPagamento, Cliente usuario, Set<PedidoItem> pedidoItems) {
+    public Pedido(double valorTotal, double valorFrete, double valorTotalItens, LocalDate data, String situacao, TipoPagamento tipoPagamento, Usuario usuario, Set<PedidoItem> pedidoItems) {
         this.valorTotal = valorTotal;
         this.valorFrete = valorFrete;
         this.valorTotalItens = valorTotalItens;
@@ -62,27 +61,27 @@ public class Pedido {
         this.id = id;
     }
 
-    public BigDecimal getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
+    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
 
-    public BigDecimal getValorFrete() {
+    public double getValorFrete() {
         return valorFrete;
     }
 
-    public void setValorFrete(BigDecimal valorFrete) {
+    public void setValorFrete(double valorFrete) {
         this.valorFrete = valorFrete;
     }
 
-    public BigDecimal getValorTotalItens() {
+    public double getValorTotalItens() {
         return valorTotalItens;
     }
 
-    public void setValorTotalItens(BigDecimal valorTotalItens) {
+    public void setValorTotalItens(double valorTotalItens) {
         this.valorTotalItens = valorTotalItens;
     }
 
@@ -110,11 +109,11 @@ public class Pedido {
         this.tipoPagamento = tipoPagamento;
     }
 
-    public Cliente getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Cliente usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

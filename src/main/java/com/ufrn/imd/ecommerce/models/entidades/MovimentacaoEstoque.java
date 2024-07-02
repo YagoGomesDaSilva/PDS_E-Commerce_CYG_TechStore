@@ -28,7 +28,7 @@ public class MovimentacaoEstoque {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Cliente usuario;
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "estoque_id")
@@ -37,7 +37,7 @@ public class MovimentacaoEstoque {
     public MovimentacaoEstoque() {
     }
 
-    public MovimentacaoEstoque(LocalDate dataEmissao, String numDocumento, LocalDate dataEntrada, LocalDate dataSaida, String tipoMovimentacao, Cliente usuario, Estoque estoque) {
+    public MovimentacaoEstoque(LocalDate dataEmissao, String numDocumento, LocalDate dataEntrada, LocalDate dataSaida, String tipoMovimentacao, Usuario usuario, Estoque estoque) {
         this.dataEmissao = dataEmissao;
         this.numDocumento = numDocumento;
         this.dataEntrada = dataEntrada;
@@ -95,11 +95,11 @@ public class MovimentacaoEstoque {
         this.tipoMovimentacao = tipoMovimentacao;
     }
 
-    public Cliente getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Cliente usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

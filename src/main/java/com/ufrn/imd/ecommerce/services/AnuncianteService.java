@@ -5,7 +5,7 @@ import com.ufrn.imd.ecommerce.config.TokenService;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
-import com.ufrn.imd.ecommerce.models.entidades.UsuarioAbstrato;
+import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
 import com.ufrn.imd.ecommerce.services.interfaces.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,7 +46,7 @@ public class AnuncianteService implements UsuarioService {
     }
 
     @Override
-    public Anunciante createUsuario(UsuarioAbstrato usuario) {
+    public Anunciante createUsuario(Usuario usuario) {
         Anunciante anunciante = (Anunciante) usuario;
         if(anunciante.getNomeAnunciante().equals("")){
             anunciante.setNomeAnunciante(usuario.getNome());
@@ -59,7 +59,7 @@ public class AnuncianteService implements UsuarioService {
     }
 
     @Override
-    public Anunciante updateUsuario(UsuarioAbstrato usuario) {
+    public Anunciante updateUsuario(Usuario usuario) {
         Anunciante anunciante = (Anunciante) usuario;
         if(anuncianteRepository.findById(anunciante.getId()).isPresent()){
             return anuncianteRepository.save(anunciante);
@@ -69,7 +69,7 @@ public class AnuncianteService implements UsuarioService {
     }
 
     @Override
-    public void deletarUsuario(UsuarioAbstrato usuario) {
+    public void deletarUsuario(Usuario usuario) {
         Anunciante anunciante = (Anunciante) usuario;
         if(anuncianteRepository.findById(anunciante.getId()).isPresent()){
             anuncianteRepository.delete(anunciante);

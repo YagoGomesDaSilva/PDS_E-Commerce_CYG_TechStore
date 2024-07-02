@@ -28,7 +28,7 @@ public class Endereco {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Anunciante usuario;
+    private Usuario usuario;
 
     public Endereco() {
 
@@ -109,11 +109,11 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public Anunciante getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Anunciante usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

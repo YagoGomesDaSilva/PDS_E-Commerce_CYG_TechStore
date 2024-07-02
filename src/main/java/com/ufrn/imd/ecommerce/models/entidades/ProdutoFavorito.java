@@ -4,15 +4,13 @@ import jakarta.persistence.*;
 
 @Entity
 public class ProdutoFavorito {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Cliente cliente;
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
@@ -20,8 +18,8 @@ public class ProdutoFavorito {
 
     public ProdutoFavorito() {}
 
-    public ProdutoFavorito(Cliente cliente, Produto produto) {
-        this.cliente = cliente;
+    public ProdutoFavorito(Usuario usuario, Produto produto) {
+        this.usuario = usuario;
         this.produto = produto;
     }
 
@@ -33,12 +31,12 @@ public class ProdutoFavorito {
         this.id = id;
     }
 
-    public Cliente getUsuarioConcreto() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioConcreto(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Produto getProduto() {

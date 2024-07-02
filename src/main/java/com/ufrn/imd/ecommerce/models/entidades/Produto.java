@@ -22,7 +22,7 @@ public class Produto {
     private String descricao;
 
     @Column(scale = 2)
-    private BigDecimal valorTotal;
+    private double valorTotal;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String marca;
@@ -57,7 +57,7 @@ public class Produto {
     }
 
 
-    public Produto(String nome, String descricao, BigDecimal valorTotal, String marca, String observacao, Anunciante anunciante, Anuncio anuncio, List<Imagem> imagems, List<Categoria> categorias, List<Estoque> estoques, Set<PedidoItem> pedidoItems) {
+    public Produto(String nome, String descricao, double valorTotal, String marca, String observacao, Anunciante anunciante, Anuncio anuncio, List<Imagem> imagems, List<Categoria> categorias, List<Estoque> estoques, Set<PedidoItem> pedidoItems) {
         this.nome = nome;
         this.descricao = descricao;
         this.valorTotal = valorTotal;
@@ -95,11 +95,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public BigDecimal getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
+    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
 

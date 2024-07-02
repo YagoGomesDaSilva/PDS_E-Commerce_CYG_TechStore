@@ -3,31 +3,16 @@ package com.ufrn.imd.ecommerce.models.entidades;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufrn.imd.ecommerce.enums.TipoUsuario;
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_perfil", discriminatorType = DiscriminatorType.STRING)
-public class Anunciante extends UsuarioAbstrato implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-
+public class Anunciante extends Usuario {
     String nomeAnunciante;
 
     @Column(columnDefinition = "VARCHAR(14)")
     String documento;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    protected List<Endereco> enderecos;
 
     @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -102,10 +87,6 @@ public class Anunciante extends UsuarioAbstrato implements UserDetails {
         this.estoques = estoques;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,45 +96,6 @@ public class Anunciante extends UsuarioAbstrato implements UserDetails {
         return Objects.equals(documento, that.documento) && Objects.equals(anuncios, that.anuncios) && Objects.equals(produtos, that.produtos) && Objects.equals(estoques, that.estoques);
     }
 
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.tipoUsuario == TipoUsuario.ADMIN){
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        } else {
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-    }
-
-    @Override
-    public String getPassword() {
-        return this.senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 //    @Override
 //    public int hashCode() {
 //        return Objects.hash(super.hashCode(), documento, anuncios, produtos, estoques);

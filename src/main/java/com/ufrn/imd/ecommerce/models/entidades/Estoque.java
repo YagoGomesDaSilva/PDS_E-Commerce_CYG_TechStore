@@ -20,8 +20,6 @@ public class Estoque {
     @Column(columnDefinition = "VARCHAR(20)")
     private String localEstoque;
 
-    @OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MovimentacaoEstoque> movimentacoesEstoque;
     @ManyToOne
     @JoinColumn(name = "anunciante_id")
     @JsonIgnore
@@ -35,11 +33,10 @@ public class Estoque {
 
     }
 
-    public Estoque(String numDocumento, Integer quantidade, String localEstoque, List<MovimentacaoEstoque> movimentacoesEstoque, Anunciante anunciante, Produto produto) {
+    public Estoque(String numDocumento, Integer quantidade, String localEstoque, Anunciante anunciante, Produto produto) {
         this.numDocumento = numDocumento;
         this.quantidade = quantidade;
         this.localEstoque = localEstoque;
-        this.movimentacoesEstoque = movimentacoesEstoque;
         this.anunciante = anunciante;
         this.produto = produto;
     }
@@ -76,14 +73,6 @@ public class Estoque {
         this.localEstoque = localEstoque;
     }
 
-    public List<MovimentacaoEstoque> getMovimentacoesEstoque() {
-        return movimentacoesEstoque;
-    }
-
-    public void setMovimentacoesEstoque(List<MovimentacaoEstoque> movimentacoesEstoque) {
-        this.movimentacoesEstoque = movimentacoesEstoque;
-    }
-
     public Anunciante getAnunciante() {
         return anunciante;
     }
@@ -105,11 +94,11 @@ public class Estoque {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Estoque estoque = (Estoque) o;
-        return Objects.equals(id, estoque.id) && Objects.equals(numDocumento, estoque.numDocumento) && Objects.equals(quantidade, estoque.quantidade) && Objects.equals(localEstoque, estoque.localEstoque) && Objects.equals(movimentacoesEstoque, estoque.movimentacoesEstoque) && Objects.equals(anunciante, estoque.anunciante) && Objects.equals(produto, estoque.produto);
+        return Objects.equals(id, estoque.id) && Objects.equals(numDocumento, estoque.numDocumento) && Objects.equals(quantidade, estoque.quantidade) && Objects.equals(localEstoque, estoque.localEstoque) && Objects.equals(anunciante, estoque.anunciante) && Objects.equals(produto, estoque.produto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numDocumento, quantidade, localEstoque, movimentacoesEstoque, anunciante, produto);
+        return Objects.hash(id, numDocumento, quantidade, localEstoque, anunciante, produto);
     }
 }

@@ -42,7 +42,7 @@ public class ProdutoService {
 
     public Produto createProduto(Produto produto, Anunciante anunciante) {
         produto.setAnunciante(anunciante);
-        if(produto.getValorTotal().doubleValue() <= 0.0) {
+        if(produto.getValorTotal() <= 0.0) {
             throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_VALOR_NEGATIVO);
         }
         if(produto.getNome().equals("") || produto.getMarca().equals("")){

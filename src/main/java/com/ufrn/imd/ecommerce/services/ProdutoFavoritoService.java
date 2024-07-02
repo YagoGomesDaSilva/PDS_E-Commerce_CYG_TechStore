@@ -2,7 +2,7 @@ package com.ufrn.imd.ecommerce.services;
 
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import com.ufrn.imd.ecommerce.models.entidades.ProdutoFavorito;
-import com.ufrn.imd.ecommerce.models.entidades.Cliente;
+import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import com.ufrn.imd.ecommerce.repositories.ProdutoFavoritoRepository;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
@@ -24,12 +24,12 @@ public class ProdutoFavoritoService {
 
 
     public void addFavoriteProduct(Long userId, Long productId) {
-        Cliente usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Produto produto = produtoRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
 
-        if (!produtoFavoritoRepository.findByClienteAndProduto(usuario, produto).isPresent()) {
+        if (!produtoFavoritoRepository.findByUsuarioAndProduto(usuario, produto).isPresent()) {
             ProdutoFavorito favorito = new ProdutoFavorito();
-            favorito.setUsuarioConcreto(usuario);
+            favorito.setUsuario(usuario);
             favorito.setProduto(produto);
 
             produtoFavoritoRepository.save(favorito);
@@ -37,13 +37,13 @@ public class ProdutoFavoritoService {
     }
 
     public void removeFavoriteProduct(Long userId, Long productId) {
-        Cliente usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Produto produto = produtoRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
-        produtoFavoritoRepository.deleteByClienteAndProduto(usuario, produto);
+        produtoFavoritoRepository.deleteByUsuarioAndProduto(usuario, produto);
     }
 
-    public List<Produto> getFavoriteProducts(Cliente usuario) {
-        return produtoFavoritoRepository.findByCliente(usuario).stream()
+    public List<Produto> getFavoriteProducts(Usuario usuario) {
+        return produtoFavoritoRepository.findByUsuario(usuario).stream()
                 .map(ProdutoFavorito::getProduto)
                 .collect(Collectors.toList());
     }

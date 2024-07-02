@@ -6,10 +6,9 @@ import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Pedido;
-import com.ufrn.imd.ecommerce.models.entidades.Cliente;
 import com.ufrn.imd.ecommerce.services.AnuncianteService;
 import com.ufrn.imd.ecommerce.services.PedidoService;
-import com.ufrn.imd.ecommerce.services.ClienteService;
+import com.ufrn.imd.ecommerce.services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,7 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
     @Autowired
-    private ClienteService clienteService;
+    private UsuarioService usuarioService;
     @Autowired
     private AnuncianteService anuncianteService;
 

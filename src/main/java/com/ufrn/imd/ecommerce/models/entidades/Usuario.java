@@ -3,15 +3,21 @@ package com.ufrn.imd.ecommerce.models.entidades;
 import com.ufrn.imd.ecommerce.enums.TipoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-@MappedSuperclass
-public abstract class UsuarioAbstrato {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Usuario implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(columnDefinition = "VARCHAR(50)")
     protected String nome;
     @Email
@@ -26,15 +32,34 @@ public abstract class UsuarioAbstrato {
     protected Double credito;
     protected TipoUsuario tipoUsuario;
 
-    public UsuarioAbstrato() {
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    protected List<Endereco> enderecos;
+
+    public Usuario() {
     }
 
-    public UsuarioAbstrato(String nome, String email, String senha, String numeroTelefone, Double credito, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String email, String senha, String numeroTelefone, Double credito, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.numeroTelefone = numeroTelefone;
         this.credito = credito;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -91,12 +116,51 @@ public abstract class UsuarioAbstrato {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UsuarioAbstrato that = (UsuarioAbstrato) o;
+        Usuario that = (Usuario) o;
         return tipo == that.tipo && Objects.equals(nome, that.nome) && Objects.equals(email, that.email) && Objects.equals(senha, that.senha) && Objects.equals(numeroTelefone, that.numeroTelefone) && Objects.equals(credito, that.credito);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(nome, email, senha, numeroTelefone, tipo, credito);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.tipoUsuario == TipoUsuario.ADMIN){
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
