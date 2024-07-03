@@ -25,6 +25,7 @@ public class Pedido {
     @Temporal(TemporalType.DATE)
     private LocalDate data;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(30)")
     private StatusPedido statusPedido;
     @Column
     @Enumerated(EnumType.STRING)

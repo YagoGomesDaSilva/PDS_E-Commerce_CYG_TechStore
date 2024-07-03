@@ -11,6 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
+
+    @Query("select e from Estoque e where e.produto.id = :idProduto")
+    Optional<Estoque> findByProduto(Long idProduto);
     // Consulta para buscar todos os registros de Estoque com os relacionamentos carregados de forma ansiosa
 //    @Query("SELECT DISTINCT e FROM Estoque e LEFT JOIN FETCH e.movimentacoesEstoque LEFT JOIN FETCH e.anunciante LEFT JOIN FETCH e.produto")
 //    List<Estoque> findAllEstoquesWithDetails();

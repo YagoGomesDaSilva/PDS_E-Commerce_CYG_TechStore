@@ -50,10 +50,10 @@ public class AuthController {
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
             token = tokenService.generateToken((Anunciante) auth.getPrincipal());
-            usuarioService.findByEmail(data.getEmail());
+
+
+
             return ResponseEntity.ok(new AuthDTO(token, "anunciante"));
-        } catch (AnuncioExCustom err) {
-            return ResponseEntity.ok(new AuthDTO(token, "cliente"));
         } catch (RuntimeException err){
             return ResponseEntity.badRequest().body(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
         }
@@ -73,6 +73,9 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
             String token = tokenService.generateToken((Anunciante) auth.getPrincipal());
+
+
+
             return ResponseEntity.ok(token);
         } catch (UsuarioExCustom err) {
             return ResponseEntity.badRequest().body(err);

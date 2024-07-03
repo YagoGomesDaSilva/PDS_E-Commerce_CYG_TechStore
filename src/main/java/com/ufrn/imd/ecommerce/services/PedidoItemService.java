@@ -51,7 +51,7 @@ public class PedidoItemService {
         PedidoItem pedidoItem = new PedidoItem();
         pedidoItem.setStatusPedido(StatusPedidoItem.CARRINHO);
         pedidoItem.setProduto(anuncio.getProduto());
-        pedidoItem.setQuantidade(1L);
+        pedidoItem.setQuantidade(1);
 
         if(!pedido.isPresent()){
             Pedido novoPedido = new Pedido();

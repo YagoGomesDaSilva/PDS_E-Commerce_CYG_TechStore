@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 public class PedidoItemDTO {
     private Long produto;
-    private Long quantidade;
+    private Integer quantidade;
 
     public Long getProduto() {
         return produto;
@@ -15,11 +15,11 @@ public class PedidoItemDTO {
     public void setProduto(Long produto) {
         this.produto = produto;
     }
-    public Long getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Long quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 }

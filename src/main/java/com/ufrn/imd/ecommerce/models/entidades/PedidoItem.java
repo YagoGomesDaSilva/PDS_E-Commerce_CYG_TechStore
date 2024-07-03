@@ -21,7 +21,7 @@ public class PedidoItem {
     private Pedido pedido;
 
     @Column
-    private Long quantidade;
+    private Integer quantidade;
 
     @Enumerated(EnumType.STRING)
     private StatusPedidoItem statusPedidoItem;
@@ -29,7 +29,7 @@ public class PedidoItem {
     public PedidoItem() {
     }
 
-    public PedidoItem(Produto produto, Pedido pedido, Long quantidade) {
+    public PedidoItem(Produto produto, Pedido pedido, Integer quantidade) {
         this.produto = produto;
         this.pedido = pedido;
         this.quantidade = quantidade;
@@ -55,11 +55,11 @@ public class PedidoItem {
         this.pedido = pedido;
     }
 
-    public Long getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Long quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 
