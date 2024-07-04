@@ -51,8 +51,6 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(usernamePassword);
             token = tokenService.generateToken((Anunciante) auth.getPrincipal());
 
-
-
             return ResponseEntity.ok(new AuthDTO(token, "anunciante"));
         } catch (RuntimeException err){
             return ResponseEntity.badRequest().body(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
@@ -73,9 +71,6 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
             String token = tokenService.generateToken((Anunciante) auth.getPrincipal());
-
-
-
             return ResponseEntity.ok(token);
         } catch (UsuarioExCustom err) {
             return ResponseEntity.badRequest().body(err);

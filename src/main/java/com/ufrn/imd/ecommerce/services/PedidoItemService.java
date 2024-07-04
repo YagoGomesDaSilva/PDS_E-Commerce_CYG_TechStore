@@ -73,7 +73,7 @@ public class PedidoItemService {
         }
     }
 
-    public List<PedidoItem> findAllItemsInCart(Long idUsuario) {
-        return pedidoItemRepository.findAllByUsuarioAndStatus(idUsuario, StatusPedidoItem.CARRINHO);
+    public List<PedidoItem> findAllItemsByStatus(Long idUsuario, StatusPedidoItem status) {
+        return pedidoItemRepository.findAllByUsuarioAndStatus(idUsuario, status);
     }
 }

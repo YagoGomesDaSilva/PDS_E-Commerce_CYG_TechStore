@@ -3,6 +3,7 @@ package com.ufrn.imd.ecommerce.services;
 import com.ufrn.imd.ecommerce.enums.StatusPedido;
 import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.enunsEx.EstoqueEnumEx;
+import com.ufrn.imd.ecommerce.error.enunsEx.PagamentoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.PedidoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.*;
@@ -12,6 +13,7 @@ import com.ufrn.imd.ecommerce.models.DTO.PedidoResponseDTO;
 import com.ufrn.imd.ecommerce.models.entidades.*;
 import com.ufrn.imd.ecommerce.repositories.*;
 import com.ufrn.imd.ecommerce.services.interfaces.DescontoService;
+import com.ufrn.imd.ecommerce.services.interfaces.PagamentoService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -31,12 +33,14 @@ public class PedidoService {
 
     private final EstoqueRepository estoqueRepository;
     private final DescontoRepository descontoRepository;
+    private final PagamentoService pagamentoService;
+    private final EnderecoRepository enderecoRepository;
 
     public PedidoService(PedidoRepository pedidoRepository,
                          PedidoItemRepository pedidoItemRepository,
                          UsuarioRepository usuarioRepository,
                          ProdutoRepository produtoRepository, @Qualifier("descontoPorAnuncianteService") DescontoService descontoService,
-                         EstoqueRepository estoqueRepository, DescontoRepository descontoRepository){
+                         EstoqueRepository estoqueRepository, DescontoRepository descontoRepository, @Qualifier("pagamentoParaAnunciante") PagamentoService pagamentoService, EnderecoRepository enderecoRepository){
 
         this.pedidoRepository = pedidoRepository;
         this.pedidoItemRepository = pedidoItemRepository;
@@ -45,6 +49,8 @@ public class PedidoService {
         this.descontoService = descontoService;
         this.estoqueRepository = estoqueRepository;
         this.descontoRepository = descontoRepository;
+        this.pagamentoService = pagamentoService;
+        this.enderecoRepository = enderecoRepository;
     }
 
     @Transactional
@@ -75,7 +81,7 @@ public class PedidoService {
 
         descontoService.calcularDesconto(valorPorAnunciante, pedido);
 
-        Double valorFrete = calcularFrete(pedido.getUsuario().getEnderecos().get(0).getEstado());
+        Double valorFrete = calcularFrete(enderecoRepository.findByUsuario(pedido.getUsuario()).getEstado());
         pedido.setStatusPedido(StatusPedido.AGUARDANDO_PAGAMENTO);
         pedido.setValorTotal(valorTotal);
         pedido.setValorFrete(valorFrete);
@@ -99,72 +105,6 @@ public class PedidoService {
             return 70.00;
         }
     }
-
-//    @Transactional
-//    public Pedido createPedido(PedidoDTO dto, Usuario usuario)  {
-//        Pedido pedido = new Pedido();
-//        pedido.setValorTotal(dto.getValorTotal());
-//        pedido.setData(LocalDate.now());
-//        pedido.setUsuario(usuario);
-//
-//        Set<PedidoItem> pedidoItems = converterItems(pedido, dto.getItems());
-//        pedidoRepository.save(pedido);
-//        pedidoItemRepository.saveAll(pedidoItems);
-//        pedido.setPedidoItems(pedidoItems);
-//        return pedido;
-//    }
-
-    private Set<PedidoItem> converterItems(Pedido pedido, List<PedidoItemDTO> items)  {
-        if(items.isEmpty()){
-            throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);
-        }
-
-        return items
-                .stream()
-                .map( dto -> {
-                    Long idProduto = dto.getProduto();
-                    Produto produto = produtoRepository
-                            .findById(idProduto)
-                            .orElseThrow(() -> new ProdutoExCustom(ProdutoEnumEx.PRODUTO_INVALIDO));
-
-                    int qtdProduto = produto.getEstoques().stream()
-                            .mapToInt(Estoque::getQuantidade).sum();
-
-                    if (qtdProduto < dto.getQuantidade() ) {
-                        throw new EstoqueExCustom(EstoqueEnumEx.ESTOQUE_NAO_ENCONTRADO);
-                    }
-
-                    // Diminuir a quantidade do produto no estoque
-
-                    Integer quantidadeRestante = dto.getQuantidade();
-                    for (Estoque estoque : produto.getEstoques()) {
-                        int quantidadeNoEstoque = estoque.getQuantidade();
-
-                        if (quantidadeNoEstoque >= quantidadeRestante) {
-                            estoque.setQuantidade((int) (quantidadeNoEstoque - quantidadeRestante));
-                            estoqueRepository.save(estoque); // Persistir alteração no banco
-                            quantidadeRestante = 0;
-                            break;
-                        }
-                        else {
-                            estoque.setQuantidade(0);
-                            estoqueRepository.save(estoque); // Persistir alteração no banco
-                            quantidadeRestante -= quantidadeNoEstoque;
-                            // Continue no loop para subtrair o restante dos próximos estoques
-                        }
-                    }
-
-                    if(quantidadeRestante>0)
-                        throw new EstoqueExCustom(EstoqueEnumEx.QUANTIDADE_INVALIDA);
-
-                    PedidoItem pedidoItems = new PedidoItem();
-                    pedidoItems.setQuantidade(dto.getQuantidade());
-                    pedidoItems.setPedido(pedido);
-                    pedidoItems.setProduto(produto);
-                    return pedidoItems;
-                }).collect(Collectors.toSet());
-    }
-
 
     public Pedido findPedido(Long idPedido)  {
         Pedido pedido = pedidoRepository.findById(idPedido).isPresent() ? pedidoRepository.findById(idPedido).get() : null;
@@ -219,11 +159,12 @@ public class PedidoService {
                 itemPorAnunciante.setIdAnunciante(anunciante.getId());
                 itemPorAnunciante.addItem(item);
 
-                Desconto desconto = descontoRepository.findByPedidoAndAnunciante(pedido, anunciante);
-                itemPorAnunciante.setDesconto(desconto.getValorDesconto());
+                Optional<Desconto> desconto = descontoRepository.findByPedidoAndAnunciante(pedido, anunciante);
+                if(desconto.isPresent()){
+                    itemPorAnunciante.setDesconto(desconto.get().getValorDesconto());
+                    descontoTotal += desconto.get().getValorDesconto();
+                }
                 pedidoResponseDTO.getItensAnunciante().add(itemPorAnunciante);
-
-                descontoTotal += desconto.getValorDesconto();
             }
         }
 
@@ -243,5 +184,25 @@ public class PedidoService {
         }
 
         return pedido.get();
+    }
+
+    @Transactional
+    public Double realizarPagamento(Pedido pedido, List<PedidoItem> itens, Double valorPagamento) {
+        Double desconto = descontoRepository.sumAllDescontosByPedido(pedido.getId());
+        Double valorTotalAPagar = pedido.getValorFrete() + pedido.getValorTotal() - desconto;
+        if(valorTotalAPagar > valorPagamento){
+            throw new PagamentoExCustom(PagamentoEnumEx.VALOR_INVALIDO);
+        }
+        valorPagamento -= valorTotalAPagar;
+        pedido.setStatusPedido(StatusPedido.FINALIZADO);
+        for(PedidoItem item : itens) {
+            item.setStatusPedido(StatusPedidoItem.FINALIZADO);
+        }
+        pedidoItemRepository.saveAll(itens);
+        pedidoRepository.save(pedido);
+
+        pagamentoService.repassarPagamento(pedido, itens);
+
+        return valorPagamento;
     }
 }

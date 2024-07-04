@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.controllers;
 
+import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.exceptions.AnuncioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
 import com.ufrn.imd.ecommerce.models.entidades.Pedido;
@@ -42,7 +43,7 @@ public class CarrinhoController {
 
     @GetMapping("/{idUsuario}")
     public List<PedidoItem> findAllItems(@PathVariable Long idUsuario){
-        return pedidoItemService.findAllItemsInCart(idUsuario);
+        return pedidoItemService.findAllItemsByStatus(idUsuario, StatusPedidoItem.CARRINHO);
     }
 
     @DeleteMapping ("/{idPedidoItem}")

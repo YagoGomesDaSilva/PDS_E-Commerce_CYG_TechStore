@@ -7,6 +7,7 @@ import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
+import com.ufrn.imd.ecommerce.repositories.EnderecoRepository;
 import com.ufrn.imd.ecommerce.services.interfaces.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class AnuncianteService implements UsuarioService {
     private TokenService tokenService;
     @Autowired
     private SecurityFilter securityFilter;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public List<Anunciante> findAnunciantes() {
         List<Anunciante> anunciantes = anuncianteRepository.findAll();
@@ -55,6 +58,9 @@ public class AnuncianteService implements UsuarioService {
         anunciante.setEmail(usuario.getEmail());
         anunciante.setNumeroTelefone(usuario.getNumeroTelefone());
         anunciante.setSenha(usuario.getSenha());
+
+        anunciante.getEnderecos().get(0).setUsuario(anunciante);
+
         return anuncianteRepository.save(anunciante);
     }
 

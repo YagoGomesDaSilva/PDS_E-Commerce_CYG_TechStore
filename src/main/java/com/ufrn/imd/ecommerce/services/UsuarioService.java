@@ -78,7 +78,7 @@ public class UsuarioService implements com.ufrn.imd.ecommerce.services.interface
         if(credito <= 0){
             throw new CreditoExCustom(CreditoEnumEx.VALOR_INVALIDO);
         }
-        usuario.setCredito(credito);
+        usuario.setCredito(usuario.getCredito() + credito);
         usuarioRepository.save(usuario);
     }
 }

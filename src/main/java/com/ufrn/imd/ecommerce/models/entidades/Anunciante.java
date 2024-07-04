@@ -89,15 +89,12 @@ public class Anunciante extends Usuario {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Anunciante that = (Anunciante) o;
-        return Objects.equals(documento, that.documento) && Objects.equals(anuncios, that.anuncios) && Objects.equals(produtos, that.produtos) && Objects.equals(estoques, that.estoques);
+        return this.getId() == that.getId();
     }
 
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(super.hashCode(), documento, anuncios, produtos, estoques);
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

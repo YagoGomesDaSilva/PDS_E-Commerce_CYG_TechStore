@@ -19,9 +19,8 @@ public class DescontoPorAnuncianteService implements DescontoService {
 
     @Override
     public void calcularDesconto(Map<Anunciante, Double> valorPorAnunciante, Pedido pedido) {
-        Desconto desconto = new Desconto();
-
         for(Map.Entry<Anunciante, Double> entry : valorPorAnunciante.entrySet()){
+            Desconto desconto = new Desconto();
             Anunciante anunciante = entry.getKey();
             Double valor = entry.getValue();
             if(valor >= 400){

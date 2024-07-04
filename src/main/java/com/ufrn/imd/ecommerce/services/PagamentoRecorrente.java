@@ -1,10 +1,14 @@
 package com.ufrn.imd.ecommerce.services;
 
-import com.ufrn.imd.ecommerce.services.interfaces.FormaPagamentoService;
+import com.ufrn.imd.ecommerce.models.entidades.Pedido;
+import com.ufrn.imd.ecommerce.models.entidades.PedidoItem;
+import com.ufrn.imd.ecommerce.services.interfaces.PagamentoService;
 
-public class PagamentoRecorrente implements FormaPagamentoService {
+import java.util.List;
+
+public class PagamentoRecorrente implements PagamentoService {
     @Override
-    public void calcularPagamento() {
+    public void repassarPagamento(Pedido pedido, List<PedidoItem> itens) {
 
     }
 }
