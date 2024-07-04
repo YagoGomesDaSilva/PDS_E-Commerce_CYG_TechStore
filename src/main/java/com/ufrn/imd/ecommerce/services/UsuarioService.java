@@ -1,7 +1,9 @@
 package com.ufrn.imd.ecommerce.services;
 
 import com.ufrn.imd.ecommerce.config.TokenService;
+import com.ufrn.imd.ecommerce.error.enunsEx.CreditoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.UsuarioEnumEx;
+import com.ufrn.imd.ecommerce.error.exceptions.CreditoExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import com.ufrn.imd.ecommerce.repositories.UsuarioRepository;
@@ -70,5 +72,13 @@ public class UsuarioService implements com.ufrn.imd.ecommerce.services.interface
     @Override
     public Usuario findByEmail(String email) {
         return null;
+    }
+
+    public void addCredito(Usuario usuario, Double credito) {
+        if(credito <= 0){
+            throw new CreditoExCustom(CreditoEnumEx.VALOR_INVALIDO);
+        }
+        usuario.setCredito(credito);
+        usuarioRepository.save(usuario);
     }
 }
