@@ -23,6 +23,7 @@ public class Endereco {
     private String referencia;
     @Column(columnDefinition = "VARCHAR(50)")
     private String bairro;
+    private String estado;
     @Column(columnDefinition = "VARCHAR(8)")
     private String cep;
 
@@ -115,6 +116,14 @@ public class Endereco {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override

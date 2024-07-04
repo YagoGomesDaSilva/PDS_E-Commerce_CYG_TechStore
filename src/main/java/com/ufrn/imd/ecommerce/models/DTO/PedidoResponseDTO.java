@@ -7,7 +7,9 @@ import java.util.Optional;
 public class PedidoResponseDTO {
     private List<ItemPorAnuncianteDTO> itensAnunciante;
     private Double valorTotal;
+    private Double valorTotalComFrete;
     private Double valorTotalComDesconto;
+    private Double valorFrete;
 
     public PedidoResponseDTO() {
         this.itensAnunciante = new ArrayList<>();
@@ -37,6 +39,22 @@ public class PedidoResponseDTO {
 
     public void setValorTotalComDesconto(Double valorTotalComDesconto) {
         this.valorTotalComDesconto = valorTotalComDesconto;
+    }
+
+    public Double getValorTotalComFrete() {
+        return valorTotalComFrete;
+    }
+
+    public void setValorTotalComFrete(Double valorTotalComFrete) {
+        this.valorTotalComFrete = valorTotalComFrete;
+    }
+
+    public Double getValorFrete() {
+        return valorFrete;
+    }
+
+    public void setValorFrete(Double valorFrete) {
+        this.valorFrete = valorFrete;
     }
 
     public Optional<ItemPorAnuncianteDTO> find(Long idAnunciante){

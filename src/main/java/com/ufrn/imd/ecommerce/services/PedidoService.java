@@ -7,7 +7,6 @@ import com.ufrn.imd.ecommerce.error.enunsEx.PedidoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.*;
 import com.ufrn.imd.ecommerce.models.DTO.ItemPorAnuncianteDTO;
-import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoItemDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoResponseDTO;
 import com.ufrn.imd.ecommerce.models.entidades.*;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,8 +48,9 @@ public class PedidoService {
     }
 
     @Transactional
-    public void realizarPedido(List<PedidoItem> itens, Pedido pedido) throws EstoqueExCustom {
+    public Pedido realizarPedido(List<PedidoItem> itens, Pedido pedido) throws EstoqueExCustom {
         Map<Anunciante, Double> valorPorAnunciante = new HashMap<Anunciante, Double>();
+        Double valorTotal = 0.0;
 
         for(PedidoItem item : itens){
             Optional <Estoque> estoque = estoqueRepository.findByProduto(item.getProduto().getId());
@@ -68,14 +67,37 @@ public class PedidoService {
             double valorTotalItem = item.getProduto().getValorTotal() * item.getQuantidade();
             valorPorAnunciante.merge(anunciante, valorTotalItem, Double::sum);
 
+            valorTotal += valorTotalItem;
+
             item.setStatusPedido(StatusPedidoItem.AGUARDANDO_PAGAMENTO);
             pedidoItemRepository.save(item);
         }
 
         descontoService.calcularDesconto(valorPorAnunciante, pedido);
 
+        Double valorFrete = calcularFrete(pedido.getUsuario().getEnderecos().get(0).getEstado());
         pedido.setStatusPedido(StatusPedido.AGUARDANDO_PAGAMENTO);
-        pedidoRepository.save(pedido);
+        pedido.setValorTotal(valorTotal);
+        pedido.setValorFrete(valorFrete);
+        return pedidoRepository.save(pedido);
+    }
+
+    private Double calcularFrete(String estado) {
+        if(estado.equals("RN") || estado.equals("PB") || estado.equals("PE") || estado.equals("AL")
+                || estado.equals("CE") || estado.equals("MA") || estado.equals("PI") || estado.equals("BA") || estado.equals("SE") ){
+            return 30.00;
+        } else if (estado.equals("RS") || estado.equals("SC") || estado.equals("PR")){
+            return 60.00;
+        } else if (estado.equals("SP") || estado.equals("RJ") || estado.equals("MG") || estado.equals("ES")){
+            return 50.00;
+        } else if (estado.equals("DF") || estado.equals("GO") || estado.equals("MT") || estado.equals("MS")) {
+            return 40.00;
+        } else if (estado.equals("AM") || estado.equals("RR") || estado.equals("AP") || estado.equals("PA")
+                || estado.equals("TO") || estado.equals("RO") || estado.equals("AC")) {
+            return 35.00;
+        } else {
+            return 70.00;
+        }
     }
 
 //    @Transactional
@@ -184,14 +206,11 @@ public class PedidoService {
 
     public PedidoResponseDTO prepararResposta(List<PedidoItem> itens, Pedido pedido) {
         PedidoResponseDTO pedidoResponseDTO = new PedidoResponseDTO();
-        Double valorTotal = 0.0;
         Double descontoTotal = 0.0;
 
         for(PedidoItem item : itens) {
             Anunciante anunciante = item.getProduto().getAnunciante();
             Optional<ItemPorAnuncianteDTO> itemPorAnuncianteDTO = pedidoResponseDTO.find(anunciante.getId());
-
-            valorTotal += (item.getProduto().getValorTotal() * item.getQuantidade());
 
             if(itemPorAnuncianteDTO.isPresent()){
                 itemPorAnuncianteDTO.get().addItem(item);
@@ -208,8 +227,11 @@ public class PedidoService {
             }
         }
 
-        pedidoResponseDTO.setValorTotal(valorTotal);
-        pedidoResponseDTO.setValorTotalComDesconto(valorTotal - descontoTotal);
+        pedidoResponseDTO.setValorTotal(pedido.getValorTotal());
+        pedidoResponseDTO.setValorFrete(pedido.getValorFrete());
+
+        pedidoResponseDTO.setValorTotalComFrete(pedido.getValorTotal() + pedido.getValorFrete());
+        pedidoResponseDTO.setValorTotalComDesconto(pedido.getValorTotal() + pedido.getValorFrete() - descontoTotal);
 
         return pedidoResponseDTO;
     }

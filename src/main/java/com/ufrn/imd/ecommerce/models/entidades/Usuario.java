@@ -103,6 +103,13 @@ public class Usuario implements UserDetails {
         this.tipo = tipo;
     }
 
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
 
     public Double getCredito() {
         return credito;
