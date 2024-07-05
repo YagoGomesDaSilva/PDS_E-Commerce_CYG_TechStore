@@ -24,12 +24,12 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public Optional<Produto> findProduto(Long idProduto)  {
+    public Produto findProduto(Long idProduto)  {
         Produto produto = produtoRepository.findById(idProduto).isPresent() ? produtoRepository.findById(idProduto).get() : null;
         if(produto == null){
             throw new ProdutoExCustom(ProdutoEnumEx.PRODUTO_NAO_ENCONTRADO);
         }
-        return Optional.of(produto);
+        return produto;
     }
 
     public List<Produto> findProdutos()  {

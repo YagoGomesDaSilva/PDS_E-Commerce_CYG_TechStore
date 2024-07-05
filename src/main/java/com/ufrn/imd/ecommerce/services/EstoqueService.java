@@ -39,10 +39,7 @@ public class EstoqueService {
         notificacaoSevices.add(notificacao);
     }
 
-    public Optional<Estoque> updateEstoque(Long anuncianteId, Produto produto, int quantidade) {
-        Optional<Anunciante> anuncianteOpc = anuncianteRepository.findAnuncianteByIdWithDetails(anuncianteId);
-        Anunciante anunciante = anuncianteOpc.orElseThrow(() -> new UsuarioExCustom(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO));
-
+    public Estoque updateEstoque(Anunciante anunciante, Produto produto, int quantidade) {
         List<Estoque> estoques = anunciante.getEstoques();
 
         Estoque estoque = verificaExistenciaProduto(estoques, produto.getId());
@@ -55,7 +52,7 @@ public class EstoqueService {
             throw new EstoqueExCustom(EstoqueEnumEx.QUANTIDADE_INVALIDA);
         }
         estoque.setQuantidade(novaQuantidade);
-        return Optional.of(estoqueRepository.save(estoque));
+        return estoqueRepository.save(estoque);
     }
 
     public Optional<Estoque> createEstoque(Estoque estoqueDTO, Long anuncianteId, Produto produto){
