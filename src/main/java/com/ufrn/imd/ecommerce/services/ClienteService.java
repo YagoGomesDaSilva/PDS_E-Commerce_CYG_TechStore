@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService implements com.ufrn.imd.ecommerce.services.interfaces.UsuarioService {
+public class ClienteService implements com.ufrn.imd.ecommerce.services.interfaces.UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Autowired
     private TokenService tokenService;
 
-    public UsuarioService() {
+    public ClienteService() {
         //to-do
     }
 

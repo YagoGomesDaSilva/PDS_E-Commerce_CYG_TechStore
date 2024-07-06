@@ -1,5 +1,6 @@
 package com.ufrn.imd.ecommerce.models.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -29,6 +30,7 @@ public class Endereco {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonIgnore
     private Usuario usuario;
 
     public Endereco() {

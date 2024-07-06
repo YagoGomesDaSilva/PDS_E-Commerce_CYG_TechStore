@@ -13,9 +13,9 @@ import com.ufrn.imd.ecommerce.repositories.AnuncianteRepository;
 import com.ufrn.imd.ecommerce.repositories.EstoqueRepository;
 import com.ufrn.imd.ecommerce.repositories.ProdutoRepository;
 import com.ufrn.imd.ecommerce.services.interfaces.NotificacaoSevice;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,18 +26,15 @@ public class EstoqueService {
     private final EstoqueRepository estoqueRepository;
     private final ProdutoRepository produtoRepository;
     private final AnuncianteRepository anuncianteRepository;
-    private List<NotificacaoSevice> notificacaoSevices;
+    private final NotificacaoSevice notificacaoSevice;
 
-    public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository, AnuncianteRepository anuncianteRepository) {
+    public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository, AnuncianteRepository anuncianteRepository, @Qualifier("notificacaoPreCompraService") NotificacaoSevice notificacaoSevice) {
         this.estoqueRepository = estoqueRepository;
         this.produtoRepository = produtoRepository;
         this.anuncianteRepository = anuncianteRepository;
-        this.notificacaoSevices = new ArrayList<>();
+        this.notificacaoSevice = notificacaoSevice;
     }
 
-    public void cadastraNotificacaoObserver(NotificacaoSevice notificacao){
-        notificacaoSevices.add(notificacao);
-    }
 
     public Estoque updateEstoque(Anunciante anunciante, Produto produto, int quantidade) {
         List<Estoque> estoques = anunciante.getEstoques();
@@ -52,6 +49,11 @@ public class EstoqueService {
             throw new EstoqueExCustom(EstoqueEnumEx.QUANTIDADE_INVALIDA);
         }
         estoque.setQuantidade(novaQuantidade);
+
+        if(novaQuantidade > 0) {
+            notificacaoSevice.notificaUsuarios(produto, novaQuantidade, estoque);
+        }
+
         return estoqueRepository.save(estoque);
     }
 

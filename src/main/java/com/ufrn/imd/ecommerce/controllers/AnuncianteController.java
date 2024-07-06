@@ -1,7 +1,7 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.services.AnuncianteService;
-import com.ufrn.imd.ecommerce.services.UsuarioService;
+import com.ufrn.imd.ecommerce.services.ClienteService;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 public class AnuncianteController {
 
     private final AnuncianteService anuncianteService;
-    private final UsuarioService usuarioService;
+    private final ClienteService clienteService;
 
-    public AnuncianteController(AnuncianteService anuncianteService, UsuarioService usuarioService) {
+    public AnuncianteController(AnuncianteService anuncianteService, ClienteService clienteService) {
         this.anuncianteService = anuncianteService;
-        this.usuarioService = usuarioService;
+        this.clienteService = clienteService;
     }
 
 //    @PostMapping

@@ -2,8 +2,10 @@ package com.ufrn.imd.ecommerce.models.entidades;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-public class ProdutoFavorito {
+public class Notificacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,13 +16,15 @@ public class ProdutoFavorito {
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
-    private Produto produto;
+    private Anuncio anuncio;
 
-    public ProdutoFavorito() {}
+    private LocalDateTime horaDaSolicitacao;
 
-    public ProdutoFavorito(Usuario usuario, Produto produto) {
+    public Notificacao() {}
+
+    public Notificacao(Usuario usuario, Anuncio anuncio) {
         this.usuario = usuario;
-        this.produto = produto;
+        this.anuncio = anuncio;
     }
 
     public Long getId() {
@@ -39,13 +43,19 @@ public class ProdutoFavorito {
         this.usuario = usuario;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Anuncio getAnuncio() {
+        return anuncio;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setAnuncio(Anuncio anuncio) {
+        this.anuncio = anuncio;
     }
 
+    public LocalDateTime getHoraDaSolicitacao() {
+        return horaDaSolicitacao;
+    }
 
+    public void setHoraDaSolicitacao(LocalDateTime horaDaSolicitacao) {
+        this.horaDaSolicitacao = horaDaSolicitacao;
+    }
 }

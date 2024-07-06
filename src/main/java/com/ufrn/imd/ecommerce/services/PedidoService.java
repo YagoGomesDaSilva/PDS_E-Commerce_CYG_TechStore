@@ -88,7 +88,7 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    private Double calcularFrete(String estado) {
+    public Double calcularFrete(String estado) {
         if(estado.equals("RN") || estado.equals("PB") || estado.equals("PE") || estado.equals("AL")
                 || estado.equals("CE") || estado.equals("MA") || estado.equals("PI") || estado.equals("BA") || estado.equals("SE") ){
             return 30.00;

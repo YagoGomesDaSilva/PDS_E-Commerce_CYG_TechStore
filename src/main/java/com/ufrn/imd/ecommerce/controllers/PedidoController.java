@@ -4,27 +4,21 @@ package com.ufrn.imd.ecommerce.controllers;
 import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.exceptions.EstoqueExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.PedidoExCustom;
-import com.ufrn.imd.ecommerce.error.exceptions.RegraNegocioException;
-import com.ufrn.imd.ecommerce.error.exceptions.UsuarioExCustom;
 import com.ufrn.imd.ecommerce.models.DTO.PagamentoDTO;
-import com.ufrn.imd.ecommerce.models.DTO.PedidoDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoResponseDTO;
-import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Pedido;
 import com.ufrn.imd.ecommerce.models.entidades.PedidoItem;
 import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import com.ufrn.imd.ecommerce.services.AnuncianteService;
 import com.ufrn.imd.ecommerce.services.PedidoItemService;
 import com.ufrn.imd.ecommerce.services.PedidoService;
-import com.ufrn.imd.ecommerce.services.UsuarioService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.ufrn.imd.ecommerce.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedido")
@@ -33,7 +27,7 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
     @Autowired
-    private UsuarioService usuarioService;
+    private ClienteService clienteService;
     @Autowired
     private AnuncianteService anuncianteService;
     @Autowired
@@ -61,8 +55,8 @@ public class PedidoController {
             Double credito =  pedidoService.realizarPagamento(pedido, pedidoItems, pagamentoDTO.getValorPagamento());
 
             if(credito > 0.0){
-                Usuario usuario = usuarioService.findUsuario(pagamentoDTO.getIdUsuario());
-                usuarioService.addCredito(usuario, credito);
+                Usuario usuario = clienteService.findUsuario(pagamentoDTO.getIdUsuario());
+                clienteService.addCredito(usuario, credito);
             }
 
             return credito;
