@@ -1,3 +1,5 @@
+const token = JSON.parse(localStorage.getItem('user')).token;
+
 function loadLayoutHTML(elementId, url, componentId = "", componentUrl) {
     fetch(url)
         .then(response => response.text())
@@ -23,6 +25,8 @@ function loadComponentHTML(elementId, url) {
 
 window.onload = function() {
     loadLayoutHTML("header-placeholder", "../layouts/header.html", "component-search-bar", "../components/searchBar.html");
-    loadLayoutHTML("footer-placeholder", "../layouts/footerNotLogged.html");
+    if(token == null || token == undefined || token == ""){
+        loadLayoutHTML("footer-placeholder", "../layouts/footerNotLogged.html");
+    }
     //loadLayoutHTML("produtos-placeholder", "../layouts/listProducts.html");
 }

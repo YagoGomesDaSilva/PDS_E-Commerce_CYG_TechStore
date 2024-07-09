@@ -13,14 +13,18 @@
 <body>
     <div class="wrapper">
         <div id="header-placeholder"></div>
-        <main class="container-principal">
+        <main class="container-principal-login">
             <form id="formLogin">
-                <label for="email">Email </label>
-                <input class="tag-form" type="email" name="email" id="email" required>
+                <div>
+                    <label for="email">Email </label>
+                    <input class="tag-form" type="email" name="email" id="email" required>
+                </div>
                 <br>
                 <br>
-                <label for="senha">Senha </label>
-                <input class="tag-form" type="password" name="senha" id="senha" required>
+                <div>
+                    <label for="senha">Senha </label>
+                    <input class="tag-form" type="password" name="senha" id="senha" required>
+                </div>
                 <br>
                 <br>
                 <button type="button" class="button-submit" onclick="login()">Entrar</button>

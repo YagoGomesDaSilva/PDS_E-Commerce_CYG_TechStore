@@ -49,8 +49,16 @@ function createAnunciante() {
                 }
                 return response.text();
             })
-            .then(token => {
-                localStorage.setItem('token', token);
+            .then(data => {
+                localStorage.setItem('user', JSON.stringify(
+                    {
+                        "token" : data.token,
+                        "idUser" : data.idUsuario,
+                        "nome" : data.nome,
+                        "email": data.email,
+                        "tipoUsuario" : data.tipoUsuario
+                    }
+                  ));
                 alert('Usuário cadastrado com sucesso!');
                 window.location.href = '../index.html';
             })
@@ -263,7 +271,15 @@ function login() {
         return response.json();
       })
       .then(data => {
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(
+            {
+                "token" : data.token,
+                "idUser" : data.idUsuario,
+                "nome" : data.nome,
+                "email": data.email,
+                "tipoUsuario" : data.tipoUsuario
+            }
+          ));
           alert('Login bem-sucedido');
           window.location.href = '../index.html';
       })

@@ -55,7 +55,7 @@ main {
 
 .swiper-button-prev, .swiper-button-next {
     display: none;
-}
+} 
 
 .swiper-slide {
     max-width: 120px !important;
@@ -63,4 +63,18 @@ main {
 
 .swiper-pagination {
     position: initial;
+}
+
+.container-principal-login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .swiper-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

@@ -1,4 +1,4 @@
-const token = localStorage.getItem('token'); 
+token = JSON.parse(localStorage.getItem('user')).token;
 
 function createAnuncio() {
     const form = document.getElementById('formAnuncio');
