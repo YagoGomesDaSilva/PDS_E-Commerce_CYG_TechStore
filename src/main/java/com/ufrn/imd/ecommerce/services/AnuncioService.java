@@ -95,4 +95,8 @@ public class AnuncioService {
         anuncio.setProduto(produto);
         return anuncioRepository.save(anuncio);
     }
+
+    public List<Anuncio> findAnunciosByAnunciante(Anunciante anunciante) {
+        return anuncioRepository.findAllByAnunciante(anunciante);
+    }
 }

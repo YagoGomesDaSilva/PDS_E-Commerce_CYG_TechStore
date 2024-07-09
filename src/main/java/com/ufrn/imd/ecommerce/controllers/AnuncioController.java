@@ -84,4 +84,15 @@ public class AnuncioController {
         }
     }
 
+    @GetMapping("/anunciante/{idAnunciante}")
+    public List<Anuncio> getAllAnunciosByAnunciante(@PathVariable Long idAnunciante) {
+        try {
+            Anunciante anunciante = anuncianteService.findUsuario(idAnunciante);
+            List<Anuncio> anuncios = anuncioService.findAnunciosByAnunciante(anunciante);
+            return anuncios;
+        } catch (AnuncioExCustom | UsuarioExCustom e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
 }
