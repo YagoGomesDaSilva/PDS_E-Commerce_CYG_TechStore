@@ -61,6 +61,12 @@ public class PedidoItemService {
             pedidoItem.setPedido(novoPedido);
             return pedidoItemRepository.save(pedidoItem);
         }
+
+        Optional<PedidoItem> optPeditoItem = pedidoItemRepository.findByPedidoAndProduto(pedido.get(), anuncio.getProduto());
+        if(optPeditoItem.isPresent()){
+            throw new PedidoItemExCustom(PedidoItemEnumEx.ITEM_JA_ESTA_NO_CARRINHO);
+        }
+
         pedidoItem.setPedido(pedido.get());
         return pedidoItemRepository.save(pedidoItem);
     }

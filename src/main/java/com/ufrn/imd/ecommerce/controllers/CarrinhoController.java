@@ -2,6 +2,7 @@ package com.ufrn.imd.ecommerce.controllers;
 
 import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.exceptions.AnuncioExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.PedidoItemExCustom;
 import com.ufrn.imd.ecommerce.models.entidades.Anuncio;
 import com.ufrn.imd.ecommerce.models.entidades.PedidoItem;
 import com.ufrn.imd.ecommerce.models.entidades.Usuario;
@@ -36,6 +37,8 @@ public class CarrinhoController {
             return pedidoItemService.addItemToCart(usuario, anuncio);
         } catch (AnuncioExCustom e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (PedidoItemExCustom e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
