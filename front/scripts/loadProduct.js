@@ -45,7 +45,24 @@ function getProducts() {
 
                 buttonElement.addEventListener("click", (event) => {
                     event.stopPropagation();
-                    getProductToCart(product.id);
+                    
+                    const idUsuario = JSON.parse(localStorage.getItem('user')).idUser;
+
+                    fetch("http://localhost:8080/cart/"+ idUsuario + "/" + product.id, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            window.alert("Item adiconado ao carrinho!");
+                        })
+                        .catch(err => {
+                            window.alert("O item já foi adicionado ao carrinho");
+                        });
                 })
 
                 productContainer.appendChild(productElement);
