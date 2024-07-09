@@ -1,5 +1,3 @@
-const token = localStorage.getItem('token'); 
-
 document.addEventListener("DOMContentLoaded", loadCart());
 
 function getProductToCart(idAnuncio){
