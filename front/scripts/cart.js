@@ -120,7 +120,7 @@ function sendPedido(){
       })
       .then(data => {
         console.log('Carrinho enviado com sucesso:', data);
-        loadCart();
+        window.location.href = '../pages/order.html';
       })
       .catch(error => {
         console.error('Erro ao enviar o carrinho:', error);
