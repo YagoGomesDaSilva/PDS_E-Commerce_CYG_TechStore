@@ -10,11 +10,20 @@ public class PedidoResponseDTO {
     private Double valorTotalComFrete;
     private Double valorTotalComDesconto;
     private Double valorFrete;
+    private Long idPedido;
 
     public PedidoResponseDTO() {
         this.itensAnunciante = new ArrayList<>();
         this.valorTotalComDesconto = 0.0;
         this.valorTotal = 0.0;
+    }
+
+    public Long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
     }
 
     public List<ItemPorAnuncianteDTO> getItensAnunciante() {

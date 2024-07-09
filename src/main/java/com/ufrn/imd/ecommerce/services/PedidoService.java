@@ -157,6 +157,7 @@ public class PedidoService {
             } else {
                 ItemPorAnuncianteDTO itemPorAnunciante = new ItemPorAnuncianteDTO();
                 itemPorAnunciante.setIdAnunciante(anunciante.getId());
+                itemPorAnunciante.setNomeAnunciante(anunciante.getNomeAnunciante());
                 itemPorAnunciante.addItem(item);
 
                 Optional<Desconto> desconto = descontoRepository.findByPedidoAndAnunciante(pedido, anunciante);
@@ -174,11 +175,13 @@ public class PedidoService {
         pedidoResponseDTO.setValorTotalComFrete(pedido.getValorTotal() + pedido.getValorFrete());
         pedidoResponseDTO.setValorTotalComDesconto(pedido.getValorTotal() + pedido.getValorFrete() - descontoTotal);
 
+        pedidoResponseDTO.setIdPedido(pedido.getId());
+
         return pedidoResponseDTO;
     }
 
-    public Pedido findPedidoByUsuario(Long idUsuario) throws PedidoExCustom {
-        Optional<Pedido> pedido = pedidoRepository.findPedidoByUsuarioAndStatusPeido(idUsuario, StatusPedido.EM_ANDAMENTO);
+    public Pedido findPedidoByUsuario(Long idUsuario, StatusPedido statusPedido) throws PedidoExCustom {
+        Optional<Pedido> pedido = pedidoRepository.findPedidoByUsuarioAndStatusPeido(idUsuario, statusPedido);
         if(!pedido.isPresent()){
             throw new PedidoExCustom(PedidoEnumEx.PEDIDO_NAO_ENCONTRADO);
         }

@@ -8,12 +8,22 @@ import java.util.List;
 public class ItemPorAnuncianteDTO {
     private Long idAnunciante;
 
+    private String nomeAnunciante;
+
     private List<PedidoItem> itens;
 
     private Double desconto;
 
     public ItemPorAnuncianteDTO(){
         this.itens = new ArrayList<>();
+    }
+
+    public String getNomeAnunciante() {
+        return nomeAnunciante;
+    }
+
+    public void setNomeAnunciante(String nomeAnunciante) {
+        this.nomeAnunciante = nomeAnunciante;
     }
 
     public Long getIdAnunciante() {

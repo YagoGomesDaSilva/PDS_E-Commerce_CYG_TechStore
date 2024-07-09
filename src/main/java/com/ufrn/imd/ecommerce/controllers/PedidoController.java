@@ -1,6 +1,7 @@
 package com.ufrn.imd.ecommerce.controllers;
 
 
+import com.ufrn.imd.ecommerce.enums.StatusPedido;
 import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.exceptions.EstoqueExCustom;
 import com.ufrn.imd.ecommerce.error.exceptions.PedidoExCustom;
@@ -34,11 +35,21 @@ public class PedidoController {
     private PedidoItemService pedidoItemService;
 
     @PostMapping("/{idUsuario}")
-    public PedidoResponseDTO realizarPedido(@PathVariable Long idUsuario){
+    public Pedido realizarPedido(@PathVariable Long idUsuario){
         try {
-            Pedido pedido = pedidoService.findPedidoByUsuario(idUsuario);
+            Pedido pedido = pedidoService.findPedidoByUsuario(idUsuario, StatusPedido.EM_ANDAMENTO);
             List<PedidoItem> itens = pedidoItemService.findAllItemsByStatus(pedido.getUsuario().getId(), StatusPedidoItem.CARRINHO);
-            pedido = pedidoService.realizarPedido(itens, pedido);
+            return pedidoService.realizarPedido(itens, pedido);
+        } catch (EstoqueExCustom | PedidoExCustom err) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, err.getMessage());
+        }
+    }
+
+    @GetMapping("/{idUsuario}")
+    public PedidoResponseDTO getPedidoByUsuario(@PathVariable Long idUsuario){
+        try {
+            Pedido pedido = pedidoService.findPedidoByUsuario(idUsuario, StatusPedido.AGUARDANDO_PAGAMENTO);
+            List<PedidoItem> itens = pedidoItemService.findAllItemsByStatus(pedido.getUsuario().getId(), StatusPedidoItem.AGUARDANDO_PAGAMENTO);
 
             return pedidoService.prepararResposta(itens, pedido);
         } catch (EstoqueExCustom | PedidoExCustom err) {
