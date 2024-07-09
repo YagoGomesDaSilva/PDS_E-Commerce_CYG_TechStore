@@ -49,9 +49,11 @@ public class AuthController {
         try {
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
-            token = tokenService.generateToken((Anunciante) auth.getPrincipal());
 
-            return ResponseEntity.ok(new AuthDTO(token, "anunciante"));
+            Anunciante anunciante = (Anunciante) auth.getPrincipal();
+            token = tokenService.generateToken(anunciante);
+
+            return ResponseEntity.ok(new AuthDTO(token, anunciante.getId(), anunciante.getNome(), anunciante.getEmail(), anunciante.getTipoUsuario().getRole()));
         } catch (RuntimeException err){
             return ResponseEntity.badRequest().body(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
         }
@@ -70,8 +72,10 @@ public class AuthController {
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-            String token = tokenService.generateToken((Anunciante) auth.getPrincipal());
-            return ResponseEntity.ok(token);
+            anunciante = (Anunciante) auth.getPrincipal();
+            String token = tokenService.generateToken(anunciante);
+
+            return ResponseEntity.ok(new AuthDTO(token, anunciante.getId(), anunciante.getNome(), anunciante.getEmail(), anunciante.getTipoUsuario().getRole()));
         } catch (UsuarioExCustom err) {
             return ResponseEntity.badRequest().body(err);
         }
