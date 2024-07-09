@@ -19,7 +19,7 @@ public class UsuarioController {
         this.clienteService = clienteService;
     }
 
-    @PostMapping("/addCredit")
+    @PostMapping("/credit")
     public void addCredito(@RequestBody CreditoDTO creditoDTO){
         try {
             Usuario usuario = clienteService.findUsuario(creditoDTO.getIdUsuario());
@@ -28,6 +28,16 @@ public class UsuarioController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (CreditoExCustom e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @GetMapping("/credit/{idUsuario}")
+    public double findCredito(@PathVariable Long idUsuario){
+        try {
+            Usuario usuario = clienteService.findUsuario(idUsuario);
+            return usuario.getCredito();
+        } catch (UsuarioExCustom e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
