@@ -23,6 +23,12 @@ public class NotificacaoItemFaltanteService extends NotificacaoSevice {
     @Override
     public Email formatarEmail(boolean preCompraDeuCreto, Produto produto, Usuario usuario) {
 
-        return null;
+        Email email = new Email();
+        email.setAssunto("CORRA!!! Seu produto está com estoque disponível!!!");
+        email.setConteudo("Olá " + usuario.getNome() + "! \n" +
+                "\n" +
+                "O produto " + produto.getNome() + " acabou de chegar em nosso estoque! Adiquira logo antes que se esgote novamente");
+
+        return email;
     }
 }
