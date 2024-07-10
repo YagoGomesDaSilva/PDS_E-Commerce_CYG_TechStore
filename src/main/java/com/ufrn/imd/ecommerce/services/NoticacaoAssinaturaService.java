@@ -23,6 +23,12 @@ public class NoticacaoAssinaturaService extends NotificacaoSevice {
     @Override
     public Email formatarEmail(boolean preCompraDeuCreto, Produto produto, Usuario usuario) {
 
-        return null;
+        Email email = new Email();
+        email.setAssunto("OPS!!! Um produto  em sua compra recorrente esta em falta !!!");
+        email.setConteudo("Olá " + usuario.getNome() + "! \n" +
+                "\n" +
+                "O produto " + produto.getNome() + " infelizmente esta em falta! :( ");
+
+        return email;
     }
 }
