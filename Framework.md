@@ -23,6 +23,7 @@
 	+ Região Sudeste: R$350,00
 	+ Região Nordeste: R$200,00
 	+ Região Centro-Oeste: R$300,00
+    + Fora do Brasil: R$800,00
 * Forma de pagamento comum, todo valor do pagamento do pedido será destinado para a loja [Strategy]
 
 ### 3. Serviço de Assinatura
