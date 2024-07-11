@@ -28,7 +28,8 @@ public class EstoqueService {
     private final AnuncianteRepository anuncianteRepository;
     private final NotificacaoSevice notificacaoSevice;
 
-    public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository, AnuncianteRepository anuncianteRepository, @Qualifier("notificacaoPreCompraService") NotificacaoSevice notificacaoSevice) {
+    public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository,
+                          AnuncianteRepository anuncianteRepository, @Qualifier("notificacaoItemFaltanteService") NotificacaoSevice notificacaoSevice) {
         this.estoqueRepository = estoqueRepository;
         this.produtoRepository = produtoRepository;
         this.anuncianteRepository = anuncianteRepository;
