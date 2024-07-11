@@ -75,6 +75,10 @@ public class AssinaturaService {
                     pedidoItemAssinaturaRepository.save(itemAssinatura);
                 }
 
+                assinatura.setProximaDataRenovacao(assinatura.getProximaDataRenovacao().plusMonths(1));
+
+                assinaturaRepository.save(assinatura);
+
                 pedidoAssinatura.setQuantidadeComprasRealizadas(pedidoAssinatura.getQuantidadeComprasRealizadas() + 1);
                 pedidoAssinaturaRepository.save(pedidoAssinatura);
             } else {
