@@ -15,6 +15,7 @@ import com.ufrn.imd.ecommerce.services.PedidoItemService;
 import com.ufrn.imd.ecommerce.services.PedidoService;
 import com.ufrn.imd.ecommerce.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +27,7 @@ import java.util.List;
 public class PedidoController {
 
     @Autowired
+    @Qualifier("pedidoAssinaturaService")
     private PedidoService pedidoService;
     @Autowired
     private ClienteService clienteService;
@@ -75,37 +77,4 @@ public class PedidoController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, err.getMessage());
         }
     }
-
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Pedido RealizarPedido(@RequestBody PedidoDTO dto, HttpServletRequest request)  {
-//        try {
-//            Anunciante usuario = anuncianteService.findUsuarioByToken(request);
-//            Pedido pedido = pedidoService.createPedido(dto, usuario);
-//            return pedido;
-//        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @GetMapping
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<Pedido> findAll() {
-//        try {
-//            return pedidoService.findPedidos();
-//        } catch (RegraNegocioException err) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @GetMapping("/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Optional<Pedido> findFullById(@RequestParam Long id) {
-//        try {
-//            return pedidoService.findFullPedido(id);
-//        } catch (PedidoExCustom err) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
 }

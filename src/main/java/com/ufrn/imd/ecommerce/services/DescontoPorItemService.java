@@ -6,19 +6,20 @@ import com.ufrn.imd.ecommerce.models.entidades.Desconto;
 import com.ufrn.imd.ecommerce.repositories.DescontoRepository;
 import com.ufrn.imd.ecommerce.repositories.EnderecoRepository;
 import com.ufrn.imd.ecommerce.services.interfaces.DescontoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
 public class DescontoPorItemService implements DescontoService {
-    private final EnderecoRepository enderecoRepository;
-    private final DescontoRepository descontoRepository;
 
-    public DescontoPorItemService(EnderecoRepository enderecoRepository, DescontoRepository descontoRepository) {
-        this.enderecoRepository = enderecoRepository;
-        this.descontoRepository = descontoRepository;
-    }
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private DescontoRepository descontoRepository;
+
 
     @Override
     public void calcularDesconto(Map<Anunciante, Double> valorPorAnunciante, Pedido pedido) {

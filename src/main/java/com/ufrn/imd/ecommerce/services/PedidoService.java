@@ -14,6 +14,7 @@ import com.ufrn.imd.ecommerce.models.entidades.*;
 import com.ufrn.imd.ecommerce.repositories.*;
 import com.ufrn.imd.ecommerce.services.interfaces.DescontoService;
 import com.ufrn.imd.ecommerce.services.interfaces.PagamentoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -25,33 +26,24 @@ import java.util.stream.Collectors;
 @Service
 public class PedidoService {
 
-    private final PedidoRepository pedidoRepository;
-    private final PedidoItemRepository pedidoItemRepository;
-    private final UsuarioRepository usuarioRepository;
-    private final ProdutoRepository produtoRepository;
-    private final DescontoService descontoService;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PedidoItemRepository pedidoItemRepository;
+    @Autowired
+    @Qualifier("descontoPorItemService")
+    private DescontoService descontoService;
+    @Autowired
+    private EstoqueRepository estoqueRepository;
+    @Autowired
+    private DescontoRepository descontoRepository;
+    @Autowired
+    @Qualifier("pagamentoComum")
+    private PagamentoService pagamentoService;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
-    private final EstoqueRepository estoqueRepository;
-    private final DescontoRepository descontoRepository;
-    private final PagamentoService pagamentoService;
-    private final EnderecoRepository enderecoRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository,
-                         PedidoItemRepository pedidoItemRepository,
-                         UsuarioRepository usuarioRepository,
-                         ProdutoRepository produtoRepository, @Qualifier("descontoPorItemService") DescontoService descontoService,
-                         EstoqueRepository estoqueRepository, DescontoRepository descontoRepository, @Qualifier("pagamentoComum") PagamentoService pagamentoService, EnderecoRepository enderecoRepository){
-
-        this.pedidoRepository = pedidoRepository;
-        this.pedidoItemRepository = pedidoItemRepository;
-        this.usuarioRepository = usuarioRepository;
-        this.produtoRepository = produtoRepository;
-        this.descontoService = descontoService;
-        this.estoqueRepository = estoqueRepository;
-        this.descontoRepository = descontoRepository;
-        this.pagamentoService = pagamentoService;
-        this.enderecoRepository = enderecoRepository;
-    }
 
     @Transactional
     public Pedido realizarPedido(List<PedidoItem> itens, Pedido pedido) throws EstoqueExCustom {

@@ -5,26 +5,27 @@ import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import jakarta.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PedidoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    protected Long id;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
-    private Produto produto;
+    protected Produto produto;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     @JsonIgnore
-    private Pedido pedido;
+    protected Pedido pedido;
 
     @Column
-    private Integer quantidade;
+    protected Integer quantidade;
 
     @Enumerated(EnumType.STRING)
-    private StatusPedidoItem statusPedidoItem;
+    protected StatusPedidoItem statusPedidoItem;
 
     public PedidoItem() {
     }
