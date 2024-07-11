@@ -10,6 +10,7 @@ import com.ufrn.imd.ecommerce.models.DTO.AuthenticationDTO;
 import com.ufrn.imd.ecommerce.models.DTO.RegisterDTO;
 import com.ufrn.imd.ecommerce.models.entidades.Anunciante;
 import com.ufrn.imd.ecommerce.models.entidades.Endereco;
+import com.ufrn.imd.ecommerce.models.entidades.Usuario;
 import com.ufrn.imd.ecommerce.services.AuthService;
 import com.ufrn.imd.ecommerce.services.interfaces.UsuarioService;
 import jakarta.validation.Valid;
@@ -38,7 +39,7 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private TokenService tokenService;
-    @Qualifier("anuncianteService")
+    @Qualifier("clienteService")
     @Autowired
     private UsuarioService usuarioService;
 
@@ -50,10 +51,10 @@ public class AuthController {
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-            Anunciante anunciante = (Anunciante) auth.getPrincipal();
-            token = tokenService.generateToken(anunciante);
+            Usuario usuario = (Usuario) auth.getPrincipal();
+            token = tokenService.generateToken(usuario);
 
-            return ResponseEntity.ok(new AuthDTO(token, anunciante.getId(), anunciante.getNome(), anunciante.getEmail(), anunciante.getTipoUsuario().getRole()));
+            return ResponseEntity.ok(new AuthDTO(token, usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTipoUsuario().getRole()));
         } catch (RuntimeException err){
             return ResponseEntity.badRequest().body(UsuarioEnumEx.USUARIO_NAO_ENCONTRADO);
         }
@@ -66,16 +67,16 @@ public class AuthController {
         ArrayList<Endereco> enderecos = new ArrayList<>();
         enderecos.add(data.getEndereco());
         try {
-            Anunciante anunciante = new Anunciante(data.getNome(), data.getEmail(), encyptedPassword, data.getTelefone(), 0.0, "", data.getDocumento(), enderecos, TipoUsuario.ANUNCIANTE);
-            usuarioService.createUsuario(anunciante);
+            Usuario usuario = new Usuario(data.getNome(), data.getEmail(), encyptedPassword, data.getTelefone(), 0.0, enderecos, TipoUsuario.COMUM);
+            usuarioService.createUsuario(usuario);
 
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-            anunciante = (Anunciante) auth.getPrincipal();
-            String token = tokenService.generateToken(anunciante);
+            usuario = (Usuario) auth.getPrincipal();
+            String token = tokenService.generateToken(usuario);
 
-            return ResponseEntity.ok(new AuthDTO(token, anunciante.getId(), anunciante.getNome(), anunciante.getEmail(), anunciante.getTipoUsuario().getRole()));
+            return ResponseEntity.ok(new AuthDTO(token, usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTipoUsuario().getRole()));
         } catch (UsuarioExCustom err) {
             return ResponseEntity.badRequest().body(err);
         }

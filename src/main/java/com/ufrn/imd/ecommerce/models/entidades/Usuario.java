@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -38,12 +39,13 @@ public class Usuario implements UserDetails {
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha, String numeroTelefone, Double credito, TipoUsuario tipoUsuario) {
+    public Usuario(String nome, String email, String senha, String numeroTelefone, Double credito, List<Endereco> enderecos, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.numeroTelefone = numeroTelefone;
         this.credito = credito;
+        this.enderecos = enderecos;
         this.tipoUsuario = tipoUsuario;
     }
 

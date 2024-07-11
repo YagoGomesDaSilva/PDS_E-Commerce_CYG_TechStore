@@ -20,7 +20,7 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return anuncianteRepository.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
 
