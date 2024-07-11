@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +22,16 @@ public class AssinaturaService {
     private final EstoqueRepository estoqueRepository;
     private final PedidoItemAssinaturaRepository pedidoItemAssinaturaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final NotificacaoRepository notificacaoRepository;
 
-    public AssinaturaService(AssinaturaRepository assinaturaRepository, PedidoAssinaturaRepository pedidoAssinaturaRepository, PedidoItemRepository pedidoItemRepository, EstoqueRepository estoqueRepository, PedidoItemAssinaturaRepository pedidoItemAssinaturaRepository, UsuarioRepository usuarioRepository) {
+    public AssinaturaService(AssinaturaRepository assinaturaRepository, PedidoAssinaturaRepository pedidoAssinaturaRepository, PedidoItemRepository pedidoItemRepository, EstoqueRepository estoqueRepository, PedidoItemAssinaturaRepository pedidoItemAssinaturaRepository, UsuarioRepository usuarioRepository, NotificacaoRepository notificacaoRepository) {
         this.assinaturaRepository = assinaturaRepository;
         this.pedidoAssinaturaRepository = pedidoAssinaturaRepository;
         this.pedidoItemRepository = pedidoItemRepository;
         this.estoqueRepository = estoqueRepository;
         this.pedidoItemAssinaturaRepository = pedidoItemAssinaturaRepository;
         this.usuarioRepository = usuarioRepository;
+        this.notificacaoRepository = notificacaoRepository;
     }
 
     public void renovarAssinaturas(){
@@ -53,6 +56,15 @@ public class AssinaturaService {
                     if(estoque.get().getQuantidade() < itemAssinatura.getQuantidade()){
                         usuario.setCredito(usuario.getCredito() + (itemAssinatura.getQuantidade() * itemAssinatura.getProduto().getValorTotal()));
                         usuarioRepository.save(usuario);
+
+                        Notificacao notificacao = new Notificacao();
+                        notificacao.setAnuncio(item.getProduto().getAnuncio());
+                        notificacao.setHoraDaSolicitacao(LocalDateTime.now());
+                        notificacao.setUsuario(usuario);
+
+                        itemAssinatura.setDevolvido(true);
+
+                        notificacaoRepository.save(notificacao);
 
                         // enviar email informando que o item não estava disponivel em estoque e que o valor foi devolvido em crédito
                     }

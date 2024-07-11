@@ -5,10 +5,9 @@ import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.enunsEx.EstoqueEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.PagamentoEnumEx;
 import com.ufrn.imd.ecommerce.error.enunsEx.PedidoEnumEx;
-import com.ufrn.imd.ecommerce.error.enunsEx.ProdutoEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.*;
 import com.ufrn.imd.ecommerce.models.DTO.ItemPorAnuncianteDTO;
-import com.ufrn.imd.ecommerce.models.DTO.PedidoItemDTO;
+import com.ufrn.imd.ecommerce.models.DTO.PagamentoDTO;
 import com.ufrn.imd.ecommerce.models.DTO.PedidoResponseDTO;
 import com.ufrn.imd.ecommerce.models.entidades.*;
 import com.ufrn.imd.ecommerce.repositories.*;
@@ -21,7 +20,6 @@ import jakarta.transaction.Transactional;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
@@ -182,7 +180,8 @@ public class PedidoService {
     }
 
     @Transactional
-    public Double realizarPagamento(Pedido pedido, List<PedidoItem> itens, Double valorPagamento) {
+    public Double realizarPagamento(Pedido pedido, List<PedidoItem> itens, PagamentoDTO pagamento) {
+        Double valorPagamento = pagamento.getValorPagamento();
         Double desconto = descontoRepository.sumAllDescontosByPedido(pedido.getId());
         Double valorTotalAPagar = pedido.getValorFrete() + pedido.getValorTotal() - desconto;
         if(valorTotalAPagar > valorPagamento){

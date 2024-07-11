@@ -65,7 +65,7 @@ public class PedidoController {
             Pedido pedido = pedidoService.findPedido(pagamentoDTO.getIdPedido());
             List<PedidoItem> pedidoItems = pedidoItemService.findAllItemsByStatus(pagamentoDTO.getIdUsuario(), StatusPedidoItem.AGUARDANDO_PAGAMENTO);
 
-            Double credito =  pedidoService.realizarPagamento(pedido, pedidoItems, pagamentoDTO.getValorPagamento());
+            Double credito =  pedidoService.realizarPagamento(pedido, pedidoItems, pagamentoDTO);
 
             if(credito > 0.0){
                 Usuario usuario = clienteService.findUsuario(pagamentoDTO.getIdUsuario());

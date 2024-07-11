@@ -3,7 +3,10 @@ package com.ufrn.imd.ecommerce.services;
 import com.ufrn.imd.ecommerce.enums.StatusPedido;
 import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.error.enunsEx.EstoqueEnumEx;
+import com.ufrn.imd.ecommerce.error.enunsEx.PagamentoEnumEx;
 import com.ufrn.imd.ecommerce.error.exceptions.EstoqueExCustom;
+import com.ufrn.imd.ecommerce.error.exceptions.PagamentoExCustom;
+import com.ufrn.imd.ecommerce.models.DTO.PagamentoDTO;
 import com.ufrn.imd.ecommerce.models.entidades.*;
 import com.ufrn.imd.ecommerce.repositories.*;
 import com.ufrn.imd.ecommerce.services.interfaces.DescontoService;
@@ -28,10 +31,16 @@ public class PedidoAssinaturaService extends PedidoService{
     private final PedidoItemAssinaturaRepository pedidoItemAssinaturaRepository;
     private final DescontoService descontoService;
     private final AssinaturaRepository assinaturaRepository;
+    private final DescontoRepository descontoRepository;
+    private final PedidoItemRepository pedidoItemRepository;
+    private final PedidoRepository pedidoRepository;
+    private final PagamentoService pagamentoService;
 
     public PedidoAssinaturaService(EstoqueRepository estoqueRepository, PedidoAssinaturaRepository pedidoAssinaturaRepository,
                                    EnderecoRepository enderecoRepository, PedidoItemAssinaturaRepository pedidoItemAssinaturaRepository,
-                                   @Qualifier("descontoAssinaturaService") DescontoService descontoService, AssinaturaRepository assinaturaRepository) {
+                                   @Qualifier("descontoAssinaturaService") DescontoService descontoService, AssinaturaRepository assinaturaRepository,
+                                   DescontoRepository descontoRepository, PedidoItemRepository pedidoItemRepository, PedidoRepository pedidoRepository,
+                                   @Qualifier("pagamentoRecorrente") PagamentoService pagamentoService) {
         super();
         this.estoqueRepository = estoqueRepository;
         this.pedidoAssinaturaRepository = pedidoAssinaturaRepository;
@@ -39,6 +48,10 @@ public class PedidoAssinaturaService extends PedidoService{
         this.pedidoItemAssinaturaRepository = pedidoItemAssinaturaRepository;
         this.descontoService = descontoService;
         this.assinaturaRepository = assinaturaRepository;
+        this.descontoRepository = descontoRepository;
+        this.pedidoItemRepository = pedidoItemRepository;
+        this.pedidoRepository = pedidoRepository;
+        this.pagamentoService = pagamentoService;
     }
 
     @Override
@@ -91,6 +104,42 @@ public class PedidoAssinaturaService extends PedidoService{
         assinaturaRepository.save(assinatura);
 
         return pedidoAssinaturaRepository.save(pedidoAssinatura);
+    }
+
+
+
+    @Transactional
+    @Override
+    public Double realizarPagamento(Pedido pedido, List<PedidoItem> itens, PagamentoDTO pagamento) {
+        Double valorPagamento = pagamento.getValorPagamento();
+        Double desconto = 0.0;
+
+        int quantidadePagamentosAntecipados = pagamento.getQuantidadePagamentosAntecipados();
+
+        if(quantidadePagamentosAntecipados >= 3){
+            desconto = descontoRepository.sumAllDescontosByPedido(pedido.getId());
+        }
+
+        Double valorTotalAPagar = pedido.getValorFrete() + pedido.getValorTotal() - desconto;
+
+        PedidoAssinatura pedidoAssinatura = (PedidoAssinatura) pedido;
+
+        if(valorTotalAPagar * quantidadePagamentosAntecipados > valorPagamento){
+            throw new PagamentoExCustom(PagamentoEnumEx.VALOR_INVALIDO);
+        }
+        valorPagamento -= valorTotalAPagar;
+
+        pedidoAssinatura.setStatusPedido(StatusPedido.FINALIZADO);
+        pedidoAssinatura.setQuantidadePagamentosAntecipados(quantidadePagamentosAntecipados);
+        for(PedidoItem item : itens) {
+            item.setStatusPedido(StatusPedidoItem.FINALIZADO);
+        }
+        pedidoItemRepository.saveAll(itens);
+        pedidoAssinaturaRepository.save(pedidoAssinatura);
+
+        pagamentoService.repassarPagamento(pedidoAssinatura, itens);
+
+        return valorPagamento;
     }
 }
 
