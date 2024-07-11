@@ -39,7 +39,7 @@ public class PedidoService {
     public PedidoService(PedidoRepository pedidoRepository,
                          PedidoItemRepository pedidoItemRepository,
                          UsuarioRepository usuarioRepository,
-                         ProdutoRepository produtoRepository, @Qualifier("descontoPorAnuncianteService") DescontoService descontoService,
+                         ProdutoRepository produtoRepository, @Qualifier("descontoPorItemService") DescontoService descontoService,
                          EstoqueRepository estoqueRepository, DescontoRepository descontoRepository, @Qualifier("pagamentoParaAnunciante") PagamentoService pagamentoService, EnderecoRepository enderecoRepository){
 
         this.pedidoRepository = pedidoRepository;
