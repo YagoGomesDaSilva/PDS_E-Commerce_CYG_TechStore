@@ -34,12 +34,22 @@
     text-align: left;
 }
 
-.product-container button {
+.product-container #listCartButton {
     width: 90%;
     padding: 0.5em 0.5em;
     border-radius: 16px;
     background: var(--verde-escuro); 
     border: none;
+}
+
+.product-container #emptyEstoqueButton {
+    width: 90%;
+    padding: 0.5em 0.5em;
+    border-radius: 16px;
+    background: var(--amarelo); 
+    border: none;
+    font-size: 10px;
+    font-weight: 700;
 }
 
 .container-products {

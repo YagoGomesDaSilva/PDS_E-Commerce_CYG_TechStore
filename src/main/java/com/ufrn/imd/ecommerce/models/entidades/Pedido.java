@@ -10,34 +10,35 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    protected Long id;
 
-    private double valorTotal;
+    protected double valorTotal;
     @Column(scale = 2)
-    private double valorFrete;
+    protected double valorFrete;
     @Column(scale = 2)
-    private double valorTotalItens;
+    protected double valorTotalItens;
     @Column
     @Temporal(TemporalType.DATE)
-    private LocalDate data;
+    protected LocalDate data;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(30)")
-    private StatusPedido statusPedido;
+    protected StatusPedido statusPedido;
     @Column
     @Enumerated(EnumType.STRING)
-    private TipoPagamento tipoPagamento;
+    protected TipoPagamento tipoPagamento;
 
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    protected Usuario usuario;
 
     @OneToMany(mappedBy = "pedido")
-    private Set<PedidoItem> pedidoItems;
+    protected Set<PedidoItem> pedidoItems;
 
 
     public Pedido() {

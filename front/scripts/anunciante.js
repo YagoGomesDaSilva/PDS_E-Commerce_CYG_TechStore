@@ -24,15 +24,41 @@ function getProducts() {
                 price.textContent = product.produto != null ? product.produto.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : "A negociar";
 
                 const buttonElement = document.createElement('button');
-                buttonElement.id = "listCartButton";
+                buttonElement.id = "emptyEstoqueButton";
                 buttonElement.style.cursor = "pointer";
                 const imageCartElement = document.createElement('img');
-                imageCartElement.src = "../imgs/cart.png";
+                imageCartElement.src = "../imgs/editar.png";
                 imageCartElement.style.width = "30px";
                 imageCartElement.style.height = "30px";
                 
                 buttonElement.appendChild(imageCartElement);
 
+                buttonElement.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    
+                    const novaQuantidade = Number(window.prompt("Insira a quantidade que está sendo adicionada ao estoque: "))
+                    const idUsuario = JSON.parse(localStorage.getItem('user')).idUser;
+                    
+                    fetch("http://localhost:8080/estoque/" + idUsuario, {
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                        },
+                        body: JSON.stringify({
+                            "idProduto" : product.produto.id,
+                            "quantidade" : novaQuantidade
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.alert("Estoque atualizado com sucesso! Novo valor em estoque: " + data.quantidade);
+                    })
+                    .catch(err => {
+                        window.alert("Não foi possível atualizar o estoque!");
+                    });
+                    
+                });
                 productElement.appendChild(imageElement);
                 productElement.appendChild(titleElement);
                 productElement.appendChild(divPrice);

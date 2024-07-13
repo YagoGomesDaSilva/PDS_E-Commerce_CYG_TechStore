@@ -34,14 +34,9 @@ public class Anunciante extends Usuario {
         this.documento = documento;
     }
 
-    public Anunciante(String nome, String email, String senha, String numeroTelefone, Double credito, String nomeAnunciante, String documento, TipoUsuario tipoUsuario) {
-        super(nome, email, senha, numeroTelefone, credito, tipoUsuario);
-        this.nomeAnunciante = nomeAnunciante;
-        this.documento = documento;
-    }
 
     public Anunciante(String nome, String email, String senha, String numeroTelefone, Double credito, String nomeAnunciante, String documento, List<Endereco> enderecos, TipoUsuario tipoUsuario) {
-        super(nome, email, senha, numeroTelefone, credito, tipoUsuario);
+        super(nome, email, senha, numeroTelefone, credito, enderecos, tipoUsuario);
         this.documento = documento;
         this.enderecos = enderecos;
         this.nomeAnunciante = "";

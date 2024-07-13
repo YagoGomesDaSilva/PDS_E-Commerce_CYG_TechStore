@@ -3,6 +3,7 @@ package com.ufrn.imd.ecommerce.repositories;
 import com.ufrn.imd.ecommerce.enums.StatusPedido;
 import com.ufrn.imd.ecommerce.enums.StatusPedidoItem;
 import com.ufrn.imd.ecommerce.models.entidades.Pedido;
+import com.ufrn.imd.ecommerce.models.entidades.PedidoAssinatura;
 import com.ufrn.imd.ecommerce.models.entidades.PedidoItem;
 import com.ufrn.imd.ecommerce.models.entidades.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface PedidoItemRepository extends JpaRepository<PedidoItem, Long> {
     List<PedidoItem> findAllByUsuarioAndStatus(Long idUsuario, StatusPedidoItem statusPedidoItem);
 
     Optional<PedidoItem> findByPedidoAndProduto(Pedido pedido, Produto produto);
+
+    List<PedidoItem> findAllByPedido(Pedido pedido);
 }
