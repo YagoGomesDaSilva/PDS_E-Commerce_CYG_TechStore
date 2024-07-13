@@ -61,7 +61,7 @@ public class PedidoAssinaturaService extends PedidoService{
         Double valorTotal = 0.0;
 
         for(PedidoItem item : itens){
-            PedidoItemAssinatura itemAssinatura = (PedidoItemAssinatura) item;
+            PedidoItemAssinatura itemAssinatura = new PedidoItemAssinatura(item);
             itemAssinatura.setDevolvido(false);
 
             Optional<Estoque> estoque = estoqueRepository.findByProduto(itemAssinatura.getProduto().getId());
@@ -92,10 +92,14 @@ public class PedidoAssinaturaService extends PedidoService{
         pedido.setValorFrete(valorFrete);
         pedido.setData(LocalDate.now());
 
-        PedidoAssinatura pedidoAssinatura = (PedidoAssinatura) pedido;
+        PedidoAssinatura pedidoAssinatura = new PedidoAssinatura();
+
+        pedidoAssinatura.setId(pedido.getId());
 
         pedidoAssinatura.setQuantidadeComprasRealizadas(0);
         pedidoAssinatura.setQuantidadePagamentosAntecipados(0);
+
+        pedidoAssinatura = pedidoAssinaturaRepository.save(pedidoAssinatura);
 
         Assinatura assinatura = new Assinatura();
         assinatura.setPedidoAssinatura(pedidoAssinatura);
@@ -103,7 +107,7 @@ public class PedidoAssinaturaService extends PedidoService{
 
         assinaturaRepository.save(assinatura);
 
-        return pedidoAssinaturaRepository.save(pedidoAssinatura);
+        return pedidoAssinatura;
     }
 
 
@@ -122,7 +126,8 @@ public class PedidoAssinaturaService extends PedidoService{
 
         Double valorTotalAPagar = pedido.getValorFrete() + pedido.getValorTotal() - desconto;
 
-        PedidoAssinatura pedidoAssinatura = (PedidoAssinatura) pedido;
+        PedidoAssinatura pedidoAssinatura = new PedidoAssinatura();
+        pedidoAssinatura.setId(pedido.getId());
 
         if(valorTotalAPagar * quantidadePagamentosAntecipados > valorPagamento){
             throw new PagamentoExCustom(PagamentoEnumEx.VALOR_INVALIDO);

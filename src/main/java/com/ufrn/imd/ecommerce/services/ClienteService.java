@@ -39,6 +39,9 @@ public class ClienteService implements com.ufrn.imd.ecommerce.services.interface
         if(usuarioRepository.findUsuarioByEmail(usuario.getEmail()) != null) {
             throw new UsuarioExCustom(UsuarioEnumEx.EMAIL_DUPLICADO);
         }
+
+        usuario.getEnderecos().get(0).setUsuario(usuario);
+
         return usuarioRepository.save(usuario);
     }
 

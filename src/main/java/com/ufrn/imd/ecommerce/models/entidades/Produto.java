@@ -46,7 +46,6 @@ public class Produto {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> categorias;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private  List<Estoque> estoques;
 
     @OneToMany(mappedBy = "produto")

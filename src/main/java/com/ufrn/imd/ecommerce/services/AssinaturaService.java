@@ -46,7 +46,7 @@ public class AssinaturaService {
                 List<PedidoItem> itens = pedidoItemRepository.findAllByPedido(pedidoAssinatura);
 
                 for(PedidoItem item : itens){
-                    PedidoItemAssinatura itemAssinatura = (PedidoItemAssinatura) item;
+                    PedidoItemAssinatura itemAssinatura = new PedidoItemAssinatura(item);
                     itemAssinatura.setDevolvido(false);
 
                     Optional<Estoque> estoque = estoqueRepository.findByProduto(itemAssinatura.getProduto().getId());

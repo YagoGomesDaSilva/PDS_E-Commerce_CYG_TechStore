@@ -11,6 +11,22 @@ public class PedidoAssinatura extends Pedido{
 
     private int quantidadeComprasRealizadas;
 
+    public PedidoAssinatura(Pedido pedido) {
+        this.id = pedido.getId();
+        this.pedidoItems = pedido.getPedidoItems();
+        this.usuario = pedido.getUsuario();
+        this.statusPedido = pedido.getStatusPedido();
+        this.valorTotal = pedido.getValorTotal();
+        this.valorFrete = pedido.getValorFrete();
+        this.valorTotalItens = pedido.getValorTotalItens();
+        this.data = pedido.getData();
+        this.statusPedido = pedido.getStatusPedido();
+    }
+
+    public PedidoAssinatura() {
+
+    }
+
     public int getQuantidadePagamentosAntecipados() {
         return quantidadePagamentosAntecipados;
     }
