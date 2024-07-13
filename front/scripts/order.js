@@ -29,7 +29,7 @@ function loadOrder() {
                 itensByAnuncianteDiv.classList.add('itens-anunciante');
 
                 const nomeAnuncianteDiv = document.createElement('h2');
-                nomeAnuncianteDiv.textContent = nomeAnunciante;
+                nomeAnuncianteDiv.textContent = "Anunciante: " + nomeAnunciante;
 
                 itensByAnuncianteDiv.appendChild(nomeAnuncianteDiv);
 
@@ -78,14 +78,15 @@ function loadOrder() {
             const valorTotalComFreteDiv = document.createElement('p');
             valorTotalComFreteDiv.textContent = "Valor Total com frete: " +  (valorTotalComFrete).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-            const valorTotalComDescontoDiv = document.createElement('p');
-            valorTotalComDescontoDiv.textContent = "Valor com desconto: " +  (valorTotalComDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-
             orderDiv.appendChild(valorTotalDiv);
             orderDiv.appendChild(valorFreteDiv);
             orderDiv.appendChild(valorTotalComFreteDiv);
-            orderDiv.appendChild(valorTotalComDescontoDiv);
+
+            if(valorTotalComFrete != valorTotalComDesconto) {
+                const valorTotalComDescontoDiv = document.createElement('p');
+                valorTotalComDescontoDiv.textContent = "Valor com desconto: " +  (valorTotalComDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                orderDiv.appendChild(valorTotalComDescontoDiv);
+            }           
 
             const comprarButton = document.createElement('button');
             comprarButton.textContent = 'Realizar pagamento';
@@ -103,7 +104,9 @@ function loadOrder() {
                         "valorPagamento" : valorTotalComDesconto
                     })
                 })
-                    .then(response => {
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
                         window.location.href = "../pages/orderConcluded.html";
                     })
                     .catch(err => {

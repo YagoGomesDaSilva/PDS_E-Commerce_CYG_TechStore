@@ -1,0 +1,85 @@
+#container-order {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Estilo para cada seção de itens por anunciante */
+.itens-anunciante {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+/* Estilo para o nome do anunciante */
+.itens-anunciante h2 {
+    font-size: 1.5em;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+/* Estilo para cada item de pedido */
+.item-pedido {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo para o título do item */
+.item-pedido h3 {
+    font-size: 1.2em;
+    color: #555555;
+    margin: 0;
+}
+
+/* Estilo para as imagens dos produtos */
+.item-pedido img {
+    width: 100px;
+    height: 90px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Estilo para os valores dos itens */
+.preco-item {
+    font-size: 1em;
+    color: #777777;
+    margin-top: 5px;
+}
+
+/* Estilo para os textos dos totais e valores do pedido */
+#container-order p {
+    font-size: 1em;
+    color: #444444;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Estilo específico para cada tipo de valor (opcional) */
+#container-order p:nth-of-type(1) {
+    color: #000000; /* Valor total */
+}
+
+#container-order p:nth-of-type(2) {
+    color: #ff5722; /* Valor do frete */
+}
+
+#container-order p:nth-of-type(3) {
+    color: #4caf50; /* Valor total com frete */
+}
+
+#container-order p:nth-of-type(4) {
+    color: #2196f3; /* Valor com desconto */
+}

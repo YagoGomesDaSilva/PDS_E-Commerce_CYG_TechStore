@@ -4,6 +4,7 @@
 @import url("product.css");
 @import url("announcement.css");
 @import url("cart.css");
+@import url("order.css");
 
 :root {
     --cor-de-fundo: #EBECEE;
@@ -69,6 +70,17 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#produtos-anunciante {
+    display: flex;
+}
+
+.container-principal-anunciante {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {

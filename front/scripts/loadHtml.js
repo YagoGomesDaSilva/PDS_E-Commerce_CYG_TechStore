@@ -1,4 +1,4 @@
-const token = JSON.parse(localStorage.getItem('user')).token;
+const token = localStorage.getItem('user') != null ? JSON.parse(localStorage.getItem('user')).token : "";
 
 function loadLayoutHTML(elementId, url, componentId = "", componentUrl) {
     fetch(url)

@@ -52,13 +52,24 @@
     text-align: left;
 }
 
-.container-select-product button {
+.container-select-product #listCartButton {
     width: 90%;
     padding: 0.5em 1em;
     width: 100%;
     margin-top: 0.5em;
     border-radius: 8px;
     background: var(--verde-escuro); 
+    border: none;
+    cursor: pointer;
+}
+
+.container-select-product #emptyEstoqueButton {
+    width: 90%;
+    padding: 0.5em 1em;
+    width: 100%;
+    margin-top: 0.5em;
+    border-radius: 8px;
+    background: var(--amarelo); 
     border: none;
     cursor: pointer;
 }

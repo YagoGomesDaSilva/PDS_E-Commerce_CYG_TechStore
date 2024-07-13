@@ -25,14 +25,29 @@ function getProducts() {
                 price.textContent = product.produto != null ? product.produto.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : "A negociar";
 
                 const buttonElement = document.createElement('button');
-                buttonElement.id = "listCartButton";
-                buttonElement.style.cursor = "pointer";
-                const imageCartElement = document.createElement('img');
-                imageCartElement.src = "../imgs/cart.png";
-                imageCartElement.style.width = "30px";
-                imageCartElement.style.height = "30px";
                 
-                buttonElement.appendChild(imageCartElement);
+                
+                if(product.produto.estoques[0].quantidade == 0){
+                    buttonElement.id = "emptyEstoqueButton";
+                    buttonElement.style.cursor = "pointer";
+                    
+                    const esgotado = document.createElement('span')
+                    esgotado.textContent = "Realizar pré-compra quando voltar".toUpperCase()
+                    buttonElement.appendChild(esgotado);
+                } else {
+                    const imageCartElement = document.createElement('img');
+                    
+                    buttonElement.id = "listCartButton";
+                    buttonElement.style.cursor = "pointer";
+                    
+                    imageCartElement.src = "../imgs/cart.png";
+                    imageCartElement.style.width = "30px";
+                    imageCartElement.style.height = "30px";
+
+                    buttonElement.appendChild(imageCartElement);
+                }
+                
+                
 
                 productElement.appendChild(imageElement);
                 productElement.appendChild(titleElement);
@@ -47,22 +62,41 @@ function getProducts() {
                     event.stopPropagation();
                     
                     const idUsuario = JSON.parse(localStorage.getItem('user')).idUser;
-
-                    fetch("http://localhost:8080/cart/"+ idUsuario + "/" + product.id, {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-                        },
-                    })
+                    
+                    if(product.produto.estoques[0].quantidade == 0){
+                        fetch("http://localhost:8080/notificacao?idAnuncio="+ product.id +"&idUsuario=" + idUsuario, {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                            }
+                        })
                         .then(response => response.json())
                         .then(data => {
                             console.log(data);
-                            window.alert("Item adiconado ao carrinho!");
+                            window.alert("Sua pré-compra será realizada assim que o produto voltar para o estoque.");
                         })
                         .catch(err => {
-                            window.alert("O item já foi adicionado ao carrinho");
+                            window.alert("Você já solicitou a pré-compra desse item!");
                         });
+                    } else {
+                        fetch("http://localhost:8080/cart/"+ idUsuario + "/" + product.id, {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                window.alert("Item adiconado ao carrinho!");
+                            })
+                            .catch(err => {
+                                window.alert("O item já foi adicionado ao carrinho");
+                            });
+                    }
+
                 })
 
                 productContainer.appendChild(productElement);
