@@ -4,16 +4,17 @@
 @import url("product.css");
 @import url("announcement.css");
 @import url("cart.css");
+@import url("order.css");
 
 :root {
     --cor-de-fundo: #EBECEE;
     --branco: white;
     --preto: #0c0c0c;
-    --cor-cabecalho: #92FFE3;
-    --cor-menu-hamburguer: linear-gradient(98deg, #77B0AA 35.49%, #77B0AA 165.37%);
-    --cor-fundo-itens: linear-gradient(98deg, #003C43 35.49%, #135D66 165.37%);
-    --verde: #135D66;
-    --verde-escuro: #003C43;
+    --cor-cabecalho: rgb(219, 74, 74);;
+    --cor-menu-hamburguer: rgb(231, 135, 135);
+    --cor-fundo-itens: rgb(207, 14, 14);
+    --verde: rgb(207, 14, 14);
+    --verde-escuro: rgb(219, 74, 74);
     --amarelo: #E2A312;
     --font-principal: "Poppins";
 }
@@ -69,6 +70,17 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#produtos-anunciante {
+    display: flex;
+}
+
+.container-principal-anunciante {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {
