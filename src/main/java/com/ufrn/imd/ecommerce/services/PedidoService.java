@@ -28,15 +28,19 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
     @Autowired
     private PedidoItemRepository pedidoItemRepository;
+
+    //Preencher qualifier
     @Autowired
-    @Qualifier("descontoPorItemService")
+    @Qualifier("")
     private DescontoService descontoService;
     @Autowired
     private EstoqueRepository estoqueRepository;
     @Autowired
     private DescontoRepository descontoRepository;
+
+    //Preencher qualifier
     @Autowired
-    @Qualifier("pagamentoComum")
+    @Qualifier("")
     private PagamentoService pagamentoService;
     @Autowired
     private EnderecoRepository enderecoRepository;

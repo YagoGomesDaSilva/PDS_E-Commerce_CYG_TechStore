@@ -28,9 +28,11 @@ public class EstoqueService {
     private final AnuncianteRepository anuncianteRepository;
     private final NotificacaoSevice notificacaoSevice;
 
+
+    //Preencher qualifier
     public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository,
                           AnuncianteRepository anuncianteRepository,
-                          @Qualifier("noticacaoAssinaturaService") NotificacaoSevice notificacaoSevice) {
+                          @Qualifier("") NotificacaoSevice notificacaoSevice) {
         this.estoqueRepository = estoqueRepository;
         this.produtoRepository = produtoRepository;
         this.anuncianteRepository = anuncianteRepository;

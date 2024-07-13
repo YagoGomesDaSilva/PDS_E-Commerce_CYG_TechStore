@@ -27,7 +27,6 @@ import java.util.List;
 public class PedidoController {
 
     @Autowired
-    @Qualifier("pedidoAssinaturaService")
     private PedidoService pedidoService;
     @Autowired
     private ClienteService clienteService;
